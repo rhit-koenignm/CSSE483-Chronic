@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_forum_home.xml" value="0.12310030395136778" />
+        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_pain_tracking.xml" value="0.12310030395136778" />
+        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_reminders.xml" value="0.12310030395136778" />
+        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/nav_header_main.xml" value="0.6552763819095477" />
         <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/app_bar_main.xml" value="0.2015625" />
         <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/content_main.xml" value="0.20520833333333333" />
@@ -17,7 +21,8 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="15" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
