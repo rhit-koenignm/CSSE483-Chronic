@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--Personalized Color Scheme Colors-->
+    <color name="plum">#502F4C</color>
+    <color name="grape">#70587C</color>
+    <color name="lavender">#C8B8DB</color>
+    <color name="soft_pink">#FCDDEC</color>
+    <color name="pearl">#F9F4F5</color>
 </resources>
