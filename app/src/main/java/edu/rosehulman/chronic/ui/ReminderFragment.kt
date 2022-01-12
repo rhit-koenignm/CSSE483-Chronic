@@ -9,23 +9,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import edu.rosehulman.chronic.R
-import edu.rosehulman.chronic.databinding.FragmentProfileBinding
+import edu.rosehulman.chronic.databinding.FragmentReminderBinding
 
-class ProfileFragment : Fragment() {
+class ReminderFragment : Fragment() {
 
-
-    private lateinit var binding: FragmentProfileBinding
+    private lateinit var binding: FragmentReminderBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        binding = FragmentReminderBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.textProfile.text = "Profile"
+        binding.textReminder.text = "Reminders"
         return root
-
     }
 }

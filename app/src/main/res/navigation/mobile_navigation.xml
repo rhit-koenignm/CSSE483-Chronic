@@ -3,25 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_profile">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_profile"
         android:name="edu.rosehulman.chronic.ui.ProfileFragment"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="edu.rosehulman.chronic.ui.gallery.GalleryFragment"
-        android:label="@string/menu_pain_tracking"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_pain_tracking"
         android:name="edu.rosehulman.chronic.ui.PainTrackingFragment"
+        android:label="@string/menu_pain_tracking"
+        tools:layout="@layout/fragment_reminder" />
+
+    <fragment
+        android:id="@+id/nav_reminder"
+        android:name="edu.rosehulman.chronic.ui.ReminderFragment"
         android:label="@string/menu_reminders"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_paintracking" />
+
+    <fragment
+        android:id="@+id/nav_data"
+        android:name="edu.rosehulman.chronic.ui.DataFragment"
+        android:label="@string/menu_mydata"
+        tools:layout="@layout/fragment_data" />
+
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="edu.rosehulman.chronic.ui.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
 
 
 
