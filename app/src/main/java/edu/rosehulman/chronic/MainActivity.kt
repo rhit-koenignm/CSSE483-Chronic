@@ -54,12 +54,11 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.main, menu)
-        inflater.inflate(R.menu.main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-// Handle item selection
+        // Handle item selection
         return when (item.itemId) {
             R.id.nav_profile -> {
                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_settings)
