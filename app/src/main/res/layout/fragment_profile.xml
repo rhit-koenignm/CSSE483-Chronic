@@ -17,6 +17,7 @@
         android:layout_alignParentStart="true"
         android:src="@drawable/ic_baseline_person_24"
         android:layout_marginRight="20dp"
+
         />
 
     <TextView
@@ -41,7 +42,7 @@
         android:layout_toEndOf="@id/ProfilePhoto"
         />
 
-    <ImageButton
+    <Button
         android:id="@+id/settingsButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -50,13 +51,17 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_toLeftOf="@id/trackingTagsButton"
+        android:layout_toStartOf="@id/trackingTagsButton"
         android:backgroundTint="?colorPrimaryVariant"
-        android:src="@drawable/ic_baseline_person_24"
         app:tint="@color/white"
+        android:background="@drawable/roundbutton"
+        android:drawableTop="@drawable/ic_baseline_person_24"
+        android:drawableTint="@color/white"
+        android:text="Profile Settings"
+        android:textSize="10sp"
         />
 
-    <ImageButton
+    <Button
         android:id="@+id/trackingTagsButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -64,20 +69,29 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:backgroundTint="?colorPrimaryVariant"
-        android:src="@drawable/ic_baseline_push_pin_24"
         app:tint="@color/white"
+        android:background="@drawable/roundbutton"
+        android:drawableTop="@drawable/ic_baseline_push_pin_24"
+        android:drawableTint="@color/white"
+        android:text="Tracking Tags"
+        android:textSize="10sp"
         />
 
-    <ImageButton
+    <Button
         android:id="@+id/paindataButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@id/Email"
-        android:layout_toRightOf="@id/trackingTagsButton"
+        android:layout_toEndOf="@id/trackingTagsButton"
         android:layout_margin="10dp"
         android:backgroundTint="?colorPrimaryVariant"
-        android:src="@drawable/ic_baseline_insert_chart_outlined_24"
         app:tint="@color/white"
+        android:background="@drawable/roundbutton"
+        android:drawableTop="@drawable/ic_baseline_insert_chart_outlined_24"
+        android:drawableTint="@color/white"
+        android:text="Pain Data"
+        android:textSize="10sp"
+
 
         />
 </RelativeLayout>
