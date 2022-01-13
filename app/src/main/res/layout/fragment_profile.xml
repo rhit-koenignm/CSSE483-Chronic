@@ -7,91 +7,236 @@
     tools:context=".ui.ProfileFragment"
     android:layout_margin="20dp"
     >
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ProfileDataCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            >
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:id="@+id/ProfilePhoto"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/ic_baseline_person_24"
+                    android:layout_marginEnd="20dp"
+                    app:tint="?colorPrimary"
+                    />
+
+                <TextView
+                    android:id="@+id/Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_toEndOf="@id/ProfilePhoto"
+                    android:text="Inigo Montoya"
+                    android:gravity="center_vertical"
+                    android:textColor="?colorPrimary"
+                    android:textSize="30sp" />
+                <TextView
+                    android:id="@+id/Email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp"
+                    android:text="YouKilledMyFather@PrepareToDie.com"
+                    android:textColor="@color/grey"
+                    android:layout_below="@id/Name"
+                    android:layout_toEndOf="@id/ProfilePhoto"
+                    />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
 
-    <ImageView
-        android:id="@+id/ProfilePhoto"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/ic_baseline_person_24"
-        android:layout_marginRight="20dp"
-
-        />
-
-    <TextView
-        android:id="@+id/Name"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@id/ProfilePhoto"
-        android:text="Inigo Montoya"
-        android:gravity="center_vertical"
-        android:textColor="?colorPrimary"
-        android:textSize="30sp" />
-    <TextView
-        android:id="@+id/Email"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:gravity="center_vertical"
-        android:textSize="15sp"
-        android:text="YouKilledMyFather@PrepareToDie.com"
-        android:textColor="@color/grey"
-        android:layout_below="@id/Name"
-        android:layout_toEndOf="@id/ProfilePhoto"
-        />
-
-    <Button
-        android:id="@+id/settingsButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/Email"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toStartOf="@id/trackingTagsButton"
-        android:backgroundTint="?colorPrimaryVariant"
-        app:tint="@color/white"
-        android:background="@drawable/roundbutton"
-        android:drawableTop="@drawable/ic_baseline_person_24"
-        android:drawableTint="@color/white"
-        android:text="Profile Settings"
-        android:textSize="10sp"
-        />
-
-    <Button
-        android:id="@+id/trackingTagsButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/Email"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:backgroundTint="?colorPrimaryVariant"
-        app:tint="@color/white"
-        android:background="@drawable/roundbutton"
-        android:drawableTop="@drawable/ic_baseline_push_pin_24"
-        android:drawableTint="@color/white"
-        android:text="Tracking Tags"
-        android:textSize="10sp"
-        />
-
-    <Button
-        android:id="@+id/paindataButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/Email"
-        android:layout_toEndOf="@id/trackingTagsButton"
-        android:layout_margin="10dp"
-        android:backgroundTint="?colorPrimaryVariant"
-        app:tint="@color/white"
-        android:background="@drawable/roundbutton"
-        android:drawableTop="@drawable/ic_baseline_insert_chart_outlined_24"
-        android:drawableTint="@color/white"
-        android:text="Pain Data"
-        android:textSize="10sp"
 
 
-        />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ButtonCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ProfileDataCardView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/trackingTagsButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/roundbutton"
+                    android:backgroundTint="?colorPrimaryVariant"
+                    android:drawableTop="@drawable/ic_baseline_push_pin_24"
+                    android:drawableTint="@color/white"
+                    android:text="Tracking Tags"
+                    android:textSize="11sp"
+                    app:tint="@color/white" />
+
+                <Button
+                    android:id="@+id/settingsButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toStartOf="@id/trackingTagsButton"
+                    android:backgroundTint="?colorPrimaryVariant"
+                    app:tint="@color/white"
+                    android:background="@drawable/roundbutton"
+                    android:drawableTop="@drawable/ic_baseline_person_24"
+                    android:drawableTint="@color/white"
+                    android:text="Profile Settings"
+                    android:textSize="11sp"
+                    />
+
+                <Button
+                    android:id="@+id/paindataButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_toEndOf="@id/trackingTagsButton"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="?colorPrimaryVariant"
+                    app:tint="@color/white"
+                    android:background="@drawable/roundbutton"
+                    android:drawableTop="@drawable/ic_baseline_insert_chart_outlined_24"
+                    android:drawableTint="@color/white"
+                    android:text="Pain Data"
+                    android:textSize="11sp"
+                    />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/TrackingCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ButtonCardView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TrackingTextLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:textSize="20sp"
+                    android:text="Complete Tracking For Today"
+                    android:textColor="?colorPrimary"
+                    />
+                <ImageView
+                    android:id="@+id/trackingPercentageIcon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/TrackingTextLabel"
+                    android:src="@drawable/ic_baseline_access_time_24"
+                    app:tint="?colorPrimary"
+                    />
+                <TextView
+                    android:id="@+id/doSurveyTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_toEndOf="@id/trackingPercentageIcon"
+                    android:layout_below="@id/TrackingTextLabel"
+                    android:text="You will get the opportunity to fill out the daily pain tracking surveys"
+                    android:textColor="@color/grey"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    />
+                <Button
+                    android:id="@+id/SubmitPainTrackingButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@id/doSurveyTextLabel"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/roundbutton"
+                    android:text="Complete"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    />
+
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/TagsCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TrackingCardView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/TagsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    />
+
+                <Button
+                    android:id="@+id/ChangeTrackingTagsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@id/TagsRecyclerView"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/roundbutton"
+                    android:backgroundTint="?colorPrimaryVariant"
+                    android:drawableStart="@drawable/ic_baseline_commit_24"
+                    android:drawableTint="@color/white"
+                    android:text="Change Tags"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ShareAppCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TagsCardView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            >
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                />
+        </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
