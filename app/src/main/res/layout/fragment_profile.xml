@@ -210,15 +210,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_below="@id/TagsRecyclerView"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="-8dp"
                     android:background="@drawable/roundbutton"
                     android:backgroundTint="?colorPrimaryVariant"
                     android:drawableStart="@drawable/ic_baseline_commit_24"
                     android:drawableTint="@color/white"
                     android:text="Change Tags"
                     android:textColor="@color/white"
-                    android:textSize="22sp"
-                    />
+                    android:textSize="22sp" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -235,8 +234,56 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:backgroundTint="@color/white"
+                android:drawableLeft="@drawable/ic_baseline_share_24"
+                android:drawableTint="@color/grey"
+                android:textSize="20sp"
+                android:textColor="@color/grey"
+                android:text="Share"
                 />
         </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/SupportCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ShareAppCardView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="4dp"
+                >
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:backgroundTint="@color/white"
+                    android:drawableLeft="@drawable/ic_baseline_chat_bubble_outline_24"
+                    android:drawableTint="@color/grey"
+                    android:textSize="20sp"
+                    android:textColor="@color/grey"
+                    android:text="Support"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/WebSiteAppCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/SupportCardView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="4dp"
+                >
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:backgroundTint="@color/white"
+                    android:drawableLeft="@drawable/ic_baseline_link_24"
+                    android:drawableTint="@color/grey"
+                    android:textSize="20sp"
+                    android:textColor="@color/grey"
+                    android:text="Support"
+                    />
+            </androidx.cardview.widget.CardView>
+
+
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
