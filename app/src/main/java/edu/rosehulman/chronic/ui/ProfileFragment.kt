@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.nav_my_tags)
         }
         binding.paindataButton.setOnClickListener(){
-            findNavController().navigate(R.id.nav_pain_tracking)
+            findNavController().navigate(R.id.nav_data)
         }
         binding.settingsButton.setOnClickListener(){
             findNavController().navigate(R.id.nav_settings)

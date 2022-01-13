@@ -122,7 +122,7 @@
                     android:backgroundTint="?colorPrimaryVariant"
                     android:drawableTop="@drawable/ic_baseline_insert_chart_outlined_24"
                     android:drawableTint="@color/white"
-                    android:text="Pain Data"
+                    android:text="My Data"
                     android:textSize="11sp"
                     app:tint="@color/white" />
 
