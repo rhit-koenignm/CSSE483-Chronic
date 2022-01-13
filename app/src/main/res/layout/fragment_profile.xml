@@ -113,16 +113,18 @@
                     android:id="@+id/paindataButton"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_toEndOf="@id/trackingTagsButton"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="?colorPrimaryVariant"
-                    app:tint="@color/white"
                     android:background="@drawable/roundbutton"
+                    android:backgroundTint="?colorPrimaryVariant"
                     android:drawableTop="@drawable/ic_baseline_insert_chart_outlined_24"
                     android:drawableTint="@color/white"
                     android:text="Pain Data"
                     android:textSize="11sp"
-                    />
+                    app:tint="@color/white" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>

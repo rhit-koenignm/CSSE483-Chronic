@@ -41,6 +41,12 @@ class ProfileFragment : Fragment() {
         binding.trackingTagsButton.setOnClickListener {
             findNavController().navigate(R.id.nav_my_tags)
         }
+        binding.paindataButton.setOnClickListener(){
+            findNavController().navigate(R.id.nav_pain_tracking)
+        }
+        binding.settingsButton.setOnClickListener(){
+            findNavController().navigate(R.id.nav_settings)
+        }
     }
 
     fun updateView(){

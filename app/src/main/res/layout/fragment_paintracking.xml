@@ -1,22 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.PainTrackingFragment">
 
+
     <TextView
-        android:id="@+id/text_paintracking"
-        android:layout_width="match_parent"
+        android:id="@+id/profileName"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_alignParentTop="true"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:text="Hello Inigo"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        />
+    <TextView
+        android:id="@+id/painTrackingAverage"
+        android:layout_below="@id/profileName"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="?colorPrimary"
+        android:text="7.8"
+        />
+
+    <TextView
+        android:id="@+id/averageText"
+        android:layout_below="@id/painTrackingAverage"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="Doing Well"
+        android:textColor="@color/green"
+        />
+
+    <ImageView
+        android:id="@+id/averageIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
+
+        android:layout_toLeftOf="@id/averageText"
+        android:layout_below="@id/painTrackingAverage"
+        app:tint="@color/green"
+        />
+
+    <com.jjoe64.graphview.helper.GraphViewXML
+        android:id="@+id/PainTrackingDataGraph"
+        android:layout_width="match_parent"
+        android:layout_height="425dp"
+        android:layout_below="@+id/averageText"
+        app:seriesColor="#00cc00"
+        app:seriesData="0=5;2=5;3=0;4=2"
+        app:seriesTitle="Foobar"
+        app:seriesType="line"
+        />
+
+    <Button
+        android:id="@+id/ViewMoreDetailsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/PainTrackingDataGraph"
+        android:background="@drawable/roundbutton"
+        android:backgroundTint="?colorPrimaryVariant"
+        android:text="View More Details"
+        />
+
+
+</RelativeLayout>

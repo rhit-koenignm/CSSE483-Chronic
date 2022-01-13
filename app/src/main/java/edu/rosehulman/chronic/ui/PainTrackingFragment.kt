@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.databinding.FragmentPaintrackingBinding
 
@@ -23,7 +24,15 @@ class PainTrackingFragment : Fragment() {
         binding = FragmentPaintrackingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.textPaintracking.text = "PainTracking"
+        setuButtons()
         return root
+    }
+
+
+
+    fun setuButtons(){
+        binding.ViewMoreDetailsButton.setOnClickListener(){
+            findNavController().navigate(R.id.nav_data)
+        }
     }
 }
