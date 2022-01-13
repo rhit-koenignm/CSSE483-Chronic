@@ -39,6 +39,8 @@
         <item>Triggers</item>
         <item>Treatments</item>
     </string-array>
+    <string name="tag_item_default">Default Tag</string>
+
     <string name="choose_tag_type">Choose Tag Type</string>
 
 
