@@ -158,17 +158,17 @@
                     android:src="@drawable/ic_baseline_access_time_24"
                     app:tint="?colorPrimary"
                     />
+
                 <TextView
                     android:id="@+id/doSurveyTextLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_toEndOf="@id/trackingPercentageIcon"
                     android:layout_below="@id/TrackingTextLabel"
-                    android:text="You will get the opportunity to fill out the daily pain tracking surveys"
-                    android:textColor="@color/grey"
-                    android:gravity="center_vertical"
                     android:layout_marginStart="5dp"
-                    />
+                    android:layout_toEndOf="@id/trackingPercentageIcon"
+                    android:gravity="center_vertical"
+                    android:text="You will get the opportunity to fill out the daily pain tracking surveys"
+                    android:textColor="@color/grey" />
                 <Button
                     android:id="@+id/SubmitPainTrackingButton"
                     android:layout_width="match_parent"
@@ -207,22 +207,23 @@
                     android:layout_height="100dp"
                     />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/ChangeTrackingTagsButton"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_below="@id/TagsRecyclerView"
-                    android:layout_marginTop="-8dp"
-                    android:background="@drawable/roundbutton"
-                    android:backgroundTint="?colorPrimaryVariant"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/roundbuttonwhite"
                     android:drawableStart="@drawable/ic_baseline_commit_24"
-                    android:drawableTint="@color/white"
+                    android:drawableTint="?colorPrimaryVariant"
                     android:text="Change Tags"
-                    android:textColor="@color/white"
+                    android:textColor="?colorPrimaryVariant"
                     android:textSize="22sp" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
+
 
 
         <androidx.cardview.widget.CardView
@@ -283,6 +284,31 @@
                     android:textColor="@color/grey"
                     android:text="Support"
                     />
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/LogoutButtonCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/WebSiteAppCardView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="4dp"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/LogoutButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@id/TagsRecyclerView"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/roundbuttonwhite"
+                    android:drawableStart="@drawable/ic_baseline_exit_to_app_24"
+                    android:drawableTint="?colorPrimaryVariant"
+
+                    android:text="Logout"
+                    android:textColor="?colorPrimaryVariant"
+                    android:textSize="22sp" />
             </androidx.cardview.widget.CardView>
 
 
