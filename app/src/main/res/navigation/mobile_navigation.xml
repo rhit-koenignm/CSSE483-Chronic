@@ -29,13 +29,17 @@
         android:label="@string/menu_mydata"
         tools:layout="@layout/fragment_data" />
 
-
     <fragment
         android:id="@+id/nav_settings"
         android:name="edu.rosehulman.chronic.ui.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
 
-
+    <fragment
+        android:id="@+id/nav_my_tags"
+        android:name="edu.rosehulman.chronic.ui.MyTagsFragment"
+        android:label="@string/my_tags_fragment_title"
+        tools:layout="@layout/fragment_my_tags"
+        />
 
 </navigation>

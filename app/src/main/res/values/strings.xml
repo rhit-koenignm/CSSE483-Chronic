@@ -30,10 +30,20 @@
     <string name="menu_settings">Settings</string>
 
 
+    <!-- Strings for My Tag Fragment -->
+    <string name="my_tags_fragment_title">My Tags</string>
+    <string name="my_tags_description">Customize your pain tracking experience with tags for your symptoms, triggers, and treatments. Not seeing one you like? Add your own!</string>
+    <string-array name="tag_types">
+        <item>All Tag Types</item>
+        <item>Symptoms</item>
+        <item>Triggers</item>
+        <item>Treatments</item>
+    </string-array>
+    <string name="choose_tag_type">Choose Tag Type</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_mydata">My Data</string>
-
-
 
 </resources>

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.databinding.FragmentProfileBinding
 import edu.rosehulman.chronic.models.UserViewModel
@@ -30,12 +31,16 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
-
-
+        setUpButtons()
         updateView()
         return root
 
+    }
+
+    fun setUpButtons() {
+        binding.trackingTagsButton.setOnClickListener {
+            findNavController().navigate(R.id.nav_my_tags)
+        }
     }
 
     fun updateView(){
