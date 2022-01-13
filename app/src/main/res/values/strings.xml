@@ -45,7 +45,8 @@
     <!-- Strings for Reminders Fragment -->
     <string name="reminder_time_default">10:00 AM</string>
     <string name="reminder_days_default">S M T W T F S</string>
-    <string name="reminder_title_default">Take Nurtec</string>
+    <string name="reminder_title_default">Take Yo Pills</string>
+    <string name="reminder_content_default">Don\'t forget to take your pills to help prevent migraine attacks</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -26,6 +26,11 @@
         <item name="colorAccent">@color/plum</item>
     </style>
 
+    <style name="Theme.Chronic.TimePicker" parent="Widget.MaterialComponents.TimePicker">
+        <item name="android:headerBackground">@color/plum</item>
+        <item name="android:numbersSelectorColor">@color/plum</item>
+    </style>
+
     <style name="Theme.Chronic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Chronic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

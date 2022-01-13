@@ -3,14 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.ReminderDetailFragment">
+    tools:context=".ui.ReminderDetailFragment"
+    android:paddingHorizontal="20dp">
 
-    <TextView
-        android:id="@+id/reminder_detail_title"
+    <EditText
+        android:id="@+id/reminder_detail_title_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:text="@string/reminder_title_default"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="@color/plum"
+        android:textStyle="bold"
         />
 
+    <EditText
+        android:id="@+id/reminder_detail_content_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reminder_detail_title_edit"
+        android:textColor="@color/grape"
+        android:textSize="20sp"
+        android:text="@string/reminder_content_default"
+        android:textAlignment="center"
+        />
 
+    <TimePicker
+        android:id="@+id/reminder_detail_timepicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reminder_detail_content_edit"
+        android:style="@style/Theme.Chronic.TimePicker" />
+
+    <LinearLayout
+        android:id="@+id/reminder_detail_dayButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reminder_detail_timepicker"
+        >
+
+        <Button
+            android:id="@+id/dayButton1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/lavender"
+            android:textColor="@color/pearl"
+            android:text="S"
+            android:textSize="30sp"
+            />
+
+    </LinearLayout>
 </RelativeLayout>

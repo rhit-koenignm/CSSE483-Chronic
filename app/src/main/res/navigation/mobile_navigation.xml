@@ -18,10 +18,16 @@
         tools:layout="@layout/fragment_reminder_list" />
 
     <fragment
-        android:id="@+id/nav_reminder"
-        android:name="edu.rosehulman.chronic.ui.ReminderFragment"
+        android:id="@+id/nav_reminder_list"
+        android:name="edu.rosehulman.chronic.ui.ReminderListFragment"
         android:label="@string/menu_reminders"
-        tools:layout="@layout/fragment_paintracking" />
+        tools:layout="@layout/fragment_reminder_list" />
+
+    <fragment
+        android:id="@+id/nav_reminder_detail"
+        android:name="edu.rosehulman.chronic.ui.ReminderDetailFragment"
+        android:label="Reminder Details"
+        tools:layout="@layout/fragment_reminder_detail"/>
 
     <fragment
         android:id="@+id/nav_data"
