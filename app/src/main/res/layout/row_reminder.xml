@@ -36,10 +36,13 @@
         android:textColor="@color/plum" />
 
     <Switch
+        android:id="@+id/row_reminder_on_switch"
+        android:theme="@style/Theme.Chronic.Switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:checked="true"
         />
 
 </RelativeLayout>

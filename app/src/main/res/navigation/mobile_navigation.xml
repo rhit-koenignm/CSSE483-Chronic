@@ -15,7 +15,7 @@
         android:id="@+id/nav_pain_tracking"
         android:name="edu.rosehulman.chronic.ui.PainTrackingFragment"
         android:label="@string/menu_pain_tracking"
-        tools:layout="@layout/fragment_reminder" />
+        tools:layout="@layout/fragment_reminder_list" />
 
     <fragment
         android:id="@+id/nav_reminder"
