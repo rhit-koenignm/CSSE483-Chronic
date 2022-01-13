@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/roundbuttonlavender"
+    android:padding="9dp"
+    android:layout_margin="5dp"
+    >
+
+    <TextView
+        android:id="@+id/row_reminder_title_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/row_reminder_time_textview"
+        android:layout_marginLeft="30dp"
+        android:text="@string/reminder_title_default"
+        android:textColor="@color/plum"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/row_reminder_time_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reminder_time_default"
+        android:textColor="@color/plum"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/row_reminder_days_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/row_reminder_time_textview"
+        android:text="@string/reminder_days_default"
+        android:textColor="@color/plum" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        />
+
+</RelativeLayout>

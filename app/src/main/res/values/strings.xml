@@ -40,9 +40,12 @@
         <item>Treatments</item>
     </string-array>
     <string name="tag_item_default">Default Tag</string>
-
     <string name="choose_tag_type">Choose Tag Type</string>
 
+    <!-- Strings for Reminders Fragment -->
+    <string name="reminder_time_default">10:00 AM</string>
+    <string name="reminder_days_default">S M T W T F S</string>
+    <string name="reminder_title_default">Take Nurtec</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
