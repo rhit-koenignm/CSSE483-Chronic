@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
-            R.id.nav_profile -> {
+            R.id.action_settings -> {
                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_settings)
                 true
             }
