@@ -31,6 +31,16 @@
         <item name="android:numbersSelectorColor">@color/plum</item>
     </style>
 
+    <style name="Theme.Chronic.DayButtons" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:textSize">20sp</item>
+        <item name="backgroundTint">@color/lavender</item>
+        <item name="android:textColor">@color/pearl</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginHorizontal">3dp</item>
+    </style>
+
     <style name="Theme.Chronic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Chronic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

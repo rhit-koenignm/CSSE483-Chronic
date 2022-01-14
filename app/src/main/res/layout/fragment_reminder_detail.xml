@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.ReminderDetailFragment"
-    android:paddingHorizontal="20dp">
+    android:layout_marginHorizontal="10dp">
 
     <EditText
         android:id="@+id/reminder_detail_title_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/reminder_title_default"
-        android:textSize="30sp"
+        android:textSize="27sp"
         android:textAlignment="center"
         android:textColor="@color/plum"
         android:textStyle="bold"
@@ -20,7 +20,7 @@
     <EditText
         android:id="@+id/reminder_detail_content_edit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_below="@id/reminder_detail_title_edit"
         android:textColor="@color/grape"
         android:textSize="20sp"
@@ -30,27 +30,79 @@
 
     <TimePicker
         android:id="@+id/reminder_detail_timepicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/reminder_detail_content_edit"
         style="@style/Theme.Chronic.TimePicker"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_below="@id/reminder_detail_content_edit" />
 
     <LinearLayout
         android:id="@+id/reminder_detail_dayButtons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@id/reminder_detail_timepicker"
         >
 
         <Button
+            android:id="@+id/dayButton0"
+            style="@style/Theme.Chronic.DayButtons"
+            android:text="S" />
+
+        <Button
             android:id="@+id/dayButton1"
-            android:layout_width="50dp"
+            style="@style/Theme.Chronic.DayButtons"
+            android:text="M" />
+
+        <Button
+            android:id="@+id/dayButton2"
+            style="@style/Theme.Chronic.DayButtons"
+            android:text="T" />
+
+        <Button
+            android:id="@+id/dayButton3"
+            style="@style/Theme.Chronic.DayButtons"
+            android:text="W" />
+
+        <Button
+            android:id="@+id/dayButton4"
+            style="@style/Theme.Chronic.DayButtons"
+            android:text="T" />
+
+        <Button
+            android:id="@+id/dayButton5"
+            style="@style/Theme.Chronic.DayButtons"
+            android:text="F" />
+
+
+        <Button
+            android:id="@+id/dayButton6"
+            style="@style/Theme.Chronic.DayButtons"
+            android:text="S" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reminder_detail_dayButtons"
+        >
+
+        <Button
+            android:id="@+id/reminder_save_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/lavender"
-            android:textColor="@color/pearl"
-            android:text="S"
-            android:textSize="30sp"
+            android:text="@string/reminder_save_button"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/reminder_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reminder_delete_button"
             />
 
     </LinearLayout>

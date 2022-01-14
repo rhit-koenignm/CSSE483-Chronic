@@ -23,7 +23,7 @@
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_pain_tracking.xml" value="0.12310030395136778" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_paintracking.xml" value="0.213768115942029" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_reminder.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_reminder_detail.xml" value="0.26992753623188404" />
+        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_reminder_detail.xml" value="0.25" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_reminders.xml" value="0.12310030395136778" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_settings.xml" value="0.26992753623188404" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/nav_header_main.xml" value="0.6552763819095477" />
@@ -51,8 +51,6 @@
         <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/fragment_gallery.xml" value="0.2015625" />
         <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/fragment_home.xml" value="0.2015625" />
         <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/fragment_profile.xml" value="0.5" />
-        <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/fragment_reminder_detail.xml" value="0.24635416666666668" />
-        <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/fragment_reminder_list.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/fragment_slideshow.xml" value="0.2015625" />
         <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/nav_header_main.xml" value="0.33" />
         <entry key="..\:/Users/snownp/OneDrive - Rose-Hulman Institute of Technology/Desktop/Rose-Hulman Schoolwork/Senior Year/Winter/CSSE-483/Chronic/app/src/main/res/layout/root_preferences.xml" value="0.25" />

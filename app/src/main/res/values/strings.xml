@@ -47,6 +47,8 @@
     <string name="reminder_days_default">S M T W T F S</string>
     <string name="reminder_title_default">Take Yo Pills</string>
     <string name="reminder_content_default">Don\'t forget to take your pills to help prevent migraine attacks</string>
+    <string name="reminder_save_button">Save</string>
+    <string name="reminder_delete_button">Delete</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
