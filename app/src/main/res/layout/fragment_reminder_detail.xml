@@ -45,38 +45,38 @@
         <Button
             android:id="@+id/dayButton0"
             style="@style/Theme.Chronic.DayButtons"
-            android:text="S" />
+            android:text="@string/day_button_s" />
 
         <Button
             android:id="@+id/dayButton1"
             style="@style/Theme.Chronic.DayButtons"
-            android:text="M" />
+            android:text="@string/day_button_m" />
 
         <Button
             android:id="@+id/dayButton2"
             style="@style/Theme.Chronic.DayButtons"
-            android:text="T" />
+            android:text="@string/day_button_t" />
 
         <Button
             android:id="@+id/dayButton3"
             style="@style/Theme.Chronic.DayButtons"
-            android:text="W" />
+            android:text="@string/day_button_w" />
 
         <Button
             android:id="@+id/dayButton4"
             style="@style/Theme.Chronic.DayButtons"
-            android:text="T" />
+            android:text="@string/day_button_t" />
 
         <Button
             android:id="@+id/dayButton5"
             style="@style/Theme.Chronic.DayButtons"
-            android:text="F" />
+            android:text="@string/day_button_f" />
 
 
         <Button
             android:id="@+id/dayButton6"
             style="@style/Theme.Chronic.DayButtons"
-            android:text="S" />
+            android:text="@string/day_button_s" />
 
     </LinearLayout>
 

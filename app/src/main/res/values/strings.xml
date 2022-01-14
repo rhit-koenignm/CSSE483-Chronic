@@ -50,6 +50,14 @@
     <string name="reminder_save_button">Save</string>
     <string name="reminder_delete_button">Delete</string>
 
+    <!-- Strings for day buttons on reminder fragments -->
+    <string name="day_button_s">S</string>
+    <string name="day_button_m">M</string>
+    <string name="day_button_t">T</string>
+    <string name="day_button_w">W</string>
+    <string name="day_button_f">F</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_mydata">My Data</string>
