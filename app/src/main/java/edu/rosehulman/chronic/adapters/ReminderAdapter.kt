@@ -1,7 +1,7 @@
 package edu.rosehulman.chronic.adapters
 
 import edu.rosehulman.chronic.models.Reminder
-import edu.rosehulman.chronic.ui.ReminderFragment
+import edu.rosehulman.chronic.ui.ReminderDetailFragment
 
-class ReminderAdapter(val fragment: ReminderFragment){
+class ReminderAdapter(val fragment: ReminderDetailFragment){
 }
