@@ -11,11 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/reminder_title_default"
-        android:textSize="27sp"
         android:textAlignment="center"
         android:textColor="@color/plum"
-        android:textStyle="bold"
-        />
+        android:textSize="27sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/reminder_detail_content_edit"
