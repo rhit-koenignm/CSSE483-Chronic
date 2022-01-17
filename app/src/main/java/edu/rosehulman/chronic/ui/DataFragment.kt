@@ -18,8 +18,6 @@ class DataFragment : Fragment() {
     ): View {
         binding = FragmentDataBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        binding.textData.text = "DataTracking"
         return root
     }
 }

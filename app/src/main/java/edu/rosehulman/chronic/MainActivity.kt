@@ -39,9 +39,11 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+
+            //Top level destinations get a menu, and all others get back buttons in the app bar
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_profile, R.id.nav_reminder_list, R.id.nav_pain_tracking
+                R.id.nav_profile, R.id.nav_reminder_list, R.id.nav_pain_tracking, R.id.nav_data
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
