@@ -3,19 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.DataFragment">
 
-
-   <CalendarView
-       android:id="@+id/CalenderData"
-       android:layout_width="match_parent"
-       android:layout_height="400dp"
-       android:layout_alignParentTop="true"
-       android:layout_centerHorizontal="true"
-       android:theme="@style/CalenderViewCustom"
-       android:dateTextAppearance="@style/CalenderViewDateCustomText"
-       android:weekDayTextAppearance="@style/CalenderViewWeekCustomText"
-       />
+    <CalendarView
+        android:id="@+id/CalenderData"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:theme="@style/CalenderViewCustom"
+        android:dateTextAppearance="@style/CalenderViewDateCustomText"
+        android:weekDayTextAppearance="@style/CalenderViewWeekCustomText"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/CalenderDataRecyclerView"
@@ -37,6 +37,8 @@
         style="@style/FAB_Theme"
         android:contentDescription="@string/Data_Fragment_add_entry_button"
         tools:ignore="RelativeOverlap" />
+
+
 
 
 </RelativeLayout>
