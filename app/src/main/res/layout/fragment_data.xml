@@ -5,21 +5,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.DataFragment">
 
+
    <CalendarView
        android:id="@+id/CalenderData"
        android:layout_width="match_parent"
        android:layout_height="400dp"
        android:layout_alignParentTop="true"
        android:layout_centerHorizontal="true"
+       android:theme="@style/CalenderViewCustom"
+       android:dateTextAppearance="@style/CalenderViewDateCustomText"
+       android:weekDayTextAppearance="@style/CalenderViewWeekCustomText"
        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/CalenderDataRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/CalenderData"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_below="@id/FAB_CalenderData"
+        android:layout_marginTop="29.5dp"
+        android:layout_centerHorizontal="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FAB_CalenderData"
@@ -27,9 +31,12 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_add_24"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        />
+        android:layout_alignBottom="@id/CalenderData"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="-29.5dp"
+        style="@style/FAB_Theme"
+        android:contentDescription="@string/Data_Fragment_add_entry_button"
+        tools:ignore="RelativeOverlap" />
 
 
 </RelativeLayout>

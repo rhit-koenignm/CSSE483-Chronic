@@ -2,15 +2,15 @@
     <!-- Base application theme. -->
     <style name="Theme.Chronic" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/plum</item>
-        <item name="colorPrimaryVariant">@color/grape</item>
+        <item name="colorPrimary">@color/grape</item>
+        <item name="colorPrimaryVariant">@color/plum</item>
         <item name="colorOnPrimary">@color/pearl</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/lavender</item>
         <item name="colorSecondaryVariant">@color/soft_pink</item>
         <item name="colorOnSecondary">@color/pearl</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -42,6 +42,29 @@
     </style>
 
     <style name="Theme.Chronic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.Chronic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="CalenderViewCustom" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/plum</item>
+        <item name="colorPrimary">@color/lavender</item>
+        <item name="android:background">@color/grape</item>
+    </style>
+
+    <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:weekNumberColor">@color/grey</item>
+    </style>
+
+    <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="FAB_Theme" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="backgroundTint">@color/white</item>
+        <item name="colorAccent">@color/plum</item>
+        <item name="tint">@color/plum</item>
+    </style>
+
+
 </resources>
