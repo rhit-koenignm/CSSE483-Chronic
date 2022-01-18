@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import edu.rosehulman.chronic.R
-import edu.rosehulman.chronic.adapters.PainDataCalenderAdapter
+import edu.rosehulman.chronic.adapters.PainDataAdapter
 import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
 import edu.rosehulman.chronic.models.PainData
 import java.util.*
@@ -29,7 +27,7 @@ class DataCalenderFragment : Fragment(){
 
 
         //Add recycler view
-        val adapter = PainDataCalenderAdapter(this)
+        val adapter = PainDataAdapter(this)
         //Set Adapter properties
         //Match the adapter class to the xml
         binding.CalenderDataRecyclerView.adapter = adapter

@@ -3,15 +3,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataViewModel
-import edu.rosehulman.chronic.ui.DataCalenderFragment
-import edu.rosehulman.chronic.ui.DataFragment
 
-class PainDataCalenderAdapter(val fragment: DataCalenderFragment) : RecyclerView.Adapter<PainDataCalenderAdapter.PainDataViewHolder>() {
+class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAdapter.PainDataViewHolder>() {
     val model = ViewModelProvider(fragment.requireActivity()).get(PainDataViewModel::class.java)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PainDataViewHolder {

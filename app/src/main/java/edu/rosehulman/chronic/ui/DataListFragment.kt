@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import edu.rosehulman.chronic.adapters.PainDataCalenderAdapter
-import edu.rosehulman.chronic.adapters.PainDataListAdapter
-import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
+import edu.rosehulman.chronic.adapters.PainDataAdapter
 import edu.rosehulman.chronic.databinding.FragmentDataListBinding
 import edu.rosehulman.chronic.models.PainData
 import java.util.*
@@ -27,7 +25,7 @@ class DataListFragment : Fragment(){
 
 
         //Add recycler view
-        val adapter = PainDataListAdapter(this)
+        val adapter = PainDataAdapter(this)
         //Set Adapter properties
         //Match the adapter class to the xml
         binding.CalenderListRecyclerView.adapter = adapter
