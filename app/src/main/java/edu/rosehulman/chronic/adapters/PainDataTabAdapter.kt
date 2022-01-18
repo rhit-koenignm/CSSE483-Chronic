@@ -30,7 +30,7 @@ class PainDataTabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
             0 -> "Calender View"
             1 -> "List View"
             else -> {
-                return "First Tab"
+                return "Calender View"
             }
         }
     }

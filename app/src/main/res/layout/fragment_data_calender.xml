@@ -8,7 +8,7 @@
     <CalendarView
         android:id="@+id/CalenderData"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:theme="@style/CalenderViewCustom"
@@ -34,7 +34,6 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="-29.5dp"
         style="@style/FAB_Theme"
-        android:contentDescription="@string/Data_Fragment_add_entry_button"
         tools:ignore="RelativeOverlap" />
 
 </RelativeLayout>

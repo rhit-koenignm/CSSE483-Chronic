@@ -19,7 +19,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         style="@style/FAB_Theme"
-        android:contentDescription="@string/Data_Fragment_add_entry_button"
         />
 
 </RelativeLayout>

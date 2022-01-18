@@ -31,7 +31,7 @@ class DataFragment : Fragment() {
 
         val tabLayout = binding.Tabs
         tabLayout.setupWithViewPager(binding.ViewPager)
-
+        binding.ViewPager.offscreenPageLimit = 2
 
 
 

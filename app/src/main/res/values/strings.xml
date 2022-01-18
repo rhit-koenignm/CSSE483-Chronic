@@ -56,11 +56,7 @@
     <string name="day_button_t">T</string>
     <string name="day_button_w">W</string>
     <string name="day_button_f">F</string>
+    <string name="menu_my_data_label">My Data</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="menu_mydata">My Data</string>
-    <string name="Data_Fragment_add_entry_button">Add Entry</string>
 
 </resources>
