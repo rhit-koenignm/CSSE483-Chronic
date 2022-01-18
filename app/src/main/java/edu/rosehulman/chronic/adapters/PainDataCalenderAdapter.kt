@@ -1,19 +1,17 @@
 package edu.rosehulman.chronic.adapters
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.navOptions
 import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataViewModel
+import edu.rosehulman.chronic.ui.DataCalenderFragment
 import edu.rosehulman.chronic.ui.DataFragment
 
-class PainDataAdapter(val fragment: DataFragment) : RecyclerView.Adapter<PainDataAdapter.PainDataViewHolder>() {
+class PainDataCalenderAdapter(val fragment: DataCalenderFragment) : RecyclerView.Adapter<PainDataCalenderAdapter.PainDataViewHolder>() {
     val model = ViewModelProvider(fragment.requireActivity()).get(PainDataViewModel::class.java)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PainDataViewHolder {
@@ -22,7 +20,7 @@ class PainDataAdapter(val fragment: DataFragment) : RecyclerView.Adapter<PainDat
     }
 
     override fun onBindViewHolder(holder: PainDataViewHolder, position: Int) {
-        holder.bind(model.getObjectAtPosition(position));
+        holder.bind(model.getObjectAtPosition(position))
     }
 
     override fun getItemCount(): Int {
