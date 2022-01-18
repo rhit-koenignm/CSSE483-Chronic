@@ -17,6 +17,7 @@ import java.util.*
 class DataCalenderFragment : Fragment(){
 
     private lateinit var binding: FragmentDataCalenderBinding
+    private lateinit var adapter: PainDataAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +28,7 @@ class DataCalenderFragment : Fragment(){
 
 
         //Add recycler view
-        val adapter = PainDataAdapter(this)
+        adapter = PainDataAdapter(this)
         //Set Adapter properties
         //Match the adapter class to the xml
         binding.CalenderDataRecyclerView.adapter = adapter
@@ -38,6 +39,7 @@ class DataCalenderFragment : Fragment(){
         //Adds nice little gaps around each object in the recylcer view
         binding.CalenderDataRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
+        updateDataSet(adapter)
 
         binding.FABCalenderData.setOnClickListener(){
             var newObject: PainData = PainData("ChangeME",-1, Date())
@@ -46,6 +48,16 @@ class DataCalenderFragment : Fragment(){
 
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateDataSet(adapter)
+    }
+
+
+    fun updateDataSet(adapter: PainDataAdapter){
+        adapter.updateDataSet()
     }
 }
 

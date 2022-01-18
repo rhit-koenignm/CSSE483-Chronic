@@ -12,7 +12,7 @@ class PainDataTabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> {
-                DataCalenderFragment()
+               DataCalenderFragment()
             }
             1 -> DataListFragment()
             else -> {

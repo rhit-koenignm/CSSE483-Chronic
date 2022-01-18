@@ -15,6 +15,7 @@ import java.util.*
 class DataListFragment : Fragment(){
 
     private lateinit var binding: FragmentDataListBinding
+    private lateinit var adapter: PainDataAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +26,7 @@ class DataListFragment : Fragment(){
 
 
         //Add recycler view
-        val adapter = PainDataAdapter(this)
+        adapter = PainDataAdapter(this)
         //Set Adapter properties
         //Match the adapter class to the xml
         binding.CalenderListRecyclerView.adapter = adapter
@@ -36,6 +37,7 @@ class DataListFragment : Fragment(){
         //Adds nice little gaps around each object in the recylcer view
         binding.CalenderListRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
+        updateDataSet(adapter)
 
         binding.FABListData.setOnClickListener(){
             var newObject: PainData = PainData("ChangeME",-1, Date())
@@ -44,5 +46,14 @@ class DataListFragment : Fragment(){
 
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateDataSet(adapter)
+    }
+
+    fun updateDataSet(adapter: PainDataAdapter){
+        adapter.updateDataSet()
     }
 }

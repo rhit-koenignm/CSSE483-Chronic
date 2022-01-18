@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import edu.rosehulman.chronic.adapters.PainDataTabAdapter
 import edu.rosehulman.chronic.databinding.FragmentDataBinding
 import android.R
+import androidx.viewpager.widget.ViewPager
 
 import com.google.android.material.tabs.TabLayout
 
@@ -32,9 +33,6 @@ class DataFragment : Fragment() {
         val tabLayout = binding.Tabs
         tabLayout.setupWithViewPager(binding.ViewPager)
         binding.ViewPager.offscreenPageLimit = 2
-
-
-
 
 
         return root

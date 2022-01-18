@@ -26,6 +26,10 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
         return model.size()
     }
 
+    fun updateDataSet(){
+        notifyDataSetChanged()
+    }
+
     fun addObject(ObjectInput: PainData) {
         model.addObject(ObjectInput)
         notifyDataSetChanged()
