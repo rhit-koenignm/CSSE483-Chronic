@@ -10,8 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.databinding.FragmentProfileBinding
+import edu.rosehulman.chronic.models.UserData
 import edu.rosehulman.chronic.models.UserViewModel
 
 class ProfileFragment : Fragment() {
@@ -32,6 +37,7 @@ class ProfileFragment : Fragment() {
         val root: View = binding.root
 
         setUpButtons()
+        readFromFireStore()
         updateView()
         return root
 
@@ -41,19 +47,31 @@ class ProfileFragment : Fragment() {
         binding.trackingTagsButton.setOnClickListener {
             findNavController().navigate(R.id.nav_my_tags)
         }
-        binding.paindataButton.setOnClickListener(){
+        binding.paindataButton.setOnClickListener() {
             findNavController().navigate(R.id.nav_data)
         }
-        binding.settingsButton.setOnClickListener(){
+        binding.settingsButton.setOnClickListener() {
             findNavController().navigate(R.id.nav_settings)
         }
     }
 
-    fun updateView(){
-
+    fun updateView() {
         //storedImage.load(photoObject.url) {
         //    crossfade(true)
         //    transformations(CircleCropTransformation())
 
-        }
     }
+
+    fun readFromFireStore() {
+        var user = UserData()
+        Firebase.firestore.collection("users").get()
+            .addOnSuccessListener { snapshot: QuerySnapshot? ->
+                snapshot?.documents?.forEach {
+                    user = it.toObject(UserData::class.java)!!
+                }
+
+                binding.Email.text = user.Email
+                binding.Name.text = "${user.firstName} ${user.lastName}"
+    }
+    }
+}
