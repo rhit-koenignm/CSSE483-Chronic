@@ -10,15 +10,20 @@ import edu.rosehulman.chronic.ui.DataListFragment
 class PainDataTabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return when (position) {
+        var outputFragment: Fragment = DataCalenderFragment()
+
+        when (position) {
             0 -> {
-               DataCalenderFragment()
+                outputFragment = DataCalenderFragment()
             }
-            1 -> DataListFragment()
+            1 -> {
+                outputFragment = DataListFragment()
+            }
             else -> {
-                return DataCalenderFragment()
+                outputFragment = DataCalenderFragment()
             }
         }
+        return outputFragment
     }
 
     override fun getCount(): Int {

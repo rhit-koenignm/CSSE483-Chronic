@@ -37,10 +37,10 @@ class DataListFragment : Fragment(){
         //Adds nice little gaps around each object in the recylcer view
         binding.CalenderListRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
-        updateDataSet(adapter)
+        updateDataSet()
 
         binding.FABListData.setOnClickListener(){
-            var newObject: PainData = PainData("ChangeME",-1, Date())
+            val newObject: PainData = PainData("ChangeME",-1, Date())
             adapter.addObject(newObject)
         }
 
@@ -50,10 +50,15 @@ class DataListFragment : Fragment(){
 
     override fun onResume() {
         super.onResume()
-        updateDataSet(adapter)
+        updateDataSet()
     }
 
-    fun updateDataSet(adapter: PainDataAdapter){
+    fun updateDataSet(){
         adapter.updateDataSet()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        updateDataSet()
     }
 }

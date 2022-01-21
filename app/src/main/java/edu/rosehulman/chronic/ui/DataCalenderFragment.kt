@@ -39,10 +39,10 @@ class DataCalenderFragment : Fragment(){
         //Adds nice little gaps around each object in the recylcer view
         binding.CalenderDataRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
-        updateDataSet(adapter)
+        updateDataSet()
 
         binding.FABCalenderData.setOnClickListener(){
-            var newObject: PainData = PainData("ChangeME",-1, Date())
+            val newObject: PainData = PainData("ChangeME",-1, Date())
             adapter.addObject(newObject)
         }
 
@@ -52,12 +52,17 @@ class DataCalenderFragment : Fragment(){
 
     override fun onResume() {
         super.onResume()
-        updateDataSet(adapter)
+        updateDataSet()
     }
 
 
-    fun updateDataSet(adapter: PainDataAdapter){
+    fun updateDataSet(){
         adapter.updateDataSet()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        updateDataSet()
     }
 }
 
