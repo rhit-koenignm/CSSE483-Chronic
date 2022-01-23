@@ -16,7 +16,7 @@ import edu.rosehulman.chronic.models.Tag
 import edu.rosehulman.chronic.models.UserData
 import edu.rosehulman.chronic.ui.MyTagsFragment
 
-class MyTagAdapter(fragment: MyTagsFragment) : RecyclerView.Adapter<MyTagAdapter.MyTagViewHolder>() {
+class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTagViewHolder>() {
 
     val model = ViewModelProvider(fragment.requireActivity()).get(MyTagViewModel::class.java)
 

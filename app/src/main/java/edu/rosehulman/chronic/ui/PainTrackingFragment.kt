@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import coil.load
+import coil.transform.CircleCropTransformation
 import edu.rosehulman.chronic.databinding.FragmentPaintrackingBinding
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.ValueFormatter
@@ -19,7 +21,11 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.R
+import edu.rosehulman.chronic.models.UserData
 
 
 class PainTrackingFragment : Fragment() {
@@ -36,6 +42,7 @@ class PainTrackingFragment : Fragment() {
         binding = FragmentPaintrackingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        readFromFireStore()
         setuButtons()
         drawLineChart();
         return root
@@ -148,7 +155,20 @@ class PainTrackingFragment : Fragment() {
         return lineEntries;
     }
 
+    fun readFromFireStore() {
+        var user = UserData()
+        Firebase.firestore.collection("users").get()
+            .addOnSuccessListener { snapshot: QuerySnapshot? ->
+                snapshot?.documents?.forEach {
+                    user = it.toObject(UserData::class.java)!!
+                }
 
+                var textBoxText = "Hello ${user.firstName}"
+                binding.profileName.text = textBoxText
+
+
+            }
+    }
 
 
 

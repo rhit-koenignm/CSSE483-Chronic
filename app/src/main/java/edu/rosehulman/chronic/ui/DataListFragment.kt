@@ -1,20 +1,17 @@
 package edu.rosehulman.chronic.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Timestamp
+import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.adapters.PainDataAdapter
-import edu.rosehulman.chronic.adapters.SwipeAdapter
 import edu.rosehulman.chronic.databinding.FragmentDataListBinding
 import edu.rosehulman.chronic.models.PainData
-import java.util.*
 
 class DataListFragment : Fragment(){
 
@@ -31,6 +28,7 @@ class DataListFragment : Fragment(){
 
         //Add recycler view
         adapter = PainDataAdapter(this)
+        adapter.addModelListener(fragmentName,Constants.USER_ID)
         //Set Adapter properties
         //Match the adapter class to the xml
         binding.CalenderListRecyclerView.adapter = adapter
@@ -40,7 +38,6 @@ class DataListFragment : Fragment(){
         binding.CalenderListRecyclerView.setHasFixedSize(true)
         //Adds nice little gaps around each object in the recylcer view
         binding.CalenderListRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-
 
 
         updateDataSet()
@@ -69,5 +66,9 @@ class DataListFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateDataSet()
+    }
+
+    companion object{
+        const val fragmentName = "DataListFragment"
     }
 }

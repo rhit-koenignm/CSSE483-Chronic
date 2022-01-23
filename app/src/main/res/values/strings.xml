@@ -57,6 +57,16 @@
     <string name="day_button_w">W</string>
     <string name="day_button_f">F</string>
     <string name="menu_my_data_label">My Data</string>
+    <string name="tracking_tags_button">Tracking Tags</string>
+    <string name="profile_settings_button">Profile Settings</string>
+    <string name="my_data_button">My Data</string>
+    <string name="complete_tracking_for_today_label">Complete Tracking For Today</string>
+    <string name="directions_text_label">You will get the opportunity to fill out the daily pain tracking surveys</string>
+    <string name="complete_button">Complete</string>
+    <string name="change_my_tags_button">Change My Tags</string>
+    <string name="share_button">Share</string>
+    <string name="support_button">Support</string>
+    <string name="logout_button">Logout</string>
 
 
 </resources>

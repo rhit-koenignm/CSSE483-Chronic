@@ -1,7 +1,6 @@
 package edu.rosehulman.chronic.ui
 
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Timestamp
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.adapters.PainDataAdapter
 import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
 import edu.rosehulman.chronic.models.PainData
@@ -33,6 +31,7 @@ class DataCalenderFragment : Fragment(){
 
         //Add recycler view
         adapter = PainDataAdapter(this)
+        adapter.addModelListener(DataListFragment.fragmentName, Constants.USER_ID)
         //Set Adapter properties
         //Match the adapter class to the xml
         binding.CalenderDataRecyclerView.adapter = adapter
@@ -52,7 +51,6 @@ class DataCalenderFragment : Fragment(){
             adapter.addObject(newObject)
         }
 
-
         return root
     }
 
@@ -70,6 +68,10 @@ class DataCalenderFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateDataSet()
+    }
+
+    companion object{
+        const val fragmentName = "DataCalenderFragment"
     }
 }
 

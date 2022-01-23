@@ -1,4 +1,5 @@
 package edu.rosehulman.chronic.adapters
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,10 +39,18 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
         notifyDataSetChanged()
     }
 
-    fun removeAtPosition(position: Int) {
-        model.removeAtPosition(position)
 
+    fun addModelListener(fragmentName: String, UserID:String){
+        model.addListener(fragmentName, UserID){notifyDataSetChanged()}
+        Log.d("Chronic","Added Listener in the Adapter")
     }
+
+    fun removeModelListener(fragmentName: String) {
+        model.removeListener(fragmentName)
+        Log.d("Chronic","Removed Listener in the Adapter")
+    }
+
+
 
     inner class PainDataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //extract the textviews from the layout and set them to the vars

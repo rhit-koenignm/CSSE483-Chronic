@@ -42,7 +42,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_toEndOf="@id/ProfilePhoto"
-                    android:text="Inigo Montoya"
                     android:gravity="center_vertical"
                     android:textColor="?colorPrimary"
                     android:textSize="30sp" />
@@ -52,7 +51,6 @@
                     android:layout_height="20dp"
                     android:gravity="center_vertical"
                     android:textSize="15sp"
-                    android:text="YouKilledMyFather@PrepareToDie.com"
                     android:textColor="@color/grey"
                     android:layout_below="@id/Name"
                     android:layout_toEndOf="@id/ProfilePhoto"
@@ -86,7 +84,7 @@
                     android:backgroundTint="?colorPrimaryVariant"
                     android:drawableTop="@drawable/ic_baseline_push_pin_24"
                     android:drawableTint="@color/white"
-                    android:text="Tracking Tags"
+                    android:text="@string/tracking_tags_button"
                     android:textSize="11sp"
                     app:tint="@color/white" />
 
@@ -104,7 +102,7 @@
                     android:background="@drawable/roundbutton"
                     android:drawableTop="@drawable/ic_baseline_person_24"
                     android:drawableTint="@color/white"
-                    android:text="Profile Settings"
+                    android:text="@string/profile_settings_button"
                     android:textSize="11sp"
                     />
 
@@ -121,7 +119,7 @@
                     android:backgroundTint="?colorPrimaryVariant"
                     android:drawableTop="@drawable/ic_baseline_insert_chart_outlined_24"
                     android:drawableTint="@color/white"
-                    android:text="My Data"
+                    android:text="@string/my_data_button"
                     android:textSize="11sp"
                     app:tint="@color/white" />
 
@@ -146,7 +144,7 @@
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
                     android:textSize="20sp"
-                    android:text="Complete Tracking For Today"
+                    android:text="@string/complete_tracking_for_today_label"
                     android:textColor="?colorPrimary"
                     />
                 <ImageView
@@ -166,7 +164,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@id/trackingPercentageIcon"
                     android:gravity="center_vertical"
-                    android:text="You will get the opportunity to fill out the daily pain tracking surveys"
+                    android:text="@string/directions_text_label"
                     android:textColor="@color/grey" />
                 <Button
                     android:id="@+id/SubmitPainTrackingButton"
@@ -175,16 +173,11 @@
                     android:layout_below="@id/doSurveyTextLabel"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/roundbutton"
-                    android:text="Complete"
+                    android:text="@string/complete_button"
                     android:textColor="@color/white"
                     android:textSize="22sp"
                     />
-
-
-
             </RelativeLayout>
-
-
         </androidx.cardview.widget.CardView>
 
 
@@ -216,7 +209,7 @@
                     android:background="@drawable/roundbuttonwhite"
                     android:drawableStart="@drawable/ic_baseline_commit_24"
                     android:drawableTint="?colorPrimaryVariant"
-                    android:text="Change Tags"
+                    android:text="@string/change_my_tags_button"
                     android:textColor="?colorPrimaryVariant"
                     android:textSize="22sp" />
 
@@ -237,11 +230,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:backgroundTint="@color/white"
-                android:drawableLeft="@drawable/ic_baseline_share_24"
+                android:drawableStart="@drawable/ic_baseline_share_24"
                 android:drawableTint="@color/grey"
                 android:textSize="20sp"
                 android:textColor="@color/grey"
-                android:text="Share"
+                android:text="@string/share_button"
                 />
         </androidx.cardview.widget.CardView>
 
@@ -257,11 +250,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:backgroundTint="@color/white"
-                    android:drawableLeft="@drawable/ic_baseline_chat_bubble_outline_24"
+                    android:drawableStart="@drawable/ic_baseline_chat_bubble_outline_24"
                     android:drawableTint="@color/grey"
                     android:textSize="20sp"
                     android:textColor="@color/grey"
-                    android:text="Support"
+                    android:text="@string/support_button"
                     />
             </androidx.cardview.widget.CardView>
 
@@ -277,11 +270,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:backgroundTint="@color/white"
-                    android:drawableLeft="@drawable/ic_baseline_link_24"
+                    android:drawableStart="@drawable/ic_baseline_link_24"
                     android:drawableTint="@color/grey"
                     android:textSize="20sp"
                     android:textColor="@color/grey"
-                    android:text="Support"
+                    android:text="@string/support_button"
                     />
             </androidx.cardview.widget.CardView>
 
@@ -305,7 +298,7 @@
                     android:drawableStart="@drawable/ic_baseline_exit_to_app_24"
                     android:drawableTint="?colorPrimaryVariant"
 
-                    android:text="Logout"
+                    android:text="@string/logout_button"
                     android:textColor="?colorPrimaryVariant"
                     android:textSize="22sp" />
             </androidx.cardview.widget.CardView>
