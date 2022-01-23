@@ -29,26 +29,26 @@
         />
 
     <TextView
-        android:id="@+id/text_day_number"
+        android:id="@+id/text_start_timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:text="9"
+        android:text="1/1/2022"
         android:textColor="@color/plum"
         android:textStyle="bold"
-        android:textSize="25sp"
+        android:textSize="10sp"
         />
 
     <TextView
-        android:id="@+id/text_month_string"
+        android:id="@+id/text_end_timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/text_day_number"
-        android:text="APR"
+        android:layout_below="@id/text_start_timestamp"
+        android:text="1/10/2022"
         android:textColor="@color/plum"
         android:textStyle="bold"
-        android:textSize="25sp"
+        android:textSize="10sp"
         />
 
 

@@ -2,9 +2,11 @@ package edu.rosehulman.chronic.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.PainData
@@ -14,7 +16,8 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
     val model = ViewModelProvider(fragment.requireActivity()).get(PainDataViewModel::class.java)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PainDataViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.calender_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.calender_item, parent, false)
         return PainDataViewHolder(view)
     }
 
@@ -26,7 +29,7 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
         return model.size()
     }
 
-    fun updateDataSet(){
+    fun updateDataSet() {
         notifyDataSetChanged()
     }
 
@@ -35,32 +38,40 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
         notifyDataSetChanged()
     }
 
+    fun removeAtPosition(position: Int) {
+        model.removeAtPosition(position)
+
+    }
 
     inner class PainDataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //extract the textviews from the layout and set them to the vars
         val titleText = itemView.findViewById<TextView>(R.id.text_day_description)
         val painLevelText = itemView.findViewById<TextView>(R.id.text_pain_level)
-        val daynumText = itemView.findViewById<TextView>(R.id.text_day_number)
-        val monthText = itemView.findViewById<TextView>(R.id.text_month_string)
-
-
+        val startText = itemView.findViewById<TextView>(R.id.text_start_timestamp)
+        val endText = itemView.findViewById<TextView>(R.id.text_end_timestamp)
 
 
         init {
-            itemView.setOnClickListener(){
+            itemView.setOnClickListener() {
                 //Tracks mapping for index of the particular viewholder, and then  shove it in the right place
                 model.updatePosition(adapterPosition)
             }
+
+
         }
 
-        fun bind(painObject:PainData){
+        fun bind(painObject: PainData) {
             //Bind the model object's specific data to the text view for each
-            titleText.text = painObject.Title
-            painLevelText.text = painObject.PainValue.toString()
-            daynumText.text = painObject.Time.day.toString()
-            monthText.text = painObject.Time.month.toString()
+            titleText.text = painObject.title
+            painLevelText.text = painObject.painLevel.toString()
+            startText.text = painObject.startTime.toDate().toString()
+            endText.text = painObject.endTime.toDate().toString()
 
 
         }
     }
+
+
+
+
 }

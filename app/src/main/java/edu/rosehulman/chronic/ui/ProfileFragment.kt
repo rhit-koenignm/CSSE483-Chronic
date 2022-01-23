@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -38,7 +40,6 @@ class ProfileFragment : Fragment() {
 
         setUpButtons()
         readFromFireStore()
-        updateView()
         return root
 
     }
@@ -55,12 +56,6 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    fun updateView() {
-        //storedImage.load(photoObject.url) {
-        //    crossfade(true)
-        //    transformations(CircleCropTransformation())
-
-    }
 
     fun readFromFireStore() {
         var user = UserData()
@@ -72,6 +67,11 @@ class ProfileFragment : Fragment() {
 
                 binding.Email.text = user.Email
                 binding.Name.text = "${user.firstName} ${user.lastName}"
-    }
+                binding.ProfilePhoto.load(user.ProfileURL) {
+                    crossfade(true)
+                    transformations(CircleCropTransformation())
+
+                }
+            }
     }
 }

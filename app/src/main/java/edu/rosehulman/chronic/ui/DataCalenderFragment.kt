@@ -1,6 +1,7 @@
 package edu.rosehulman.chronic.ui
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.adapters.PainDataAdapter
 import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
 import edu.rosehulman.chronic.models.PainData
@@ -42,7 +46,9 @@ class DataCalenderFragment : Fragment(){
         updateDataSet()
 
         binding.FABCalenderData.setOnClickListener(){
-            val newObject: PainData = PainData("ChangeME",-1, Date())
+            val startTime:Timestamp = Timestamp.now()
+            val endTime: Timestamp = Timestamp.now()
+            val newObject: PainData = PainData(0,"Brain Pain",startTime, endTime)
             adapter.addObject(newObject)
         }
 
@@ -59,6 +65,7 @@ class DataCalenderFragment : Fragment(){
     fun updateDataSet(){
         adapter.updateDataSet()
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

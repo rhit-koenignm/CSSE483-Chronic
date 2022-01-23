@@ -23,6 +23,7 @@ class PainDataTabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
                 outputFragment = DataCalenderFragment()
             }
         }
+        notifyDataSetChanged()
         return outputFragment
     }
 
