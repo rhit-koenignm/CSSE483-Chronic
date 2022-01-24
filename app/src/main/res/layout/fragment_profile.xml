@@ -226,7 +226,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="4dp"
             >
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:backgroundTint="@color/white"
@@ -235,6 +235,7 @@
                 android:textSize="20sp"
                 android:textColor="@color/grey"
                 android:text="@string/share_button"
+
                 />
         </androidx.cardview.widget.CardView>
 
@@ -246,7 +247,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="4dp"
                 >
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:backgroundTint="@color/white"
@@ -266,7 +267,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="4dp"
                 >
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:backgroundTint="@color/white"
@@ -274,7 +275,7 @@
                     android:drawableTint="@color/grey"
                     android:textSize="20sp"
                     android:textColor="@color/grey"
-                    android:text="@string/support_button"
+                    android:text="@string/web_site_button"
                     />
             </androidx.cardview.widget.CardView>
 

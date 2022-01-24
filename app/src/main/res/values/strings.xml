@@ -67,6 +67,7 @@
     <string name="share_button">Share</string>
     <string name="support_button">Support</string>
     <string name="logout_button">Logout</string>
+    <string name="web_site_button">Web Site</string>
 
 
 </resources>

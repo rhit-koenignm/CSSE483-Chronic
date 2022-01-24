@@ -91,12 +91,8 @@ class ProfileFragment : Fragment() {
                 }
 
                 binding.Email.text = user.Email
-                binding.Name.text = "${user.firstName} ${user.lastName}"
-                binding.ProfilePhoto.load(user.ProfileURL) {
-                    crossfade(true)
-                    transformations(CircleCropTransformation())
-
-                }
+                "${user.firstName} ${user.lastName}".also { binding.Name.text = it }
+                binding.ProfilePhoto.load(user.ProfileURL)
             }
     }
 }
