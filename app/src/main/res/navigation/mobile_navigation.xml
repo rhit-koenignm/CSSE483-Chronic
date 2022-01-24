@@ -48,4 +48,13 @@
         tools:layout="@layout/fragment_my_tags"
         />
 
+    <fragment
+        android:id="@+id/nav_pain_data_entry"
+        android:name="edu.rosehulman.chronic.ui.PainDataEntryFragment"
+        android:label="@string/pain_data_entry_fragment_title"
+        tools:layout="@layout/fragment_pain_data_entry"
+        />
+
+
+
 </navigation>

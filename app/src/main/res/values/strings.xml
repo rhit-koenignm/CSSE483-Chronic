@@ -62,12 +62,23 @@
     <string name="my_data_button">My Data</string>
     <string name="complete_tracking_for_today_label">Complete Tracking For Today</string>
     <string name="directions_text_label">You will get the opportunity to fill out the daily pain tracking surveys</string>
-    <string name="complete_button">Complete</string>
+    <string name="complete_button">Complete Data Tracking</string>
     <string name="change_my_tags_button">Change My Tags</string>
     <string name="share_button">Share</string>
     <string name="support_button">Support</string>
     <string name="logout_button">Logout</string>
     <string name="web_site_button">Web Site</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="date_and_time_entry_information_label">Date and Time Entry Information</string>
+    <string name="start_date_label">Start Date</string>
+    <string name="end_date_label">End Date</string>
+    <string name="pain_level_label">Pain Level</string>
+    <string name="Pain_LeveL_Instructions_Label">Pain Level on a scale of 1 to 10 (With 10 being the worst)</string>
+    <string name="symptoms_label">Symptoms</string>
+    <string name="triggers_label">Triggers</string>
+    <string name="treatments_labels">Treatments</string>
+    <string name="pain_data_entry_fragment_title">Pain Data Entry</string>
 
 
 </resources>

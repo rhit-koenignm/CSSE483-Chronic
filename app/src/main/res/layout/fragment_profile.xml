@@ -166,6 +166,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/directions_text_label"
                     android:textColor="@color/grey" />
+
                 <Button
                     android:id="@+id/SubmitPainTrackingButton"
                     android:layout_width="match_parent"
@@ -175,8 +176,7 @@
                     android:background="@drawable/roundbutton"
                     android:text="@string/complete_button"
                     android:textColor="@color/white"
-                    android:textSize="22sp"
-                    />
+                    android:textSize="22sp" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -196,8 +196,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/TagsRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    />
+                    android:layout_height="300dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/ChangeTrackingTagsButton"
