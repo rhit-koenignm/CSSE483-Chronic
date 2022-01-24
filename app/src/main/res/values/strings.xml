@@ -79,6 +79,12 @@
     <string name="triggers_label">Triggers</string>
     <string name="treatments_labels">Treatments</string>
     <string name="pain_data_entry_fragment_title">Pain Data Entry</string>
+    <string name="entry_title_label">Entry Title</string>
+    <string name="integer_pain_level_hint">Integer Pain Level</string>
+    <string name="end_date_hint">1/1/1970</string>
+    <string name="start_date_hint">1/1/1970</string>
+    <string name="enter_a_title_for_your_entry_here_hint">Enter a title for your entry here</string>
+    <string name="press_button_to_add_entry_hint">Press Button to Add Entry</string>
 
 
 </resources>

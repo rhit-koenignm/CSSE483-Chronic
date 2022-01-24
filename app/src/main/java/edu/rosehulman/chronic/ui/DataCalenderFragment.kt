@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import edu.rosehulman.chronic.Constants
+import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.adapters.PainDataAdapter
 import edu.rosehulman.chronic.adapters.SwipeToDeleteCallback
 import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
@@ -45,28 +47,25 @@ class DataCalenderFragment : Fragment(){
         //Adds nice little gaps around each object in the recylcer view
         binding.CalenderDataRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
-
-
         val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder
             ): Boolean {
-                TODO("Not yet implemented")
+                //do nothing
+                return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 adapter.removeAt(viewHolder.adapterPosition)
             }
         }
+
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(binding.CalenderDataRecyclerView)
 
         updateDataSet()
 
         binding.FABCalenderData.setOnClickListener(){
-            val startTime:Timestamp = Timestamp.now()
-            val endTime: Timestamp = Timestamp.now()
-            val newObject: PainData = PainData(0,"Brain Pain",startTime, endTime)
-            adapter.addObject(newObject)
+            findNavController().navigate(R.id.nav_pain_data_entry)
         }
 
         return root
