@@ -50,6 +50,9 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
         Log.d("Chronic","Removed Listener in the Adapter")
     }
 
+    fun removeAt(adapterPosition: Int) {
+        model.removeAt(adapterPosition)
+    }
 
 
     inner class PainDataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

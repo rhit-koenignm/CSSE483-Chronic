@@ -40,6 +40,14 @@ class PainDataViewModel : ViewModel() {
             currentPosition = 0
         }
 
+        fun removeAt(adapterPosition: Int) {
+            var objectAtPosition = objectList[adapterPosition]
+            fireBaseReference.document(objectAtPosition.id).delete()
+            objectList.remove(objectAtPosition)
+            currentPosition = 0
+        }
+
+
 
         fun updatePosition(position: Int){
             currentPosition = position
@@ -81,4 +89,6 @@ class PainDataViewModel : ViewModel() {
         subscriptions.remove(fragmentName)
         Log.d("PB","Removed FireStore Listener in Model")
     }
-    }
+
+
+}
