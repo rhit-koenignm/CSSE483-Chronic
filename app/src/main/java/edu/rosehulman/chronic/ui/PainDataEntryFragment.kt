@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.set
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.Timestamp
@@ -34,6 +35,12 @@ class PainDataEntryFragment : Fragment() {
         binding = FragmentPainDataEntryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
+        setupButtons()
+
+        return root
+    }
+    fun setupButtons(){
         binding.addEntryButton.setOnClickListener(){
             var title: String = binding.titleInput.text.toString()
             var startTimeString: String = binding.startTimeTextInput.text.toString()
@@ -75,8 +82,6 @@ class PainDataEntryFragment : Fragment() {
             model.addObject(newObject)
             findNavController().popBackStack()
         }
-
-        return root
     }
 
 }

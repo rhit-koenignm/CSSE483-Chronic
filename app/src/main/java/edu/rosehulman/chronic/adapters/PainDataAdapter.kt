@@ -7,6 +7,7 @@ import android.widget.Adapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.R
@@ -68,7 +69,12 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
                 //Tracks mapping for index of the particular viewholder, and then  shove it in the right place
                 model.updatePosition(adapterPosition)
             }
+            itemView.setOnLongClickListener(){
+                model.updatePosition(adapterPosition)
+                fragment.findNavController().navigate(R.id.nav_pain_data_entry)
 
+                true
+            }
 
         }
 
