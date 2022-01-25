@@ -6,16 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.set
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.Timestamp
-import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.databinding.FragmentPainDataEntryBinding
-import edu.rosehulman.chronic.databinding.FragmentPaintrackingBinding
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataViewModel
-import edu.rosehulman.chronic.models.UserViewModel
 import java.lang.NumberFormatException
 import java.text.SimpleDateFormat
 
