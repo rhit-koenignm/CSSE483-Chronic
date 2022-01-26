@@ -68,10 +68,12 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
             itemView.setOnClickListener() {
                 //Tracks mapping for index of the particular viewholder, and then  shove it in the right place
                 model.updatePosition(adapterPosition)
+                Log.d("Chronic","Current Position: $adapterPosition")
             }
             itemView.setOnLongClickListener(){
                 model.updatePosition(adapterPosition)
                 fragment.findNavController().navigate(R.id.nav_pain_data_entry)
+                Log.d("Chronic","Current Position: $adapterPosition")
 
                 true
             }
@@ -82,8 +84,11 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
             //Bind the model object's specific data to the text view for each
             titleText.text = painObject.title
             painLevelText.text = painObject.painLevel.toString()
-            startText.text = painObject.startTime.toDate().toString()
-            endText.text = painObject.endTime.toDate().toString()
+
+            var startDateFormatted = "${painObject.startTime.toDate().month}/${painObject.startTime.toDate().day}/${painObject.startTime.toDate().year}"
+            var endDateFormatted = "${painObject.endTime.toDate().month}/${painObject.endTime.toDate().day}/${painObject.endTime.toDate().year}"
+            startText.text = startDateFormatted
+            endText.text = endDateFormatted
 
 
         }

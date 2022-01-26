@@ -31,11 +31,31 @@ class PainDataEntryFragment : Fragment() {
         binding = FragmentPainDataEntryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
+        passInExistingData()
         setupButtons()
 
         return root
     }
+
+    fun passInExistingData(){
+        if(model.size() < 1){
+            return
+        }
+        var currentObject = model.getCurrentObject()
+
+        binding.titleInput.setText(currentObject.title)
+        var startDateFormatted = "${currentObject.startTime.toDate().month}/${currentObject.startTime.toDate().day}/${currentObject.startTime.toDate().year}"
+        var endDateFormatted = "${currentObject.endTime.toDate().month}/${currentObject.endTime.toDate().day}/${currentObject.endTime.toDate().year}"
+        binding.startTimeTextInput.setText(startDateFormatted)
+        binding.endTimeTextInput.setText(endDateFormatted)
+        binding.painLevelInput.setText(currentObject.painLevel.toString())
+
+    }
+
+
+
+
+
     fun setupButtons(){
         binding.addEntryButton.setOnClickListener(){
             var title: String = binding.titleInput.text.toString()
@@ -60,9 +80,23 @@ class PainDataEntryFragment : Fragment() {
 
             Log.d("Chronic","Title: $title, ST: $startTimeString, ET: $endTimeString, PD: $painDataString")
 
+            var startTime: Timestamp = Timestamp.now()
+            var endTime: Timestamp = Timestamp.now()
+
             //TODO Tags + adding time
-            val startTime: Timestamp = Timestamp(SimpleDateFormat("dd/MM/yyyy").parse(startTimeString))
-            val endTime: Timestamp = Timestamp(SimpleDateFormat("dd/MM/yyyy").parse(endTimeString))
+            try {
+                Timestamp(SimpleDateFormat("dd/MM/yyyy").parse(startTimeString)!!).also { startTime = it }
+            } catch (e: Error){
+                Log.d("Chronic","$e")
+            }
+
+            try {
+                Timestamp(SimpleDateFormat("dd/MM/yyyy").parse(endTimeString)!!).also { endTime = it }
+            } catch (e: Error){
+                Log.d("Chronic","$e")
+            }
+
+
 
             //Parse the Pain data Integer
             var painDataInt = 0
