@@ -15,27 +15,13 @@
         android:text="@string/my_tags_description"
         />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <Spinner
+        android:layout_below="@id/tags_description"
         android:id="@+id/tag_type_dropdown"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_below="@id/tags_description"
-        >
+        android:layout_margin="5dp" />
 
-        <AutoCompleteTextView
-            android:id="@+id/tag_type_dropdown_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="@string/choose_tag_type"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:textColor="@color/grape"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_tags_recyler"

@@ -1,11 +1,10 @@
 package edu.rosehulman.chronic.models
 
+import android.location.GnssAntennaInfo
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.QuerySnapshot
+import coil.load
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
@@ -19,14 +18,23 @@ class MyTagViewModel : ViewModel() {
     fun getCurrentTag() = tags[currentPos]
 
     var ref = Firebase.firestore.collection(Tag.COLLECTION_PATH)
-    lateinit var userTagRef: CollectionReference
+    lateinit var currentUser: UserData
+    lateinit var userTagsRef: CollectionReference
 
-    val subscriptions = HashMap<String, ListenerRegistration>()
+    val tagSubscriptions = HashMap<String, ListenerRegistration>()
+    val userSubscriptions = HashMap<String, ListenerRegistration>()
+
+    fun addUserListener(fragmentName: String, userID: String) {
+        Log.d(Constants.TAG, "Adding user listener for user $userID for fragment $fragmentName")
+        // Now to create the user and then add the current firebase reference
+//        currentUser = UserData.from(Firebase.firestore.collection(UserData.COLLECTION_PATH).document(userID))
+        Log.d(Constants.TAG, "Successfully grabbed user ref with a id of ${currentUser.id}")
+    }
+
 
     fun addListener(fragmentName: String, userID: String, type: String, observer: () -> Unit) {
         //populate later
         Log.d(Constants.TAG, "Adding listener for $fragmentName")
-        //userTagRef = Firebase.firestore.collection("users").document(userID).collection(UserData.MYTAGS_COLLECTION_PATH)
 
         if(type.equals("All")) {
             val subscription = ref
@@ -46,15 +54,15 @@ class MyTagViewModel : ViewModel() {
                     }
                     observer()
                 }
-            subscriptions[fragmentName + "tags"] = subscription
+            tagSubscriptions[fragmentName + "tags"] = subscription
         }
         //This is where we'll handle everything else
     }
 
     fun removeListener(fragmentName: String) {
         Log.d(Constants.TAG, "Removing listener for $fragmentName")
-        subscriptions[fragmentName + "tags"]?.remove()
-        subscriptions.remove(fragmentName + "tags")
+        tagSubscriptions[fragmentName + "tags"]?.remove()
+        tagSubscriptions.remove(fragmentName + "tags")
     }
 
     fun createTag(tag: Tag?) : Boolean {
@@ -68,8 +76,9 @@ class MyTagViewModel : ViewModel() {
     }
 
     // They also cannot update tags unless they are the creator
-    fun updateTag(tag: Tag, userName: String) : Boolean{
-        if(tag.creator == userName) {
+    fun updateTag(tag: Tag) : Boolean{
+        // FIX THIS TO MATCH THE CURRENT USER'S ID
+        if(tag.creator.equals("")) {
             tags[currentPos].title = tag.title
             tags[currentPos].type = tag.type
             ref.document(getCurrentTag().id).set(getCurrentTag())

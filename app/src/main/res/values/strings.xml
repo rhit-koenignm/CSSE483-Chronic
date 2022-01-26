@@ -33,11 +33,16 @@
     <!-- Strings for My Tag Fragment -->
     <string name="my_tags_fragment_title">My Tags</string>
     <string name="my_tags_description">Customize your pain tracking experience with tags for your symptoms, triggers, and treatments. Not seeing one you like? Add your own!</string>
-    <string-array name="tag_types">
+    <string-array name="tag_filter_types">
         <item>All Tag Types</item>
         <item>Symptoms</item>
         <item>Triggers</item>
         <item>Treatments</item>
+    </string-array>
+    <string-array name="tag_types">
+        <item>Symptom</item>
+        <item>Trigger</item>
+        <item>Treatment</item>
     </string-array>
     <string name="tag_item_default">Default Tag</string>
     <string name="choose_tag_type">Choose Tag Type</string>

@@ -1,10 +1,12 @@
 package edu.rosehulman.chronic.adapters
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +20,7 @@ import edu.rosehulman.chronic.ui.MyTagsFragment
 
 class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTagViewHolder>() {
 
+    val fragment: Fragment = fragment
     val model = ViewModelProvider(fragment.requireActivity()).get(MyTagViewModel::class.java)
 
     fun addListener(fragmentName: String, userID: String, type: String) {
@@ -44,6 +47,96 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
     fun addTag(tag: Tag?) {
         model.createTag(tag)
         this.notifyDataSetChanged()
+    }
+
+
+    // The nice thing is this edit dialog will show up if we are editing an existing tag or creating a new one
+    fun showEditDialog(tag: Tag?, currentType: String) {
+        val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(fragment.requireContext())
+        // Name the dialog
+        if(tag == null) {
+            builder.setTitle("Create a new Tag")
+        } else {
+            builder.setTitle("Edit your tag")
+        }
+
+
+        var tagInputsLayout = LinearLayout(fragment.requireContext())
+        tagInputsLayout.orientation = LinearLayout.VERTICAL
+
+        // Grabbing our filter and tag types arrays
+        var tagTypesArray = fragment.resources.getStringArray(R.array.tag_types)
+        var tagFiltersArray = fragment.resources.getStringArray(R.array.tag_filter_types)
+
+        // Set up the input for title
+        val titleInput = EditText(fragment.requireContext())
+        titleInput.inputType = InputType.TYPE_CLASS_TEXT
+        if(tag == null) {
+            // This is if we are making a new tag, otherwise set the type to the current
+            titleInput.setHint("Enter New Tag title")
+        } else {
+            titleInput.setText(tag.title.toString())
+        }
+
+        // Set up the input for the type
+        val spinner: Spinner = Spinner(fragment.requireContext())
+        ArrayAdapter.createFromResource(
+            fragment.requireContext(),
+            R.array.tag_filter_types,
+            android.R.layout.simple_spinner_item
+        ).also { filterAdapter ->
+            //Specify the layout to use when the list of choices appears
+            filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = filterAdapter
+        }
+
+        // If the tag passed in is null, we want to set the current value to the current type
+        if (tag == null) {
+            spinner.setSelection(
+            when (currentType) {
+                tagFiltersArray[0] -> 0
+                tagFiltersArray[1] -> 0
+                tagFiltersArray[2] -> 1
+                tagFiltersArray[3] -> 2
+                else -> {
+                    0
+                }
+            })
+        } else {
+            spinner.setSelection(
+                when (tag.type) {
+                    tagTypesArray[0] -> 0
+                    tagTypesArray[1] -> 1
+                    tagTypesArray[2] -> 2
+                    else -> {
+                        0
+                    }
+                }
+            )
+        }
+
+        // Adding our title and spinner to the linear layout
+        tagInputsLayout.addView(titleInput)
+        tagInputsLayout.addView(spinner)
+        builder.setView(tagInputsLayout)
+
+        //Set up the buttons
+        builder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, which ->
+            var newTitle = titleInput.text.toString()
+            var newType = spinner.selectedItem.toString()
+        })
+
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->  dialog.cancel()})
+
+        builder.setNeutralButton("Delete tag", DialogInterface.OnClickListener { dialog, which ->
+            // This is where we will delete the tag
+        })
+        // Showing dialog
+        builder.show()
+    }
+
+    fun showNotAuthorDialog() {
+
     }
 
     inner class MyTagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
