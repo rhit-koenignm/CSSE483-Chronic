@@ -13,7 +13,7 @@ data class UserData(
 {
     @get:Exclude
     var id = ""
-    var myTags: Array<String> = arrayOf<String>()
+    var myTags: List<String> = listOf<String>()
 
     companion object {
         const val COLLECTION_PATH = "users"
