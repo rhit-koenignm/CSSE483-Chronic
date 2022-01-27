@@ -43,14 +43,14 @@ class PainTrackingFragment : Fragment() {
         val root: View = binding.root
 
         readFromFireStore()
-        setuButtons()
+        setupButtons()
         drawLineChart();
         return root
     }
 
 
 
-    fun setuButtons(){
+    fun setupButtons(){
         binding.ViewMoreDetailsButton.setOnClickListener(){
             findNavController().navigate(R.id.nav_data)
         }
