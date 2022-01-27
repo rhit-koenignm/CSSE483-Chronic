@@ -9,11 +9,11 @@ data class UserData(
     var userName:String = "Steely-Eyed Missile Man",
     var firstName:String = "Marko",
     var lastName:String = "Ramius",
-    var Email:String = "RamiusM@Soviet.Union",
-    var myTags: Array<String> = arrayOf<String>())
+    var Email:String = "RamiusM@Soviet.Union")
 {
     @get:Exclude
     var id = ""
+    var myTags: Array<String> = arrayOf<String>()
 
     companion object {
         const val COLLECTION_PATH = "users"
