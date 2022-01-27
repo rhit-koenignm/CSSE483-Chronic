@@ -1,6 +1,7 @@
 package edu.rosehulman.chronic.adapters
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.text.InputType
 import android.view.LayoutInflater
@@ -33,6 +34,14 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
         model.removeListener(fragmentName)
     }
 
+    fun addUserListener(fragmentName: String, userID: String) {
+        model.addUserListener(fragmentName, userID)
+    }
+
+    fun removeUserListener(fragmentName: String) {
+        model.removeUserListener(fragmentName)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyTagViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.tag_item, parent, false)
         return MyTagViewHolder(view)
@@ -51,8 +60,8 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
 
 
     // The nice thing is this edit dialog will show up if we are editing an existing tag or creating a new one
-    fun showEditDialog(tag: Tag?, currentType: String) {
-        val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(fragment.requireContext())
+    fun showEditDialog(context: Context, tag: Tag?, currentType: String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         // Name the dialog
         if(tag == null) {
             builder.setTitle("Create a new Tag")
@@ -61,7 +70,7 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
         }
 
 
-        var tagInputsLayout = LinearLayout(fragment.requireContext())
+        var tagInputsLayout = LinearLayout(context)
         tagInputsLayout.orientation = LinearLayout.VERTICAL
 
         // Grabbing our filter and tag types arrays
@@ -69,7 +78,7 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
         var tagFiltersArray = fragment.resources.getStringArray(R.array.tag_filter_types)
 
         // Set up the input for title
-        val titleInput = EditText(fragment.requireContext())
+        val titleInput = EditText(context)
         titleInput.inputType = InputType.TYPE_CLASS_TEXT
         if(tag == null) {
             // This is if we are making a new tag, otherwise set the type to the current
@@ -79,9 +88,9 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
         }
 
         // Set up the input for the type
-        val spinner: Spinner = Spinner(fragment.requireContext())
+        val spinner: Spinner = Spinner(context)
         ArrayAdapter.createFromResource(
-            fragment.requireContext(),
+            context,
             R.array.tag_filter_types,
             android.R.layout.simple_spinner_item
         ).also { filterAdapter ->

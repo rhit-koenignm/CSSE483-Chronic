@@ -30,7 +30,6 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
         binding = FragmentMyTagsBinding.inflate(inflater, container, false)
 
         // This handles the creation and setup for our spinner that handles tag types
-        val tagTypes = resources.getStringArray(R.array.tag_types)
         val typeSpinner: Spinner = binding.tagTypeDropdown
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -46,6 +45,7 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
         binding.myTagsRecyler.adapter = adapter
         binding.myTagsRecyler.setHasFixedSize(true)
         binding.myTagsRecyler.layoutManager = LinearLayoutManager(requireContext())
+        adapter.addUserListener(fragmentName, Constants.USER_ID)
         adapter.addListener(fragmentName, Constants.USER_ID, currentType)
 
         binding.tagsFab.setOnClickListener {
@@ -58,11 +58,12 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        adapter.removeUserListener(fragmentName)
         adapter.removeListener(fragmentName)
     }
 
     fun pressedTagsFab() {
-
+        adapter.showEditDialog(this.requireContext(),null, currentType)
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

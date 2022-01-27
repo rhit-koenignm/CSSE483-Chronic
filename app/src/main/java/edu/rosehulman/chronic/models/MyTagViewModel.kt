@@ -1,11 +1,13 @@
 package edu.rosehulman.chronic.models
 
+import android.app.usage.ConfigurationStats
 import android.location.GnssAntennaInfo
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import coil.load
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
 
@@ -19,7 +21,7 @@ class MyTagViewModel : ViewModel() {
 
     var ref = Firebase.firestore.collection(Tag.COLLECTION_PATH)
     lateinit var currentUser: UserData
-    lateinit var userTagsRef: CollectionReference
+    lateinit var userRef: DocumentSnapshot
 
     val tagSubscriptions = HashMap<String, ListenerRegistration>()
     val userSubscriptions = HashMap<String, ListenerRegistration>()
@@ -27,8 +29,30 @@ class MyTagViewModel : ViewModel() {
     fun addUserListener(fragmentName: String, userID: String) {
         Log.d(Constants.TAG, "Adding user listener for user $userID for fragment $fragmentName")
         // Now to create the user and then add the current firebase reference
-//        currentUser = UserData.from(Firebase.firestore.collection(UserData.COLLECTION_PATH).document(userID))
-        Log.d(Constants.TAG, "Successfully grabbed user ref with a id of ${currentUser.id}")
+        val userSubscription = Firebase.firestore.collection(UserData.COLLECTION_PATH)
+            .whereEqualTo("id", userID)
+            .addSnapshotListener { snapshot: QuerySnapshot?, error ->
+                error?.let {
+                    Log.d(Constants.TAG, "Error $error")
+                    return@addSnapshotListener
+                }
+                Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
+                myTags.clear()
+                snapshot?.documents?.forEach {
+                    currentUser = UserData.from(it)
+                    userRef = it
+                    myTags.addAll(currentUser.myTags)
+                }
+            }
+
+        userSubscriptions[fragmentName]
+        Log.d(Constants.TAG, "Successfully grabbed user with id of ${currentUser.id}")
+    }
+
+    fun removeUserListener(fragmentName: String) {
+        Log.d(Constants.TAG, "Removing use listener for $fragmentName")
+        userSubscriptions[fragmentName]?.remove()
+        userSubscriptions.remove(fragmentName)
     }
 
 
@@ -54,15 +78,15 @@ class MyTagViewModel : ViewModel() {
                     }
                     observer()
                 }
-            tagSubscriptions[fragmentName + "tags"] = subscription
+            tagSubscriptions[fragmentName] = subscription
         }
         //This is where we'll handle everything else
     }
 
     fun removeListener(fragmentName: String) {
         Log.d(Constants.TAG, "Removing listener for $fragmentName")
-        tagSubscriptions[fragmentName + "tags"]?.remove()
-        tagSubscriptions.remove(fragmentName + "tags")
+        tagSubscriptions[fragmentName]?.remove()
+        tagSubscriptions.remove(fragmentName)
     }
 
     fun createTag(tag: Tag?) : Boolean {
