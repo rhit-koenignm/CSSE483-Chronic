@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.MyTagViewModel
 import edu.rosehulman.chronic.models.Tag
@@ -35,6 +37,7 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
     }
 
     fun addUserListener(fragmentName: String, userID: String) {
+        Log.d(Constants.TAG, "Jumping into the addUserListener from adapter")
         model.addUserListener(fragmentName, userID)
     }
 

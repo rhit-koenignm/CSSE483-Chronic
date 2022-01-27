@@ -45,6 +45,8 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
         binding.myTagsRecyler.adapter = adapter
         binding.myTagsRecyler.setHasFixedSize(true)
         binding.myTagsRecyler.layoutManager = LinearLayoutManager(requireContext())
+
+        Log.d(Constants.TAG, "About to start adding listeners in the fragment")
         adapter.addUserListener(fragmentName, Constants.USER_ID)
         adapter.addListener(fragmentName, Constants.USER_ID, currentType)
 
@@ -63,6 +65,7 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     fun pressedTagsFab() {
+        Log.d(Constants.TAG, "Pressed tags fab, inside function")
         adapter.showEditDialog(this.requireContext(),null, currentType)
     }
 
