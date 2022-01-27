@@ -13,6 +13,10 @@ class Tag(
     @get:Exclude
     var id = ""
 
+    fun toggleTracked() {
+        isTracked = !isTracked
+    }
+
     override fun toString(): String {
         return (title + ": " + type)
     }

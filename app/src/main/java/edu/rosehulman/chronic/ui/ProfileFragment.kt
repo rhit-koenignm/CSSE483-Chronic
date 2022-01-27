@@ -29,7 +29,6 @@ import edu.rosehulman.chronic.models.UserViewModel
 
 class ProfileFragment : Fragment() {
 
-
     private lateinit var binding: FragmentProfileBinding
     private lateinit var model: UserViewModel
     private lateinit var adapter: MyTagAdapter

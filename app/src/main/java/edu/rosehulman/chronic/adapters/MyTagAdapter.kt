@@ -137,7 +137,11 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
         builder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, which ->
             var newTitle = titleInput.text.toString()
             var newType = spinner.selectedItem.toString()
-            model.createTag(Tag(newTitle, newType))
+            if(tag == null){
+                model.createTag(Tag(newTitle, newType))
+            } else {
+                model.updateTag(Tag(newTitle, newType, tag.creator, tag.isTracked))
+            }
             notifyDataSetChanged()
         })
 

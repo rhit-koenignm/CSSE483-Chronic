@@ -21,7 +21,7 @@ class MyTagViewModel : ViewModel() {
 
     var ref = Firebase.firestore.collection(Tag.COLLECTION_PATH)
     var currentUser: UserData = UserData()
-    lateinit var userRef: DocumentSnapshot
+    var userRef = Firebase.firestore.collection(UserData.COLLECTION_PATH)
 
     val tagSubscriptions = HashMap<String, ListenerRegistration>()
     val userSubscriptions = HashMap<String, ListenerRegistration>()
@@ -30,7 +30,6 @@ class MyTagViewModel : ViewModel() {
         Log.d(Constants.TAG, "Adding user listener for user $userID for fragment $fragmentName")
         // Now to create the user and then add the current firebase reference
         val userSubscription = Firebase.firestore.collection(UserData.COLLECTION_PATH)
-            .whereEqualTo("id", userID)
             .addSnapshotListener { snapshot: QuerySnapshot?, error ->
                 error?.let {
                     Log.d(Constants.TAG, "Error $error")
@@ -40,7 +39,6 @@ class MyTagViewModel : ViewModel() {
                 myTags.clear()
                 snapshot?.documents?.forEach {
                     currentUser = UserData.from(it)
-                    userRef = it
                     myTags.addAll(currentUser.myTags)
                 }
             }
@@ -71,7 +69,7 @@ class MyTagViewModel : ViewModel() {
                         var tag = Tag.from(it)
                         //Here is where we'll track our tags and see if it is already tracked
                         //For now we will just set the value to false
-                        tag.isTracked = false
+                        tag.isTracked = currentUser.myTags.contains(tag.id)
                         tags.add(tag)
                     }
                     observer()
@@ -94,7 +92,7 @@ class MyTagViewModel : ViewModel() {
         } else if (tag.type.equals("") || tag.title.equals("")){
             return false
         }else {
-            tag.creator = currentUser.userName
+            tag.creator = currentUser.id
             tag.isTracked
             ref.add(tag)
             return true
@@ -103,8 +101,7 @@ class MyTagViewModel : ViewModel() {
 
     // They also cannot update tags unless they are the creator
     fun updateTag(tag: Tag) : Boolean{
-        // FIX THIS TO MATCH THE CURRENT USER'S ID
-        if(tag.creator.equals("")) {
+        if(creatorIsUser()) {
             if (tag.title.equals("") || tag.type.equals("")){
                 return false
             }
@@ -119,7 +116,8 @@ class MyTagViewModel : ViewModel() {
     // They cannot remove tags unless they created them
     fun removeCurrentTag() : Boolean {
         var tag = getCurrentTag()
-        if(tag.creator == currentUser.id) {
+        if(creatorIsUser()) {
+            myTags.remove(tag.id)
             ref.document(getCurrentTag().id).delete()
             currentPos = 0
             return true
@@ -152,5 +150,7 @@ class MyTagViewModel : ViewModel() {
         } else {
             myTags.remove(getCurrentTag().id)
         }
+        currentUser.myTags = myTags
+        userRef.document(currentUser.id).set(currentUser)
     }
 }
