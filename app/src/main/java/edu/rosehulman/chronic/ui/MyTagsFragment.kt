@@ -40,6 +40,7 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
             filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             typeSpinner.adapter = filterAdapter
         }
+        typeSpinner.onItemSelectedListener = this
 
         adapter = MyTagAdapter(this)
         binding.myTagsRecyler.adapter = adapter
@@ -69,8 +70,17 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
         adapter.showEditDialog(this.requireContext(),null, currentType)
     }
 
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        TODO("Not yet implemented")
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        //adapter.removeListener(fragmentName)
+        var type = parent?.getItemAtPosition(pos)
+        Log.d(Constants.TAG, "Getting spinner item selected $type")
+        if(type == null) {
+            //Do nothing
+        } else{
+            currentType = type.toString()
+            adapter.removeListener(fragmentName)
+            adapter.addListener(fragmentName, Constants.USER_ID, currentType)
+        }
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
