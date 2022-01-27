@@ -20,7 +20,7 @@ class MyTagViewModel : ViewModel() {
     fun getCurrentTag() = tags[currentPos]
 
     var ref = Firebase.firestore.collection(Tag.COLLECTION_PATH)
-    lateinit var currentUser: UserData
+    var currentUser: UserData = UserData()
     lateinit var userRef: DocumentSnapshot
 
     val tagSubscriptions = HashMap<String, ListenerRegistration>()
@@ -44,17 +44,15 @@ class MyTagViewModel : ViewModel() {
                     myTags.addAll(currentUser.myTags)
                 }
             }
-
         userSubscriptions[fragmentName]
         Log.d(Constants.TAG, "Successfully grabbed user with id of ${currentUser.id}")
     }
 
     fun removeUserListener(fragmentName: String) {
-        Log.d(Constants.TAG, "Removing use listener for $fragmentName")
+        Log.d(Constants.TAG, "Removing user listener for $fragmentName")
         userSubscriptions[fragmentName]?.remove()
         userSubscriptions.remove(fragmentName)
     }
-
 
     fun addListener(fragmentName: String, userID: String, type: String, observer: () -> Unit) {
         //populate later
@@ -91,9 +89,13 @@ class MyTagViewModel : ViewModel() {
 
     fun createTag(tag: Tag?) : Boolean {
         //So this is where we create new tags, however we won't allow them to add a null tag
-        if(tag == null) {
+        if (tag == null) {
             return false
-        } else {
+        } else if (tag.type.equals("") || tag.title.equals("")){
+            return false
+        }else {
+            tag.creator = currentUser.userName
+            tag.isTracked
             ref.add(tag)
             return true
         }
@@ -103,6 +105,9 @@ class MyTagViewModel : ViewModel() {
     fun updateTag(tag: Tag) : Boolean{
         // FIX THIS TO MATCH THE CURRENT USER'S ID
         if(tag.creator.equals("")) {
+            if (tag.title.equals("") || tag.type.equals("")){
+                return false
+            }
             tags[currentPos].title = tag.title
             tags[currentPos].type = tag.type
             ref.document(getCurrentTag().id).set(getCurrentTag())
@@ -112,9 +117,9 @@ class MyTagViewModel : ViewModel() {
     }
 
     // They cannot remove tags unless they created them
-    fun removeCurrentTag(userName: String) : Boolean {
+    fun removeCurrentTag() : Boolean {
         var tag = getCurrentTag()
-        if(tag.creator == userName) {
+        if(tag.creator == currentUser.id) {
             ref.document(getCurrentTag().id).delete()
             currentPos = 0
             return true
@@ -126,6 +131,14 @@ class MyTagViewModel : ViewModel() {
 
     fun updatePos(pos: Int) {
         currentPos = pos
+    }
+
+    fun creatorIsUser(): Boolean {
+        if (getCurrentTag().creator.equals(currentUser.id)) {
+            return true
+        } else {
+            return false
+        }
     }
 
     fun size() = tags.size

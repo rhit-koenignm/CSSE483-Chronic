@@ -57,7 +57,7 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
     override fun getItemCount() = model.size()
 
     fun addTag(tag: Tag?) {
-        model.createTag(tag)
+        var didAdd = model.createTag(tag)
         this.notifyDataSetChanged()
     }
 
@@ -75,6 +75,7 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
 
         var tagInputsLayout = LinearLayout(context)
         tagInputsLayout.orientation = LinearLayout.VERTICAL
+        tagInputsLayout.setPadding(4, 4, 4, 4)
 
         // Grabbing our filter and tag types arrays
         var tagTypesArray = fragment.resources.getStringArray(R.array.tag_types)
@@ -94,7 +95,7 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
         val spinner: Spinner = Spinner(context)
         ArrayAdapter.createFromResource(
             context,
-            R.array.tag_filter_types,
+            R.array.tag_types,
             android.R.layout.simple_spinner_item
         ).also { filterAdapter ->
             //Specify the layout to use when the list of choices appears
@@ -136,19 +137,34 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
         builder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, which ->
             var newTitle = titleInput.text.toString()
             var newType = spinner.selectedItem.toString()
+            model.createTag(Tag(newTitle, newType))
+            notifyDataSetChanged()
         })
 
         builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->  dialog.cancel()})
 
-        builder.setNeutralButton("Delete tag", DialogInterface.OnClickListener { dialog, which ->
-            // This is where we will delete the tag
-        })
+        if(tag != null) {
+            //Delete will only show up for existing tags
+            builder.setNeutralButton(
+                "Delete tag",
+                DialogInterface.OnClickListener { dialog, which ->
+                    // This is where we will delete the tag
+                    model.removeCurrentTag()
+                })
+        }
         // Showing dialog
         builder.show()
     }
 
     fun showNotAuthorDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(fragment.requireContext())
 
+        builder.setTitle("You are not the owner of this tag")
+        builder.setMessage("Users can only update and delete tags created by them.")
+
+        builder.setNegativeButton("Ok", DialogInterface.OnClickListener { dialog, which ->  dialog.cancel()})
+
+        builder.show()
     }
 
     inner class MyTagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -158,11 +174,19 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
         init {
             itemView.setOnLongClickListener {
                 model.updatePos(adapterPosition)
+                var tag = model.getCurrentTag()
+                if(model.creatorIsUser()) {
+                    showEditDialog(fragment.requireContext(), tag, tag.type)
+                } else {
+                    showNotAuthorDialog()
+                }
+
                 //This is where we'll put our popup that lets us delete or update the tag
                 true
             }
 
             tagImageView.setOnClickListener {
+                //Need to add in the action of tracking or not tracking
                 model.updatePos(adapterPosition)
                 model.toggleTracked()
                 notifyItemChanged(adapterPosition)
