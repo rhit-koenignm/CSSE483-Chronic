@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -78,6 +79,10 @@ class ProfileFragment : Fragment() {
         binding.SubmitPainTrackingButton.setOnClickListener{
             findNavController().navigate(R.id.nav_pain_data_entry)
         }
+        binding.LogoutButton.setOnClickListener(){
+            Firebase.auth.signOut()
+        }
+
     }
 
 

@@ -118,7 +118,10 @@ class MainActivity : AppCompatActivity() {
                 pushUserToFireBase()
                 //Otherwise, just don't?
             }else{
-                Log.d("MQ","User Signed in")
+                Log.d(Constants.TAG,"User Signed in")
+                //If the user is new, add it to firebase.
+                pushUserToFireBase()
+                //Otherwise, just don't?
                 setupFromFirebase(navView)
                 with(user){
                     Log.d(Constants.TAG, "User: $uid, Email: $email, Displayname: $displayName, PhotoURL: $photoUrl")
@@ -193,7 +196,7 @@ class MainActivity : AppCompatActivity() {
             val username = "Replace Me"
             val photoURLInput = this?.photoUrl.toString()
             val firstNameInput = this?.displayName?.split(" ")?.get(0)
-            val lastNameInput = this?.displayName?.split(" ")?.get(2)
+            val lastNameInput = this?.displayName?.split(" ")?.get(1)
             val emailInput = this?.email
 
             val photoURL = photoURLInput ?: "No URL"
@@ -205,16 +208,19 @@ class MainActivity : AppCompatActivity() {
 
             //Push to the cloud if the document ID does not already exist
 
-            var userDocument = Firebase.firestore.collection(UserData.COLLECTION_PATH).document(this?.uid!!).get().addOnSuccessListener { snapshot: DocumentSnapshot? ->
-                if(snapshot?.exists() == true){
-                    // do nothing
-                    Log.d(Constants.TAG,"User Already Exists")
-                }else{
-                    Firebase.firestore.collection(UserData.COLLECTION_PATH).add(newUser)
-                    Log.d(Constants.TAG,"New User Added")
-                }
+            this?.let { Firebase.firestore.collection(UserData.COLLECTION_PATH).document(it.uid).set(newUser) }
 
-                }
+//            var userDocument = Firebase.firestore.collection(UserData.COLLECTION_PATH).document(this?.uid!!).get().addOnSuccessListener { snapshot: DocumentSnapshot? ->
+//                if(snapshot?.exists() == true){
+//                    // do nothing
+//                    Log.d(Constants.TAG,"User Already Exists")
+//                }else{
+//                    Firebase.firestore.collection(UserData.COLLECTION_PATH).document(this.uid).set(newUser)
+//
+//                    Log.d(Constants.TAG,"New User Added")
+//                }
+//
+//                }
         }
     }
 }
