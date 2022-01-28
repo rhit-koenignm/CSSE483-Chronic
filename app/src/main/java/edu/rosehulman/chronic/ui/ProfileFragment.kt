@@ -75,9 +75,6 @@ class ProfileFragment : Fragment() {
         binding.settingsButton.setOnClickListener() {
             findNavController().navigate(R.id.nav_settings)
         }
-        binding.ChangeTrackingTagsButton.setOnClickListener {
-            findNavController().navigate(R.id.nav_my_tags)
-        }
         binding.SubmitPainTrackingButton.setOnClickListener{
             findNavController().navigate(R.id.nav_pain_data_entry)
         }
