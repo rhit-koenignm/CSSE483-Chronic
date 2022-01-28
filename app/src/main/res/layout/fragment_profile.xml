@@ -198,22 +198,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/ChangeTrackingTagsButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_below="@id/TagsRecyclerView"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/roundbuttonwhite"
-                    android:drawableStart="@drawable/ic_baseline_commit_24"
-                    android:drawableTint="?colorPrimaryVariant"
-                    android:text="@string/change_my_tags_button"
-                    android:textColor="?colorPrimaryVariant"
-                    android:textSize="22sp"
-                    android:paddingStart="10dp"
-                    />
-
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 

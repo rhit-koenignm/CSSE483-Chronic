@@ -11,13 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.Timestamp
 import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.adapters.PainDataAdapter
 import edu.rosehulman.chronic.adapters.SwipeToDeleteCallback
 import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
-import edu.rosehulman.chronic.models.PainData
 import java.util.*
 
 
