@@ -47,7 +47,6 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
         binding.myTagsRecyler.setHasFixedSize(true)
         binding.myTagsRecyler.layoutManager = LinearLayoutManager(requireContext())
 
-        Log.d(Constants.TAG, "About to start adding listeners in the fragment")
         adapter.addUserListener(fragmentName, Constants.USER_ID)
         adapter.addListener(fragmentName, Constants.USER_ID, currentType)
 
