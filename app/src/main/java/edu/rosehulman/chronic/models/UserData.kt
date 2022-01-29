@@ -9,8 +9,9 @@ data class UserData(
     var userName:String = "Steely-Eyed Missile Man",
     var firstName:String = "Marko",
     var lastName:String = "Ramius",
-    var Email:String = "RamiusM@Soviet.Union")
-{
+    var Email:String = "RamiusM@Soviet.Union",
+    var hasCompletedSetup:Boolean = false
+){
     @get:Exclude
     var id = ""
     var myTags: List<String> = listOf<String>()

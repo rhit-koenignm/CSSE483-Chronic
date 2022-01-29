@@ -90,6 +90,8 @@
     <string name="start_date_hint">1/1/1970</string>
     <string name="enter_a_title_for_your_entry_here_hint">Enter a title for your entry here</string>
     <string name="press_button_to_add_entry_hint">Press Button to Add Entry</string>
+    <string name="Loading_Screen_Title">Loading Screen Label</string>
+    <string name="User_Edit_Screen_Label">User Edit Screen</string>
 
 
 </resources>
