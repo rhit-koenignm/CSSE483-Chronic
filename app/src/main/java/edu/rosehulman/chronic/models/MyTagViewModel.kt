@@ -38,8 +38,11 @@ class MyTagViewModel : ViewModel() {
                 Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
                 myTags.clear()
                 snapshot?.documents?.forEach {
-                    currentUser = UserData.from(it)
-                    myTags.addAll(currentUser.myTags)
+                    var temp = UserData.from(it)
+                    if(temp.id.equals(Constants.USER_ID)) {
+                        currentUser = temp
+                        myTags.addAll(currentUser.myTags)
+                    }
                 }
             }
         userSubscriptions[fragmentName]

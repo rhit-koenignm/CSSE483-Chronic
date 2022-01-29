@@ -59,7 +59,6 @@ class ProfileFragment : Fragment() {
         //Adds nice little gaps around each object in the recylcer view
         binding.TagsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
-
         setUpButtons()
         readFromFireStore()
         return root
