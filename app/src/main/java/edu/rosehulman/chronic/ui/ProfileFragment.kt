@@ -87,15 +87,15 @@ class ProfileFragment : Fragment() {
 
     fun readFromFireStore() {
         var user = UserData()
-        Firebase.firestore.collection("users").get()
-            .addOnSuccessListener { snapshot: QuerySnapshot? ->
-                snapshot?.documents?.forEach {
-                    user = it.toObject(UserData::class.java)!!
-                }
-
-                binding.Email.text = user.Email
-                "${user.firstName} ${user.lastName}".also { binding.Name.text = it }
-                binding.ProfilePhoto.load(user.ProfileURL)
+        Firebase.firestore.collection(UserData.COLLECTION_PATH).document(Firebase.auth.uid!!).get().addOnSuccessListener { snapshot:DocumentSnapshot ->
+            user = snapshot.toObject(UserData::class.java)!!
+            binding.Email.text = user.Email
+            "${user.firstName} ${user.lastName}".also { binding.Name.text = it }
+            binding.ProfilePhoto.load(user.ProfileURL){
+                crossfade(true)
+                transformations(CircleCropTransformation())
             }
+        }
+
     }
 }

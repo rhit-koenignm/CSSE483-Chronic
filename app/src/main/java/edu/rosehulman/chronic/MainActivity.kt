@@ -22,15 +22,10 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.firebase.ui.auth.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.databinding.ActivityMainBinding
-import edu.rosehulman.chronic.models.UserData
 import edu.rosehulman.chronic.models.UserViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -71,13 +66,13 @@ class MainActivity : AppCompatActivity() {
             //Top level destinations get a menu, and all others get back buttons in the app bar
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_profile, R.id.nav_reminder_list, R.id.nav_pain_tracking, R.id.nav_data
+                R.id.nav_profile, R.id.nav_reminder_list, R.id.nav_pain_tracking, R.id.nav_data, R.id.nav_settings
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        setupHeaderBar()
+//        setupHeaderBar()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -105,9 +100,23 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun setupHeaderBar(){
+    fun setupHeaderBar(userModel: UserViewModel) {
             val navigationView = binding.navView
             val headerView = navigationView.getHeaderView(0)
+            val profileImage = headerView.findViewById<ImageView>(R.id.profile_imageView)
+            val profileEmail = headerView.findViewById<TextView>(R.id.email_textView)
+            val profileName = headerView.findViewById<TextView>(R.id.name_textview)
+
+            profileImage.load(userModel.user?.ProfileURL){
+                crossfade(true)
+                transformations(CircleCropTransformation())
+            }
+
+            profileEmail.text = "${userModel.user?.Email}"
+            profileName.text = "${userModel.user?.firstName} ${userModel.user?.lastName}"
+
+
+
     }
 
 
@@ -148,6 +157,7 @@ class MainActivity : AppCompatActivity() {
                     if(userModel.hasCompletedSetup()){
                         //Navigate to the quotes list page when adding the splash screen
                         navController.navigate(R.id.nav_pain_tracking)
+                        setupHeaderBar(userModel)
                     }else{
                         //Navigate to the settings page to fill out all of the user data
                         navController.navigate(R.id.navigation_user_edit)
