@@ -41,8 +41,15 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
     }
 
 
-    fun addModelListener(fragmentName: String, UserID:String){
-        model.addListener(fragmentName, UserID){notifyDataSetChanged()}
+    fun addModelListener(fragmentName: String, UserID: String, isCalenderFragment: Boolean){
+        if(isCalenderFragment){
+            model.addCalanderListener(fragmentName, UserID){notifyDataSetChanged()}
+        }else{
+            model.addListener(fragmentName, UserID){notifyDataSetChanged()}
+        }
+
+
+
         Log.d("Chronic","Added Listener in the Adapter")
     }
 
@@ -85,8 +92,8 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
             titleText.text = painObject.title
             painLevelText.text = painObject.painLevel.toString()
 
-            var startDateFormatted = "${painObject.startTime.toDate().month}/${painObject.startTime.toDate().day}/${painObject.startTime.toDate().year}"
-            var endDateFormatted = "${painObject.endTime.toDate().month}/${painObject.endTime.toDate().day}/${painObject.endTime.toDate().year}"
+            var startDateFormatted = "${painObject.startTime.dayOfMonth}/${painObject.startTime.month}/${painObject.startTime.year} : ${painObject.startTime.hour}:${painObject.startTime.minute}"
+            var endDateFormatted ="${painObject.endTime.dayOfMonth}/${painObject.endTime.month}/${painObject.endTime.year} : ${painObject.endTime.hour}:${painObject.endTime.minute}"
             startText.text = startDateFormatted
             endText.text = endDateFormatted
 

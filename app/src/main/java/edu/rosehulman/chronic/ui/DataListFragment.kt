@@ -20,6 +20,7 @@ class DataListFragment : Fragment(){
 
     private lateinit var binding: FragmentDataListBinding
     private lateinit var adapter: PainDataAdapter
+    val isCalenderFragment = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +32,7 @@ class DataListFragment : Fragment(){
 
         //Add recycler view
         adapter = PainDataAdapter(this)
-        adapter.addModelListener(fragmentName,Constants.USER_ID)
+        adapter.addModelListener(fragmentName,Constants.USER_ID,isCalenderFragment)
         //Set Adapter properties
         //Match the adapter class to the xml
         binding.CalenderListRecyclerView.adapter = adapter

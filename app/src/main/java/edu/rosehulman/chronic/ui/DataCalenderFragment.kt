@@ -16,13 +16,13 @@ import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.adapters.PainDataAdapter
 import edu.rosehulman.chronic.adapters.SwipeToDeleteCallback
 import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
-import java.util.*
 
 
 class DataCalenderFragment : Fragment(){
 
     private lateinit var binding: FragmentDataCalenderBinding
     private lateinit var adapter: PainDataAdapter
+    val isCalenderFragment = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +34,7 @@ class DataCalenderFragment : Fragment(){
 
         //Add recycler view
         adapter = PainDataAdapter(this)
-        adapter.addModelListener(DataListFragment.fragmentName, Constants.USER_ID)
+        adapter.addModelListener(DataListFragment.fragmentName, Constants.USER_ID,isCalenderFragment)
         //Set Adapter properties
         //Match the adapter class to the xml
         binding.CalenderDataRecyclerView.adapter = adapter

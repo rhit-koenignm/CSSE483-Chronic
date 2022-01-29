@@ -11,6 +11,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
 import java.sql.Time
+import java.time.LocalDateTime
 
 
 class PainDataViewModel : ViewModel() {
@@ -25,7 +26,7 @@ class PainDataViewModel : ViewModel() {
             fireBaseReference.add(objectInput)
         }
 
-        fun updateCurrentObject(title: String, painvalue: Int, startTime:Timestamp,  endTime:Timestamp){
+        fun updateCurrentObject(title: String, painvalue: Int, startTime:LocalDateTime,  endTime:LocalDateTime){
             objectList[currentPosition].title = title
             objectList[currentPosition].painLevel = painvalue
             objectList[currentPosition].startTime = startTime
@@ -65,7 +66,29 @@ class PainDataViewModel : ViewModel() {
     fun addListener(fragmentName: String, userID: String, observer: () -> Unit) {
         Log.d("Chronic","Added FireStore Listener in Model")
         val subscription = fireBaseReference
-            .orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
+            //.orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
+            .addSnapshotListener() { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
+                error?.let {
+                    Log.d("Chronic","Error in adding Snapshot Listener")
+                    return@addSnapshotListener
+                }
+
+                Log.d("Chronic","Triggered Callback")
+                objectList.clear()
+                snapshot?.documents?.forEach() {
+                    Log.d("Chronic","Adding a data from Firestore to arraylist")
+                    objectList.add(PainData.from(it))
+                }
+                observer()
+            }
+        subscriptions.put(fragmentName, subscription)
+    }
+
+    fun addCalanderListener(fragmentName: String, userID: String, observer: () -> Unit) {
+        Log.d("Chronic","Added FireStore Listener in Model")
+        val subscription = fireBaseReference
+            //.orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
+            //.whereEqualTo()
             .addSnapshotListener() { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                 error?.let {
                     Log.d("Chronic","Error in adding Snapshot Listener")
