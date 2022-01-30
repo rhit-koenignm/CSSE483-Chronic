@@ -3,16 +3,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataViewModel
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.*
 
 class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAdapter.PainDataViewHolder>() {
     val model = ViewModelProvider(fragment.requireActivity()).get(PainDataViewModel::class.java)
@@ -91,13 +93,20 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
             //Bind the model object's specific data to the text view for each
             titleText.text = painObject.title
             painLevelText.text = painObject.painLevel.toString()
+            var startDate:LocalDateTime = convertToLocalDateViaInstant(painObject.startTime.toDate())
+            var endDate:LocalDateTime = convertToLocalDateViaInstant(painObject.endTime.toDate())
 
-            var startDateFormatted = "${painObject.startTime.dayOfMonth}/${painObject.startTime.month}/${painObject.startTime.year} : ${painObject.startTime.hour}:${painObject.startTime.minute}"
-            var endDateFormatted ="${painObject.endTime.dayOfMonth}/${painObject.endTime.month}/${painObject.endTime.year} : ${painObject.endTime.hour}:${painObject.endTime.minute}"
+            var startDateFormatted = "${startDate.month}/${startDate.dayOfMonth}/${startDate.year} : ${startDate.hour}:${startDate.minute}"
+            var endDateFormatted ="${endDate.month}/${endDate.dayOfMonth}/${endDate.year} : ${endDate.hour}:${endDate.minute}"
+
             startText.text = startDateFormatted
             endText.text = endDateFormatted
+        }
 
-
+        fun convertToLocalDateViaInstant(dateToConvert: Date): LocalDateTime {
+            return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()
         }
     }
 

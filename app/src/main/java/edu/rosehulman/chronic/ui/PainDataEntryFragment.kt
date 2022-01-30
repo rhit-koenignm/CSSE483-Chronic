@@ -1,21 +1,20 @@
 package edu.rosehulman.chronic.ui
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.Timestamp
 import edu.rosehulman.chronic.databinding.FragmentPainDataEntryBinding
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataViewModel
-import java.lang.NumberFormatException
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class PainDataEntryFragment : Fragment() {
@@ -56,11 +55,11 @@ class PainDataEntryFragment : Fragment() {
             }
 
             if(startDateString == ""){
-                startDateString = "01/01/1970"
+                startDateString = "1/1/1970"
             }
 
             if(endDateString == ""){
-                endDateString = "01/01/1970"
+                endDateString = "1/1/1970"
             }
 
             if(startTimeString == ""){
@@ -71,14 +70,24 @@ class PainDataEntryFragment : Fragment() {
                 endTimeString = "00:00:00"
             }
 
+            var startLocalDateTime:LocalDateTime = LocalDateTime.parse("$startDateString : $startTimeString", DateTimeFormatter.ofPattern("M/d/yyyy : HH:mm:ss"))
+            var endLocalDateTime:LocalDateTime = LocalDateTime.parse("$endDateString : $endTimeString", DateTimeFormatter.ofPattern("M/d/yyyy : HH:mm:ss"))
 
 
-            var startLocalDateTime:LocalDateTime = LocalDateTime.parse("$startDateString : $startTimeString", DateTimeFormatter.ofPattern("dd/MM/yyyy : HH:mm:ss"))
-            var endLocalDateTime:LocalDateTime = LocalDateTime.parse("$endDateString : $endTimeString", DateTimeFormatter.ofPattern("dd/MM/yyyy : HH:mm:ss"))
-            val newObject: PainData = PainData(painDataInt,title,startLocalDateTime, endLocalDateTime)
+
+            val startDateTime: Date = Date.from(startLocalDateTime.atZone(ZoneId.systemDefault()).toInstant())
+            val endDateTime: Date = Date.from(endLocalDateTime.atZone(ZoneId.systemDefault()).toInstant())
+
+            var startTimestamp:Timestamp = Timestamp(startDateTime)
+            var endTimestamp:Timestamp = Timestamp(endDateTime)
+
+            val newObject: PainData = PainData(painDataInt,title,startTimestamp, endTimestamp)
             model.addObject(newObject)
             findNavController().popBackStack()
         }
     }
+
+
+
 
 }

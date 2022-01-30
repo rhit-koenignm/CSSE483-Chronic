@@ -3,13 +3,14 @@ package edu.rosehulman.chronic.models
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
+import java.sql.Time
 import java.time.LocalDateTime
 
 data class PainData(
     var painLevel: Int = -1,
     var title: String = "Null",
-    var startTime:LocalDateTime = LocalDateTime.now(),
-    var endTime:LocalDateTime = LocalDateTime.now(),
+    var startTime:Timestamp = Timestamp.now(),
+    var endTime:Timestamp = Timestamp.now(),
 ){
     @get:Exclude
     var id = ""
@@ -21,7 +22,7 @@ data class PainData(
 
 
         fun from(snapshot: DocumentSnapshot): PainData {
-            val pd = snapshot.toObject(PainData::class.java)!!
+            val pd:PainData = snapshot.toObject(PainData::class.java)!!
             pd.id = snapshot.id
             return pd
         }

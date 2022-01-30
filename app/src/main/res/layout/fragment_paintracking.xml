@@ -41,7 +41,7 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:text="Doing Well"
-        android:textColor="@color/green"
+        android:layout_marginLeft="4dp"
         />
 
     <ImageView
@@ -52,15 +52,13 @@
 
         android:layout_toLeftOf="@id/averageText"
         android:layout_below="@id/painTrackingAverage"
-        app:tint="@color/green"
         />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/PainTrackingDataGraph"
         android:layout_width="match_parent"
         android:layout_height="425dp"
-        android:layout_below="@id/averageText"
-        />
+        android:layout_below="@id/averageText" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ViewMoreDetailsButton"

@@ -21,17 +21,20 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.R
+import edu.rosehulman.chronic.models.PainDataViewModel
 import edu.rosehulman.chronic.models.UserData
 
 
 class PainTrackingFragment : Fragment() {
 
     private lateinit var binding: FragmentPaintrackingBinding
-
+    private lateinit var model: PainDataViewModel
 
 
     override fun onCreateView(
@@ -39,15 +42,33 @@ class PainTrackingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        model = ViewModelProvider(requireActivity()).get(PainDataViewModel::class.java)
         binding = FragmentPaintrackingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        readFromFireStore()
         setupButtons()
+        setupAverageValue()
+        readUserFromFireStore()
         drawLineChart();
         return root
     }
 
+    private fun setupAverageValue() {
+        binding.painTrackingAverage.text = model.getAveragePain().toString()
+
+        if(model.getAveragePain() >= 5){
+            binding.averageText.text = "Doing Well"
+            binding.averageIcon.load(resources.getDrawable( R.drawable.ic_baseline_keyboard_arrow_up_24))
+            binding.averageText.setTextColor(resources.getColor(R.color.green))
+            binding.averageIcon.setBackgroundColor(resources.getColor(R.color.green))
+        }else{
+            binding.averageText.text = "Doing Poorly"
+            binding.averageIcon.load(resources.getDrawable( R.drawable.ic_baseline_keyboard_arrow_down_24))
+            binding.averageText.setTextColor(resources.getColor(R.color.red))
+            binding.averageIcon.setBackgroundColor(resources.getColor(R.color.red))
+        }
+
+    }
 
 
     fun setupButtons(){
@@ -155,19 +176,15 @@ class PainTrackingFragment : Fragment() {
         return lineEntries;
     }
 
-    fun readFromFireStore() {
+
+
+    fun readUserFromFireStore() {
         var user = UserData()
-        Firebase.firestore.collection("users").get()
-            .addOnSuccessListener { snapshot: QuerySnapshot? ->
-                snapshot?.documents?.forEach {
-                    user = it.toObject(UserData::class.java)!!
-                }
+        Firebase.firestore.collection(UserData.COLLECTION_PATH).document(Firebase.auth.uid!!).get().addOnSuccessListener { snapshot: DocumentSnapshot ->
+            user = snapshot.toObject(UserData::class.java)!!
+            binding.profileName.text = user.userName
+        }
 
-                var textBoxText = "Hello ${user.firstName}"
-                binding.profileName.text = textBoxText
-
-
-            }
     }
 
 

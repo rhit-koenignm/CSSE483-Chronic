@@ -3,6 +3,7 @@ package edu.rosehulman.chronic.models
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
@@ -26,7 +27,7 @@ class PainDataViewModel : ViewModel() {
             fireBaseReference.add(objectInput)
         }
 
-        fun updateCurrentObject(title: String, painvalue: Int, startTime:LocalDateTime,  endTime:LocalDateTime){
+        fun updateCurrentObject(title: String, painvalue: Int, startTime:Timestamp,  endTime:Timestamp){
             objectList[currentPosition].title = title
             objectList[currentPosition].painLevel = painvalue
             objectList[currentPosition].startTime = startTime
@@ -60,7 +61,7 @@ class PainDataViewModel : ViewModel() {
 
     //Firebase Stuff
 
-    var fireBaseReference = Firebase.firestore.collection(PainData.COLLECTION_PATH).document(Constants.USER_ID).collection(PainData.ENTRY_COLLECTION_PATH)
+    var fireBaseReference = Firebase.firestore.collection(PainData.COLLECTION_PATH).document(Firebase.auth.uid!!).collection(PainData.ENTRY_COLLECTION_PATH)
     var subscriptions = HashMap<String, ListenerRegistration>()
 
     fun addListener(fragmentName: String, userID: String, observer: () -> Unit) {
@@ -111,6 +112,18 @@ class PainDataViewModel : ViewModel() {
         subscriptions[fragmentName]?.remove()
         subscriptions.remove(fragmentName)
         Log.d("PB","Removed FireStore Listener in Model")
+    }
+
+    fun getAveragePain():Int {
+        var averageValue = 0
+
+        for(currentObject in objectList){
+            averageValue+= currentObject.painLevel
+        }
+        if(averageValue!=0){
+            return averageValue/objectList.size
+        }
+        return averageValue
     }
 
 
