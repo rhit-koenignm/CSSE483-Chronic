@@ -114,9 +114,6 @@ class MainActivity : AppCompatActivity() {
 
             profileEmail.text = "${userModel.user?.Email}"
             profileName.text = "${userModel.user?.firstName} ${userModel.user?.lastName}"
-
-
-
     }
 
 

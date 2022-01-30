@@ -26,21 +26,26 @@ class SettingsFragment : Fragment() {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         userModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
-        binding.userEditDoneButton.setOnClickListener {
+        binding.usereditdonebutton.setOnClickListener {
             // Save user info into Firestore.
             var firstNameInput = binding.userEditNameEditText.text.toString().split(" ").get(0)
             var lastNameInput = binding.userEditNameEditText.text.toString().split(" ").get(1)
+            Log.d(Constants.TAG,"CLicked Done Button for User Edit Page")
 
+            Log.d(Constants.TAG,"$firstNameInput, $lastNameInput, ${binding.userEditEmailEditText.text.toString()}, ${binding.userEditUsernameEditText.text.toString()}, ${binding.userEditProfileImageUrlEditText.text.toString()}")
             userModel.updateUser(
                 firstNameIn = firstNameInput,
                 lastNameIn = lastNameInput,
                 emailIn = binding.userEditEmailEditText.text.toString(),
-                usernameIn = binding.userEditNameEditText.text.toString(),
+                usernameIn = binding.userEditUsernameEditText.text.toString(),
                 profilephotoURLIn = binding.userEditProfileImageUrlEditText.text.toString(),
                 newHasCompletedSetup = true,
             )
+            Log.d(Constants.TAG,"CLicked Done Button for User Edit Page")
             findNavController().navigate(R.id.nav_pain_tracking)
         }
+
+
         userModel.getOrMakeUser {
             with(userModel.user!!) {
                 Log.d(Constants.TAG, "$this")

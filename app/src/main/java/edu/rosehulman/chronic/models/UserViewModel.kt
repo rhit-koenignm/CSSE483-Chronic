@@ -36,7 +36,7 @@ class UserViewModel : ViewModel() {
                         var lastNameInput = this?.displayName?.split(" ")?.get(1)
                         var photoURLInput = this?.photoUrl.toString()
                         var photoURL = photoURLInput ?: "No URL"
-                        user = UserData(firstName = firstNameInput!!, lastName = lastNameInput!!, Email = this?.email!!, ProfileURL = photoURL)
+                        user = UserData(firstName = firstNameInput!!, lastName = lastNameInput!!, Email = this?.email!!, ProfileURL = photoURL, userName = "No Username")
                     }
                     //Push the new thing back to firebase
                     firebaseReference.set(user!!)

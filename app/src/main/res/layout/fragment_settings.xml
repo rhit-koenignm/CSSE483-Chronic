@@ -81,7 +81,7 @@
             android:text="Upload Photo" />
 
         <Button
-            android:id="@+id/user_edit_done_button"
+            android:id="@+id/usereditdonebutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/user_edit_profileImageUrl_edit_text"
