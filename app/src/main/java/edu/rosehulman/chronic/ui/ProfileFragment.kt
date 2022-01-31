@@ -45,11 +45,11 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.TagsRecyclerView.adapter
-
         //Add recycler view
-        adapter = MyTagAdapter(this)
+        adapter = MyTagAdapter(this, fragmentName)
+
         //Set Adapter properties
+
         //Match the adapter class to the xml
         binding.TagsRecyclerView.adapter = adapter
         //Chose a linear layout manager for rows, grid is for grid
@@ -59,8 +59,14 @@ class ProfileFragment : Fragment() {
         //Adds nice little gaps around each object in the recylcer view
         binding.TagsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
-        setUpButtons()
+
+        // Now that we have set up our adapter, we need to set up our listeners
+        adapter.addUserListener(fragmentName)
+        adapter.addListener(fragmentName, "MyTags")
+
+
         readFromFireStore()
+        setUpButtons()
         return root
 
     }
@@ -84,7 +90,6 @@ class ProfileFragment : Fragment() {
 
     }
 
-
     fun readFromFireStore() {
         var user = UserData()
         Firebase.firestore.collection(UserData.COLLECTION_PATH).document(Firebase.auth.uid!!).get().addOnSuccessListener { snapshot:DocumentSnapshot ->
@@ -97,5 +102,16 @@ class ProfileFragment : Fragment() {
             }
         }
 
+    }
+
+    // When the fragment is destroyed, remove our listeners
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.removeUserListener(fragmentName)
+        adapter.removeListener(fragmentName)
+    }
+
+    companion object {
+        const val fragmentName = "ProfileFragment"
     }
 }

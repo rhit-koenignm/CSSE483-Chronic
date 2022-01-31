@@ -21,13 +21,19 @@ import edu.rosehulman.chronic.models.Tag
 import edu.rosehulman.chronic.models.UserData
 import edu.rosehulman.chronic.ui.MyTagsFragment
 
-class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTagViewHolder>() {
+// Author: Natalie Koenig
+// Description: MyTagAdapter holds the MyTagViewModels that will show up in the profile page and my tags page. It contains relevant functions to help us interact with the tags.
+// Date: 1/31/2022
+class MyTagAdapter(fragment: Fragment, fragmentName: String) : RecyclerView.Adapter<MyTagAdapter.MyTagViewHolder>() {
 
     val fragment: Fragment = fragment
+
+    // Newly added: this fragment name will allow us to limit functionality if the fragment is ProfileFragment
+    val fragmentName = fragmentName
     val model = ViewModelProvider(fragment.requireActivity()).get(MyTagViewModel::class.java)
 
-    fun addListener(fragmentName: String, userID: String, type: String) {
-        model.addListener(fragmentName, userID, type) {
+    fun addListener(fragmentName: String, type: String) {
+        model.addListener(fragmentName, type) {
             notifyDataSetChanged()
         }
     }
@@ -36,9 +42,10 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
         model.removeListener(fragmentName)
     }
 
-    fun addUserListener(fragmentName: String, userID: String) {
+    // This does a listener on the current user so we can grab their tags
+    fun addUserListener(fragmentName: String) {
         Log.d(Constants.TAG, "Jumping into the addUserListener from adapter")
-        model.addUserListener(fragmentName, userID)
+        model.addUserListener(fragmentName)
     }
 
     fun removeUserListener(fragmentName: String) {
@@ -177,29 +184,36 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
         val tagImageView = itemView.findViewById<ImageView>(R.id.tag_item_icon)
 
         init {
-            itemView.setOnLongClickListener {
-                model.updatePos(adapterPosition)
-                var tag = model.getCurrentTag()
-                if(model.creatorIsUser()) {
-                    showEditDialog(fragment.requireContext(), tag, tag.type)
-                } else {
-                    showNotAuthorDialog()
+            if(!fragmentName.equals("ProfileFragment")) {
+                itemView.setOnLongClickListener {
+                    model.updatePos(adapterPosition)
+                    var tag = model.getCurrentTag()
+                    if (model.creatorIsUser()) {
+                        showEditDialog(fragment.requireContext(), tag, tag.type)
+                    } else {
+                        showNotAuthorDialog()
+                    }
+
+                    //This is where we'll put our popup that lets us delete or update the tag
+                    true
                 }
 
-                //This is where we'll put our popup that lets us delete or update the tag
-                true
-            }
-
-            tagImageView.setOnClickListener {
-                //Need to add in the action of tracking or not tracking
-                model.updatePos(adapterPosition)
-                model.toggleTracked()
-                notifyItemChanged(adapterPosition)
+                tagImageView.setOnClickListener {
+                    //Need to add in the action of tracking or not tracking
+                    model.updatePos(adapterPosition)
+                    model.toggleTracked()
+                    notifyItemChanged(adapterPosition)
+                }
             }
         }
 
         fun bind(tag: Tag){
-            tagTitleTextView.text = tag.toString()
+            // If we are in the profile fragment we only care about myTags
+            if(fragmentName.equals("ProfileFragment")){
+                tagTitleTextView.text = tag.title
+            } else {
+                tagTitleTextView.text = tag.toString()
+            }
 
             if(tag.isTracked) {
                 tagImageView.load(R.drawable.ic_baseline_check_24)

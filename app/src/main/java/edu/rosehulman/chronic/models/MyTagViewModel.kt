@@ -12,7 +12,11 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
 
+// Author: Natalie Koenig
+// Description: The view model class to be used in the MyTagAdapter that will show up in the profile page and my tags page
+// Date: 1/31/2022
 class MyTagViewModel : ViewModel() {
+    // To make life easier, we are storing the
     var tags = ArrayList<Tag>()
     var myTags = ArrayList<String>()
     var currentPos = 0
@@ -31,8 +35,8 @@ class MyTagViewModel : ViewModel() {
     val tagSubscriptions = HashMap<String, ListenerRegistration>()
     val userSubscriptions = HashMap<String, ListenerRegistration>()
 
-    fun addUserListener(fragmentName: String, userID: String) {
-        Log.d(Constants.TAG, "Adding user listener for user $userID for fragment $fragmentName")
+    fun addUserListener(fragmentName: String) {
+        Log.d(Constants.TAG, "Adding user listener for user $uid for fragment $fragmentName")
         // Now to create the user and then add the current firebase reference
         val userSubscription = userRef
             .addSnapshotListener { snapshot: DocumentSnapshot?, error ->
@@ -43,26 +47,8 @@ class MyTagViewModel : ViewModel() {
                 Log.d(Constants.TAG, "In snapshot listener with user $uid")
                 myTags.clear()
                 var tempTags = snapshot!!.get("myTags") as List<String>
-                tempTags.forEach {
-                    Log.d(Constants.TAG, "Got tag ${it}")
-                    myTags.add(it)
-                }
+                myTags.addAll(tempTags)
             }
-//            .addSnapshotListener { snapshot: QuerySnapshot?, error ->
-//                error?.let {
-//                    Log.d(Constants.TAG, "Error $error")
-//                    return@addSnapshotListener
-//                }
-//                Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
-//                myTags.clear()
-//                snapshot?.documents?.forEach {
-//                    var temp = UserData.from(it)
-//                    if(temp.id.equals(Constants.USER_ID)) {
-//                        currentUser = temp
-//                        myTags.addAll(currentUser.myTags)
-//                    }
-//                }
-//            }
         userSubscriptions[fragmentName]
         Log.d(Constants.TAG, "Successfully grabbed user with id of ${uid}")
     }
@@ -73,98 +59,42 @@ class MyTagViewModel : ViewModel() {
         userSubscriptions.remove(fragmentName)
     }
 
-    fun addListener(fragmentName: String, userID: String, type: String, observer: () -> Unit) {
-        //populate later
+    // This function adds the listener for the tags collection overall
+    // We grab the type so we can know what type we are filtering by, if it is myTags then it is ONLY the ones that have been added
+    fun addListener(fragmentName: String, type: String, observer: () -> Unit) {
         Log.d(Constants.TAG, "Adding listener for $fragmentName")
 
+        // Checking what the type is. Since MyTags is not a type, we are going to check that first
         if(type.equals("MyTags")) {
+            if(myTags.isEmpty()){
+                Log.d(Constants.TAG, "My tags is empty so no listener to add")
+            } else {
+                val subscription = ref
+                    .whereIn("id", myTags)
+                    .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
+                        error?.let {
+                            Log.d(Constants.TAG, "Error $error")
+                            return@addSnapshotListener
+                        }
+                        Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
+                        tags.clear()
+                        snapshot?.documents?.forEach {
+                            var tag = Tag.from(it)
+                            //Here is where we'll track our tags and see if it is already tracked
+                            //For now we will just set the value to false
+                            tag.isTracked = myTags.contains(tag.id)
+                            tags.add(tag)
+                        }
+                        observer()
+                    }
+                tagSubscriptions[fragmentName] = subscription
+            }
+        } else if(type.equals("All")){
+            // This case will handle the default filtering on the MyTagsFragment which displays all of the tags
             val subscription = ref
-                .whereIn("id", myTags)
                 .whereIn("creator", listOf("admin", uid))
-                .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
-                    error?.let {
-                        Log.d(Constants.TAG, "Error $error")
-                        return@addSnapshotListener
-                    }
-                    Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
-                    tags.clear()
-                    snapshot?.documents?.forEach {
-                        var tag = Tag.from(it)
-                        //Here is where we'll track our tags and see if it is already tracked
-                        //For now we will just set the value to false
-                        tag.isTracked = myTags.contains(tag.id)
-                        tags.add(tag)
-                    }
-                    observer()
-                }
-            tagSubscriptions[fragmentName] = subscription
-        } else if(type.equals("Symptoms")) {
-            val subscription = ref
-                .whereEqualTo("type", "Symptom")
-                .whereIn("creator", listOf("admin", uid))
-                .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
-                    error?.let {
-                        Log.d(Constants.TAG, "Error $error")
-                        return@addSnapshotListener
-                    }
-                    Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
-                    tags.clear()
-                    snapshot?.documents?.forEach {
-                        var tag = Tag.from(it)
-                        //Here is where we'll track our tags and see if it is already tracked
-                        //For now we will just set the value to false
-                        tag.isTracked = myTags.contains(tag.id)
-                        tags.add(tag)
-                    }
-                    observer()
-                }
-            tagSubscriptions[fragmentName] = subscription
-        } else if(type.equals("Triggers")) {
-            val subscription = ref
-                .whereEqualTo("type", "Trigger")
-                .whereIn("creator", listOf("admin", uid))
-                .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
-                    error?.let {
-                        Log.d(Constants.TAG, "Error $error")
-                        return@addSnapshotListener
-                    }
-                    Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
-                    tags.clear()
-                    snapshot?.documents?.forEach {
-                        var tag = Tag.from(it)
-                        //Here is where we'll track our tags and see if it is already tracked
-                        //For now we will just set the value to false
-                        tag.isTracked = myTags.contains(tag.id)
-                        tags.add(tag)
-                    }
-                    observer()
-                }
-            tagSubscriptions[fragmentName] = subscription
-        }else if(type.equals("Symptoms")) {
-            val subscription = ref
-                .whereEqualTo("type", "Symptom")
-                .whereIn("creator", listOf("admin", uid))
-                .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
-                    error?.let {
-                        Log.d(Constants.TAG, "Error $error")
-                        return@addSnapshotListener
-                    }
-                    Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
-                    tags.clear()
-                    snapshot?.documents?.forEach {
-                        var tag = Tag.from(it)
-                        //Here is where we'll track our tags and see if it is already tracked
-                        //For now we will just set the value to false
-                        tag.isTracked = myTags.contains(tag.id)
-                        tags.add(tag)
-                    }
-                    observer()
-                }
-            tagSubscriptions[fragmentName] = subscription
-        } else if(type.equals("Treatments")){
-            val subscription = ref
-                .whereEqualTo("type", "Treatment")
-                .whereIn("creator", listOf("admin", uid))
+                .orderBy("type")
+                .orderBy("title")
                 .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                     error?.let {
                         Log.d(Constants.TAG, "Error $error")
@@ -183,8 +113,12 @@ class MyTagViewModel : ViewModel() {
                 }
             tagSubscriptions[fragmentName] = subscription
         } else {
+            // This case will handle the filtering for a Symptom, Trigger, or Treatment
             val subscription = ref
                 .whereIn("creator", listOf("admin", uid))
+                .whereEqualTo("type", type)
+                .orderBy("type")
+                .orderBy("title")
                 .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                     error?.let {
                         Log.d(Constants.TAG, "Error $error")
@@ -206,6 +140,7 @@ class MyTagViewModel : ViewModel() {
         //This is where we'll handle everything else
     }
 
+    // Removing our tag listener
     fun removeListener(fragmentName: String) {
         Log.d(Constants.TAG, "Removing listener for $fragmentName")
         tagSubscriptions[fragmentName]?.remove()
@@ -213,7 +148,7 @@ class MyTagViewModel : ViewModel() {
     }
 
     fun createTag(tag: Tag?) : Boolean {
-        //So this is where we create new tags, however we won't allow them to add a null tag
+        //So this is where we create new tags, however we won't allow them to add a null tag or empty tag
         if (tag == null) {
             return false
         } else if (tag.type.equals("") || tag.title.equals("")){
@@ -258,6 +193,8 @@ class MyTagViewModel : ViewModel() {
         currentPos = pos
     }
 
+    // This is a very important function that checks if the creator of a tag is the current user
+    // We use this before doing updates and deletions
     fun creatorIsUser(): Boolean {
         if (getCurrentTag().creator.equals(uid)) {
             return true
@@ -266,6 +203,7 @@ class MyTagViewModel : ViewModel() {
         }
     }
 
+    // Grabbing the size of the tags overall
     fun size() = tags.size
 
     fun toggleTracked() {

@@ -17,6 +17,9 @@ import edu.rosehulman.chronic.adapters.MyTagAdapter
 import edu.rosehulman.chronic.databinding.FragmentMyTagsBinding
 import edu.rosehulman.chronic.databinding.FragmentPaintrackingBinding
 
+// Author: Natalie Koenig
+// Description: The fragment that will allow the user to see their tags, add/remove them, or create new tags
+// Date: 1/31/2022
 class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: FragmentMyTagsBinding
     lateinit var adapter: MyTagAdapter
@@ -42,13 +45,14 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
         }
         typeSpinner.onItemSelectedListener = this
 
-        adapter = MyTagAdapter(this)
+        adapter = MyTagAdapter(this, fragmentName)
         binding.myTagsRecyler.adapter = adapter
         binding.myTagsRecyler.setHasFixedSize(true)
         binding.myTagsRecyler.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter.addUserListener(fragmentName, Constants.USER_ID)
-        adapter.addListener(fragmentName, Constants.USER_ID, currentType)
+        adapter.addUserListener(fragmentName)
+
+        adapter.addListener(fragmentName, currentType)
 
         binding.tagsFab.setOnClickListener {
             Log.d(Constants.TAG, "Pressed tags fab")
@@ -77,8 +81,21 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
             //Do nothing
         } else{
             currentType = type.toString()
+            var tagFiltersArray = this.resources.getStringArray(R.array.tag_filter_types)
+            var tagTypesArray = this.resources.getStringArray(R.array.tag_types)
+
+            var passedInType =
+                when (currentType) {
+                    tagFiltersArray[0] -> "All"
+                    tagFiltersArray[1] -> tagTypesArray[0]
+                    tagFiltersArray[2] -> tagTypesArray[1]
+                    tagFiltersArray[3] -> tagTypesArray[2]
+                    else -> {
+                        "MyTags"
+                    }
+                }
             adapter.removeListener(fragmentName)
-            adapter.addListener(fragmentName, Constants.USER_ID, currentType)
+            adapter.addListener(fragmentName, passedInType)
         }
     }
 

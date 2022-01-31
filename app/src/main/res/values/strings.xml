@@ -35,6 +35,7 @@
     <string name="my_tags_description">Customize your pain tracking experience with tags for your symptoms, triggers, and treatments. Not seeing one you like? Add your own!</string>
     <string-array name="tag_filter_types">
         <item>All Tag Types</item>
+        <item>My Tags</item>
         <item>Symptoms</item>
         <item>Triggers</item>
         <item>Treatments</item>
