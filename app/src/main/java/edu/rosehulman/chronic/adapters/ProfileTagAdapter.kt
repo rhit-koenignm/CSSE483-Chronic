@@ -21,7 +21,7 @@ import edu.rosehulman.chronic.models.Tag
 import edu.rosehulman.chronic.models.UserData
 import edu.rosehulman.chronic.ui.MyTagsFragment
 
-class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTagViewHolder>() {
+class ProfileTagAdapter(fragment: Fragment) : RecyclerView.Adapter<ProfileTagAdapter.MyTagViewHolder>() {
 
     val fragment: Fragment = fragment
     val model = ViewModelProvider(fragment.requireActivity()).get(MyTagViewModel::class.java)
@@ -140,6 +140,7 @@ class MyTagAdapter(fragment: Fragment) : RecyclerView.Adapter<MyTagAdapter.MyTag
             if(tag == null){
                 // Call the adapter's method instead actually
                 this.addTag(Tag(newTitle, newType))
+
             } else {
                 model.updateTag(Tag(newTitle, newType, tag.creator, tag.isTracked))
             }

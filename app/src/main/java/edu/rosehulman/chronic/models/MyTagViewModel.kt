@@ -5,6 +5,7 @@ import android.location.GnssAntennaInfo
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import coil.load
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -19,9 +20,13 @@ class MyTagViewModel : ViewModel() {
     fun getTagAt(pos: Int) = tags[pos]
     fun getCurrentTag() = tags[currentPos]
 
+    var uid = Firebase.auth.uid!!
+
     var ref = Firebase.firestore.collection(Tag.COLLECTION_PATH)
-    var currentUser: UserData = UserData()
-    var userRef = Firebase.firestore.collection(UserData.COLLECTION_PATH)
+    var userRef = Firebase
+        .firestore
+        .collection(UserData.COLLECTION_PATH)
+        .document(uid)
 
     val tagSubscriptions = HashMap<String, ListenerRegistration>()
     val userSubscriptions = HashMap<String, ListenerRegistration>()
@@ -29,24 +34,37 @@ class MyTagViewModel : ViewModel() {
     fun addUserListener(fragmentName: String, userID: String) {
         Log.d(Constants.TAG, "Adding user listener for user $userID for fragment $fragmentName")
         // Now to create the user and then add the current firebase reference
-        val userSubscription = Firebase.firestore.collection(UserData.COLLECTION_PATH)
-            .addSnapshotListener { snapshot: QuerySnapshot?, error ->
+        val userSubscription = userRef
+            .addSnapshotListener { snapshot: DocumentSnapshot?, error ->
                 error?.let {
                     Log.d(Constants.TAG, "Error $error")
                     return@addSnapshotListener
                 }
-                Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
+                Log.d(Constants.TAG, "In snapshot listener with user $uid")
                 myTags.clear()
-                snapshot?.documents?.forEach {
-                    var temp = UserData.from(it)
-                    if(temp.id.equals(Constants.USER_ID)) {
-                        currentUser = temp
-                        myTags.addAll(currentUser.myTags)
-                    }
+                var tempTags = snapshot!!.get("myTags") as List<String>
+                tempTags.forEach {
+                    Log.d(Constants.TAG, "Got tag ${it}")
+                    myTags.add(it)
                 }
             }
+//            .addSnapshotListener { snapshot: QuerySnapshot?, error ->
+//                error?.let {
+//                    Log.d(Constants.TAG, "Error $error")
+//                    return@addSnapshotListener
+//                }
+//                Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
+//                myTags.clear()
+//                snapshot?.documents?.forEach {
+//                    var temp = UserData.from(it)
+//                    if(temp.id.equals(Constants.USER_ID)) {
+//                        currentUser = temp
+//                        myTags.addAll(currentUser.myTags)
+//                    }
+//                }
+//            }
         userSubscriptions[fragmentName]
-        Log.d(Constants.TAG, "Successfully grabbed user with id of ${currentUser.id}")
+        Log.d(Constants.TAG, "Successfully grabbed user with id of ${uid}")
     }
 
     fun removeUserListener(fragmentName: String) {
@@ -62,6 +80,7 @@ class MyTagViewModel : ViewModel() {
         if(type.equals("MyTags")) {
             val subscription = ref
                 .whereIn("id", myTags)
+                .whereIn("creator", listOf("admin", uid))
                 .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                     error?.let {
                         Log.d(Constants.TAG, "Error $error")
@@ -73,7 +92,7 @@ class MyTagViewModel : ViewModel() {
                         var tag = Tag.from(it)
                         //Here is where we'll track our tags and see if it is already tracked
                         //For now we will just set the value to false
-                        tag.isTracked = currentUser.myTags.contains(tag.id)
+                        tag.isTracked = myTags.contains(tag.id)
                         tags.add(tag)
                     }
                     observer()
@@ -82,6 +101,7 @@ class MyTagViewModel : ViewModel() {
         } else if(type.equals("Symptoms")) {
             val subscription = ref
                 .whereEqualTo("type", "Symptom")
+                .whereIn("creator", listOf("admin", uid))
                 .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                     error?.let {
                         Log.d(Constants.TAG, "Error $error")
@@ -93,7 +113,7 @@ class MyTagViewModel : ViewModel() {
                         var tag = Tag.from(it)
                         //Here is where we'll track our tags and see if it is already tracked
                         //For now we will just set the value to false
-                        tag.isTracked = currentUser.myTags.contains(tag.id)
+                        tag.isTracked = myTags.contains(tag.id)
                         tags.add(tag)
                     }
                     observer()
@@ -102,6 +122,7 @@ class MyTagViewModel : ViewModel() {
         } else if(type.equals("Triggers")) {
             val subscription = ref
                 .whereEqualTo("type", "Trigger")
+                .whereIn("creator", listOf("admin", uid))
                 .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                     error?.let {
                         Log.d(Constants.TAG, "Error $error")
@@ -113,7 +134,7 @@ class MyTagViewModel : ViewModel() {
                         var tag = Tag.from(it)
                         //Here is where we'll track our tags and see if it is already tracked
                         //For now we will just set the value to false
-                        tag.isTracked = currentUser.myTags.contains(tag.id)
+                        tag.isTracked = myTags.contains(tag.id)
                         tags.add(tag)
                     }
                     observer()
@@ -122,6 +143,7 @@ class MyTagViewModel : ViewModel() {
         }else if(type.equals("Symptoms")) {
             val subscription = ref
                 .whereEqualTo("type", "Symptom")
+                .whereIn("creator", listOf("admin", uid))
                 .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                     error?.let {
                         Log.d(Constants.TAG, "Error $error")
@@ -133,7 +155,7 @@ class MyTagViewModel : ViewModel() {
                         var tag = Tag.from(it)
                         //Here is where we'll track our tags and see if it is already tracked
                         //For now we will just set the value to false
-                        tag.isTracked = currentUser.myTags.contains(tag.id)
+                        tag.isTracked = myTags.contains(tag.id)
                         tags.add(tag)
                     }
                     observer()
@@ -142,6 +164,7 @@ class MyTagViewModel : ViewModel() {
         } else if(type.equals("Treatments")){
             val subscription = ref
                 .whereEqualTo("type", "Treatment")
+                .whereIn("creator", listOf("admin", uid))
                 .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                     error?.let {
                         Log.d(Constants.TAG, "Error $error")
@@ -153,7 +176,7 @@ class MyTagViewModel : ViewModel() {
                         var tag = Tag.from(it)
                         //Here is where we'll track our tags and see if it is already tracked
                         //For now we will just set the value to false
-                        tag.isTracked = currentUser.myTags.contains(tag.id)
+                        tag.isTracked = myTags.contains(tag.id)
                         tags.add(tag)
                     }
                     observer()
@@ -161,6 +184,7 @@ class MyTagViewModel : ViewModel() {
             tagSubscriptions[fragmentName] = subscription
         } else {
             val subscription = ref
+                .whereIn("creator", listOf("admin", uid))
                 .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                     error?.let {
                         Log.d(Constants.TAG, "Error $error")
@@ -172,7 +196,7 @@ class MyTagViewModel : ViewModel() {
                         var tag = Tag.from(it)
                         //Here is where we'll track our tags and see if it is already tracked
                         //For now we will just set the value to false
-                        tag.isTracked = currentUser.myTags.contains(tag.id)
+                        tag.isTracked = myTags.contains(tag.id)
                         tags.add(tag)
                     }
                     observer()
@@ -195,7 +219,7 @@ class MyTagViewModel : ViewModel() {
         } else if (tag.type.equals("") || tag.title.equals("")){
             return false
         }else {
-            tag.creator = currentUser.id
+            tag.creator = uid
             tag.isTracked
             ref.add(tag)
             return true
@@ -235,7 +259,7 @@ class MyTagViewModel : ViewModel() {
     }
 
     fun creatorIsUser(): Boolean {
-        if (getCurrentTag().creator.equals(currentUser.id)) {
+        if (getCurrentTag().creator.equals(uid)) {
             return true
         } else {
             return false
@@ -248,12 +272,14 @@ class MyTagViewModel : ViewModel() {
         // So isTracked will be used locally, but not in firestore.
         // When I load them in I'll set them according to the user's tag collection
         tags[currentPos].isTracked = !tags[currentPos].isTracked
-        if(getCurrentTag().isTracked) {
+        if(getCurrentTag().isTracked && !myTags.contains(getCurrentTag().id)) {
             myTags.add(getCurrentTag().id)
         } else {
             myTags.remove(getCurrentTag().id)
         }
-        currentUser.myTags = myTags
-        userRef.document(currentUser.id).set(currentUser)
+        myTags = myTags
+        userRef.update(mapOf(
+            "myTags" to myTags
+        ))
     }
 }
