@@ -20,6 +20,7 @@ class UserViewModel : ViewModel() {
 
     //Send in a callback observer function
     fun getOrMakeUser(observer: () -> Unit) {
+        firebaseReference = Firebase.firestore.collection(UserData.COLLECTION_PATH).document(Firebase.auth.currentUser?.uid!!)
         if (user != null) {
             //done for now, user exists, need to get it
             observer()
