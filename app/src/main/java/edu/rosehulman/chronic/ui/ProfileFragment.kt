@@ -59,16 +59,13 @@ class ProfileFragment : Fragment() {
         //Adds nice little gaps around each object in the recylcer view
         binding.TagsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
-
         // Now that we have set up our adapter, we need to set up our listeners
         adapter.addUserListener(fragmentName)
         adapter.addListener(fragmentName, "MyTags")
 
-
         readFromFireStore()
         setUpButtons()
         return root
-
     }
 
     fun setUpButtons() {
