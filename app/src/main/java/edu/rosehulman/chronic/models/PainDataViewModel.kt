@@ -67,7 +67,7 @@ class PainDataViewModel : ViewModel() {
     fun addListener(fragmentName: String, userID: String, observer: () -> Unit) {
         Log.d("Chronic","Added FireStore Listener in Model")
         val subscription = fireBaseReference
-            //.orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
+            .orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
             .addSnapshotListener() { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                 error?.let {
                     Log.d("Chronic","Error in adding Snapshot Listener")
@@ -88,7 +88,7 @@ class PainDataViewModel : ViewModel() {
     fun addCalanderListener(fragmentName: String, userID: String, observer: () -> Unit) {
         Log.d("Chronic","Added FireStore Listener in Model")
         val subscription = fireBaseReference
-            //.orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
+            .orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
             //.whereEqualTo()
             .addSnapshotListener() { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                 error?.let {
@@ -125,6 +125,24 @@ class PainDataViewModel : ViewModel() {
         }
         return averageValue
     }
+
+    fun getSpecifedDataPoints(inputNumDataPoints: Int ): ArrayList<PainData> {
+        var output = ArrayList<PainData>()
+        var objectsToGrab = inputNumDataPoints;
+
+        //Only grab what exists
+        if(objectList.size <objectsToGrab){
+            objectsToGrab = objectList.size
+        }
+        for(index in 0 until objectsToGrab){
+            output.add(objectList[index])
+        }
+
+
+    return output
+    }
+
+
 
 
 }

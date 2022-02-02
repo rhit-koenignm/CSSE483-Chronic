@@ -19,7 +19,7 @@ data class PainData(
         const val COLLECTION_PATH = "users"
         const val ENTRY_COLLECTION_PATH = "entries"
         const val ENTRYTAGS_COLLECTION_PATH = "entryTags"
-
+        const val SORTTIME = "startTime"
 
         fun from(snapshot: DocumentSnapshot): PainData {
             val pd:PainData = snapshot.toObject(PainData::class.java)!!
