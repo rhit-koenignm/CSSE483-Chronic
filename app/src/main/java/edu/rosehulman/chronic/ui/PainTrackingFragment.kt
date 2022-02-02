@@ -3,17 +3,19 @@ package edu.rosehulman.chronic.ui
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IValueFormatter
-import com.github.mikephil.charting.utils.ViewPortHandler
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -23,7 +25,9 @@ import edu.rosehulman.chronic.databinding.FragmentPaintrackingBinding
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataViewModel
 import edu.rosehulman.chronic.models.UserData
-import java.text.DecimalFormat
+import java.lang.Math.abs
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PainTrackingFragment : Fragment() {
@@ -33,8 +37,9 @@ class PainTrackingFragment : Fragment() {
 
     private lateinit var chart: BarChart
 
-    var displayLastWeek = false;
-    var displayLastMonth = true;
+    //Display 31 or 7
+    var displayLastWeek = true;
+    var displayLastMonth = false;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +49,9 @@ class PainTrackingFragment : Fragment() {
         model = ViewModelProvider(requireActivity()).get(PainDataViewModel::class.java)
         binding = FragmentPaintrackingBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        setHasOptionsMenu(true)
+        //val action_filter_button = binding.root.findViewById<Object>(R.id.action_filter_toggle)
+
 
 
         //TODO Clear backstack so you can't get to the loading screen
@@ -103,6 +111,41 @@ class PainTrackingFragment : Fragment() {
         //Create the graph
         chart = binding.PainTrackingDataGraph
 
+        //Setup Chart data
+        //Setup Data on Chart
+        //Grab the latest 7 data entries if in week mode, grab the latest 31 entries if in month mode
+
+        val dataList = ArrayList<PainData>()
+        if(displayLastWeek){
+            // grab the last seven entries (if they exist)
+            dataList.addAll(model.getSpecifedDataPoints(7))
+        }else{
+            dataList.addAll(model.getSpecifedDataPoints(31))
+        }
+
+        val values = ArrayList<BarEntry>()
+        val colors = ArrayList<Int>()
+        val xAxisLabel = ArrayList<String>()
+        val green = Color.rgb(110, 190, 102)
+        val red = Color.rgb(211, 74, 88)
+
+
+        for (i in dataList.indices) {
+            //Flip to be negative and red for bad entries, and green and positive for good entries
+            var dataValue = dataList[i].painLevel.toFloat();
+            if(dataValue < 5){
+                dataValue = - dataList[i].painLevel.toFloat();
+            }
+
+            values.add(BarEntry((i).toFloat(), dataValue))
+            // specific colors, less than 5 is red, otherwise it is green
+            if (dataList[i].painLevel < 5) colors.add(red) else colors.add(green)
+
+            //Handle adding the proper date labels
+            xAxisLabel.add(dataList[i].getFormattedStartTime())
+        }
+
+
         //Set Colors
         chart.setBackgroundColor(Color.WHITE)
         chart.setDrawBarShadow(false)
@@ -137,6 +180,11 @@ class PainTrackingFragment : Fragment() {
         xAxis.textSize = 13f
         xAxis.setCenterAxisLabels(true)
         xAxis.granularity = 1f
+        xAxis.valueFormatter = (MyAxisValueFormatter(xAxisLabel))
+        xAxis.setCenterAxisLabels(false)
+
+
+
 
         if(displayLastWeek){
             xAxis.labelCount = 7
@@ -159,48 +207,8 @@ class PainTrackingFragment : Fragment() {
         chart.axisRight.isEnabled = false
         chart.legend.isEnabled = false
 
-        //Setup Data on Chart
-        setupDataForChart()
-
-    }
 
 
-    private fun setupDataForChart() {
-        //Grab the latest 7 data entries if in week mode, grab the latest 31 entries if in month mode
-
-        val dataList = ArrayList<PainData>()
-        if(displayLastWeek){
-            // grab the last seven entries (if they exist)
-            dataList.addAll(model.getSpecifedDataPoints(7))
-        }else{
-            dataList.addAll(model.getSpecifedDataPoints(31))
-        }
-
-
-//        dataList.add(Data(0f, -224.1f, "12-29"))
-//        dataList.add(Data(1f, 238.5f, "12-30"))
-//        dataList.add(Data(2f, 1280.1f, "12-31"))
-//        dataList.add(Data(3f, -442.3f, "01-01"))
-//        dataList.add(Data(4f, -2280.1f, "01-02"))
-
-
-        val values = ArrayList<BarEntry>()
-        val colors = ArrayList<Int>()
-        val green = Color.rgb(110, 190, 102)
-        val red = Color.rgb(211, 74, 88)
-
-
-        for (i in dataList.indices) {
-            //Flip to be negative and red for bad entries, and green and positive for good entries
-            var dataValue = dataList[i].painLevel.toFloat();
-            if(dataValue < 5){
-                dataValue = - dataList[i].painLevel.toFloat();
-            }
-
-            values.add(BarEntry((dataList.size-i).toFloat(), dataValue))
-            // specific colors, less than 5 is red, otherwise it is green
-            if (dataList[i].painLevel < 5) colors.add(red) else colors.add(green)
-        }
 
         //Take the data, and add it to the chart
         val set: BarDataSet
@@ -217,33 +225,59 @@ class PainTrackingFragment : Fragment() {
             set.setValueTextColors(colors)
             val data = BarData(set)
             data.setValueTextSize(13f)
-            //data.setValueFormatter(ValueFormatter()!!)
-
             data.barWidth = 0.8f
+            data.setValueFormatter(MyDataValueFormatter())
             chart.data = data
             chart.invalidate()
         }
     }
 
+    class MyAxisValueFormatter(private val xValsDateLabel: ArrayList<String>) : ValueFormatter() {
 
-
-
-
-    private class ValueFormatter internal constructor() : IValueFormatter {
-        private val mFormat: DecimalFormat
-        override fun getFormattedValue(
-            value: Float,
-            entry: Entry,
-            dataSetIndex: Int,
-            viewPortHandler: ViewPortHandler
-        ): String {
-            return mFormat.format(value.toDouble())
+        override fun getFormattedValue(value: Float): String {
+            return value.toString()
         }
 
-        init {
-            mFormat = DecimalFormat("######.0")
+        override fun getAxisLabel(value: Float, axis: AxisBase): String {
+            if (value.toInt() >= 0 && value.toInt() <= xValsDateLabel.size - 1) {
+                return xValsDateLabel[value.toInt()]
+            } else {
+                return ("").toString()
+            }
         }
     }
+
+    class MyDataValueFormatter() : ValueFormatter() {
+
+        override fun getFormattedValue(value: Float): String {
+            return kotlin.math.abs(value).toString()
+        }
+
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                // User chose the "Settings" item, show the app settings UI...
+                true
+            }
+
+            R.id.action_filter_toggle -> {
+
+                true
+            }
+            else -> {
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
 
 
     override fun onStop() {

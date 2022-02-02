@@ -5,6 +5,8 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
 import java.sql.Time
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.*
 
 data class PainData(
     var painLevel: Int = -1,
@@ -26,5 +28,18 @@ data class PainData(
             pd.id = snapshot.id
             return pd
         }
+    }
+
+
+    fun getFormattedStartTime():String{
+        var startDate:LocalDateTime = convertToLocalDateViaInstant(startTime.toDate())
+        return "${startDate.monthValue}/${startDate.dayOfMonth}"
+
+    }
+
+    private fun convertToLocalDateViaInstant(dateToConvert: Date): LocalDateTime {
+        return dateToConvert.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
     }
 }

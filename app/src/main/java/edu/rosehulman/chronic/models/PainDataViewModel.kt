@@ -139,8 +139,12 @@ class PainDataViewModel : ViewModel() {
         }
 
 
+        //Switch so that it is latest first
+        output.reverse()
+
     return output
     }
+
 
 
 

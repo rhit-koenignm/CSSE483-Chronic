@@ -108,6 +108,8 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime()
         }
+
+
     }
 
 
