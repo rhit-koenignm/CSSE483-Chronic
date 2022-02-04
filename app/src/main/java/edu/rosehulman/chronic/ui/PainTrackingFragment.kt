@@ -141,8 +141,11 @@ class PainTrackingFragment : Fragment() {
             // specific colors, less than 5 is red, otherwise it is green
             if (dataList[i].painLevel < 5) colors.add(red) else colors.add(green)
 
-            //Handle adding the proper date labels
-            xAxisLabel.add(dataList[i].getFormattedStartTime())
+            if(displayLastWeek){
+                //Handle adding the proper date labels
+                xAxisLabel.add(dataList[i].getFormattedStartTime())
+            }
+
         }
 
 
@@ -171,12 +174,16 @@ class PainTrackingFragment : Fragment() {
         chart.setDrawGridBackground(false)
 
 
+
+
         //Initialize the X axis formatting
         val xAxis = chart.xAxis
         xAxis.position = XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
         xAxis.textColor = Color.LTGRAY
+
+
         xAxis.textSize = 13f
         xAxis.setCenterAxisLabels(true)
         xAxis.granularity = 1f
@@ -188,8 +195,10 @@ class PainTrackingFragment : Fragment() {
 
         if(displayLastWeek){
             xAxis.labelCount = 7
+            chart.legend.isEnabled = true
         }else{
             xAxis.labelCount = 31
+            chart.legend.isEnabled = false
         }
 
         //Setup the axis itself and the formatting
@@ -224,9 +233,17 @@ class PainTrackingFragment : Fragment() {
             set.colors = colors
             set.setValueTextColors(colors)
             val data = BarData(set)
+
             data.setValueTextSize(13f)
             data.barWidth = 0.8f
             data.setValueFormatter(MyDataValueFormatter())
+
+
+
+
+            data.setDrawValues(false)
+
+
             chart.data = data
             chart.invalidate()
         }
@@ -267,7 +284,13 @@ class PainTrackingFragment : Fragment() {
             }
 
             R.id.action_filter_toggle -> {
+                displayLastWeek = displayLastWeek != true
+                displayLastMonth = displayLastMonth != true
+                chart.notifyDataSetChanged();
+                chart.invalidate();
 
+                //Redraw Chart
+                drawChart()
                 true
             }
             else -> {
