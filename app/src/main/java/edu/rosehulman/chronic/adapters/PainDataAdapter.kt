@@ -51,6 +51,8 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
 
 
 
+
+
         Log.d("Chronic","Added Listener in the Adapter")
     }
 
@@ -61,6 +63,10 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
 
     fun removeAt(adapterPosition: Int) {
         model.removeAt(adapterPosition)
+    }
+
+    fun addDateListener(fragmentName: String, newDate: Date, uid: String) {
+        model.addDateListener(fragmentName, newDate, uid){notifyDataSetChanged()}
     }
 
 

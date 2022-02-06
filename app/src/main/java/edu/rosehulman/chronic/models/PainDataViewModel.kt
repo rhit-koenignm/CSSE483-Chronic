@@ -10,6 +10,9 @@ import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
 import java.sql.Time
 import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class PainDataViewModel : ViewModel() {
@@ -144,10 +147,27 @@ class PainDataViewModel : ViewModel() {
     return output
     }
 
+    fun addDateListener(fragmentName: String, newDate: Date, uid: String, observer: () -> Unit) {
+        Log.d("Chronic","Added FireStore Date Listener in Model")
+        val subscription = fireBaseReference
+            .orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
+            .whereGreaterThan("startTime", newDate)
+            .addSnapshotListener() { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
+                error?.let {
+                    Log.d("Chronic","Error in addinSnapshot Date Listener")
+                    return@addSnapshotListener
+                }
 
-
-
-
+                Log.d("Chronic","Triggered Callback")
+                objectList.clear()
+                snapshot?.documents?.forEach() {
+                    Log.d("Chronic","Adding a data from Firestore to arraylist")
+                    objectList.add(PainData.from(it))
+                }
+                observer()
+            }
+        subscriptions.put(fragmentName, subscription)
+    }
 
 
 }

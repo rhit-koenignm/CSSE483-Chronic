@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.adapters.PainDataAdapter
@@ -35,7 +37,8 @@ class DataListFragment : Fragment(){
 
         //Add recycler view
         adapter = PainDataAdapter(this)
-        adapter.addModelListener(fragmentName,Constants.USER_ID,isCalenderFragment)
+        adapter.addModelListener(fragmentName, Firebase.auth.uid!!,isCalenderFragment)
+        adapter.notifyDataSetChanged()
         //Set Adapter properties
         //Match the adapter class to the xml
         binding.CalenderListRecyclerView.adapter = adapter
@@ -90,5 +93,10 @@ class DataListFragment : Fragment(){
 
     companion object{
         const val fragmentName = "DataListFragment"
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.removeModelListener(fragmentName = DataCalenderFragment.fragmentName)
     }
 }

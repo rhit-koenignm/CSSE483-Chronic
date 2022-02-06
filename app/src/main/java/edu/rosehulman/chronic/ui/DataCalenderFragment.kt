@@ -7,18 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
-import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.adapters.PainDataAdapter
 import edu.rosehulman.chronic.adapters.SwipeToDeleteCallback
 import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
 import edu.rosehulman.chronic.models.PainData
+import java.util.*
 
 
 class DataCalenderFragment : Fragment(){
@@ -37,7 +38,9 @@ class DataCalenderFragment : Fragment(){
 
         //Add recycler view
         adapter = PainDataAdapter(this)
-        adapter.addModelListener(DataListFragment.fragmentName, Constants.USER_ID,isCalenderFragment)
+        val newDate = Date(binding.CalenderData.date)
+        adapter.addDateListener(fragmentName,newDate,Firebase.auth.uid!!)
+        adapter.notifyDataSetChanged()
         //Set Adapter properties
         //Match the adapter class to the xml
         binding.CalenderDataRecyclerView.adapter = adapter
@@ -73,6 +76,15 @@ class DataCalenderFragment : Fragment(){
             Log.d(Constants.TAG,"CLicked Add New Entry")
         }
 
+            //Handle the use of the calander itself for filtering
+        binding.CalenderData.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            val newDate = Date(binding.CalenderData.date)
+            adapter.removeModelListener(fragmentName)
+            adapter.addDateListener(fragmentName,newDate,Firebase.auth.uid!!)
+            adapter.notifyDataSetChanged()
+
+        }
+
         return root
     }
 
@@ -94,6 +106,10 @@ class DataCalenderFragment : Fragment(){
 
     companion object{
         const val fragmentName = "DataCalenderFragment"
+    }
+    override fun onStop() {
+        super.onStop()
+        adapter.removeModelListener(fragmentName)
     }
 }
 
