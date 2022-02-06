@@ -1,6 +1,7 @@
 package edu.rosehulman.chronic.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +11,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Timestamp
 import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.adapters.PainDataAdapter
 import edu.rosehulman.chronic.adapters.SwipeToDeleteCallback
 import edu.rosehulman.chronic.databinding.FragmentDataListBinding
+import edu.rosehulman.chronic.models.PainData
 
 class DataListFragment : Fragment(){
 
@@ -59,7 +62,11 @@ class DataListFragment : Fragment(){
         itemTouchHelper.attachToRecyclerView(binding.CalenderListRecyclerView)
 
         binding.FABListData.setOnClickListener(){
-            findNavController().navigate(R.id.nav_pain_data_entry)
+            val defaultEntry = PainData(0,"CHANGEME", Timestamp.now(), Timestamp.now())
+            adapter.addObject(defaultEntry)
+            //Need to update the adapter to tell that it's changed
+            adapter.notifyDataSetChanged()
+            Log.d(Constants.TAG,"CLicked Add New Entry")
         }
 
 

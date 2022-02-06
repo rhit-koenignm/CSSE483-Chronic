@@ -33,8 +33,36 @@ class PainDataEntryFragment : Fragment() {
         val root: View = binding.root
 
         setupButtons()
+        setupExistingData()
 
         return root
+    }
+
+    fun setupExistingData(){
+        val currentObject = model.getCurrentObject()
+
+        //Bind the model object's specific data to the text view for each
+        binding.titleInput.setText(currentObject.title)
+        binding.painLevelInput.setText(currentObject.painLevel.toString())
+        val startDate:LocalDateTime = convertToLocalDateViaInstant(currentObject.startTime.toDate())
+        val endDate:LocalDateTime = convertToLocalDateViaInstant(currentObject.endTime.toDate())
+
+        val startDateFormatted = "${startDate.monthValue}/${startDate.dayOfMonth}/${startDate.year}"
+        val startTimeFormatted = "${startDate.hour}:${startDate.minute}:${startDate.second}"
+        val endDateFormatted ="${endDate.monthValue}/${endDate.dayOfMonth}/${endDate.year}"
+        val endTimeFormatted ="${endDate.hour}:${endDate.minute}:${endDate.second}"
+
+        binding.startDateTextInput.setText(startDateFormatted)
+        binding.startTimeTextInput.setText(startTimeFormatted)
+
+        binding.endDateTextInput.setText(endDateFormatted)
+        binding.endTimeTextInput.setText(endTimeFormatted)
+    }
+
+    fun convertToLocalDateViaInstant(dateToConvert: Date): LocalDateTime {
+        return dateToConvert.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
     }
 
 
@@ -70,22 +98,27 @@ class PainDataEntryFragment : Fragment() {
                 endTimeString = "00:00:00"
             }
 
-            var startLocalDateTime:LocalDateTime = LocalDateTime.parse("$startDateString : $startTimeString", DateTimeFormatter.ofPattern("M/d/yyyy : HH:mm:ss"))
-            var endLocalDateTime:LocalDateTime = LocalDateTime.parse("$endDateString : $endTimeString", DateTimeFormatter.ofPattern("M/d/yyyy : HH:mm:ss"))
-
-
+            val startLocalDateTime:LocalDateTime = LocalDateTime.parse("$startDateString : $startTimeString", DateTimeFormatter.ofPattern("M/d/yyyy : HH:mm:ss"))
+            val endLocalDateTime:LocalDateTime = LocalDateTime.parse("$endDateString : $endTimeString", DateTimeFormatter.ofPattern("M/d/yyyy : HH:mm:ss"))
 
             val startDateTime: Date = Date.from(startLocalDateTime.atZone(ZoneId.systemDefault()).toInstant())
             val endDateTime: Date = Date.from(endLocalDateTime.atZone(ZoneId.systemDefault()).toInstant())
 
-            var startTimestamp:Timestamp = Timestamp(startDateTime)
-            var endTimestamp:Timestamp = Timestamp(endDateTime)
+            val startTimestamp:Timestamp = Timestamp(startDateTime)
+            val endTimestamp:Timestamp = Timestamp(endDateTime)
 
             val newObject: PainData = PainData(painDataInt,title,startTimestamp, endTimestamp)
-            model.addObject(newObject)
+            model.updateCurrentObject(title,painDataInt,startTimestamp,endTimestamp)
             findNavController().popBackStack()
         }
     }
+
+
+
+
+
+
+
 
 
 

@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
@@ -18,6 +15,8 @@ import java.time.LocalDateTime
 class PainDataViewModel : ViewModel() {
         var objectList = ArrayList<PainData>()
         var currentPosition = 0         //Defaults to looking at the zeroth position
+
+
 
         fun getObjectAtPosition(position: Int) = objectList[position]
         fun getCurrentObject() = getObjectAtPosition(currentPosition)
@@ -85,7 +84,7 @@ class PainDataViewModel : ViewModel() {
         subscriptions.put(fragmentName, subscription)
     }
 
-    fun addCalanderListener(fragmentName: String, userID: String, observer: () -> Unit) {
+    fun addCalendarListener(fragmentName: String, userID: String, observer: () -> Unit) {
         Log.d("Chronic","Added FireStore Listener in Model")
         val subscription = fireBaseReference
             .orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
@@ -144,6 +143,8 @@ class PainDataViewModel : ViewModel() {
 
     return output
     }
+
+
 
 
 

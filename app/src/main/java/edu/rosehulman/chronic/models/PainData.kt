@@ -13,6 +13,8 @@ data class PainData(
     var title: String = "Null",
     var startTime:Timestamp = Timestamp.now(),
     var endTime:Timestamp = Timestamp.now(),
+    var attachedTags: ArrayList<Tag> = ArrayList<Tag>(),
+    var myTags: ArrayList<String> = ArrayList<String>(),
 ){
     @get:Exclude
     var id = ""
@@ -32,7 +34,7 @@ data class PainData(
 
 
     fun getFormattedStartTime():String{
-        var startDate:LocalDateTime = convertToLocalDateViaInstant(startTime.toDate())
+        val startDate:LocalDateTime = convertToLocalDateViaInstant(startTime.toDate())
         return "${startDate.monthValue}/${startDate.dayOfMonth}"
 
     }

@@ -39,7 +39,7 @@ class PainTrackingFragment : Fragment() {
 
     //Display 31 or 7
     var displayLastWeek = true;
-    var displayLastMonth = false;
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,9 +50,6 @@ class PainTrackingFragment : Fragment() {
         binding = FragmentPaintrackingBinding.inflate(inflater, container, false)
         val root: View = binding.root
         setHasOptionsMenu(true)
-        //val action_filter_button = binding.root.findViewById<Object>(R.id.action_filter_toggle)
-
-
 
         //TODO Clear backstack so you can't get to the loading screen
 
@@ -141,10 +138,9 @@ class PainTrackingFragment : Fragment() {
             // specific colors, less than 5 is red, otherwise it is green
             if (dataList[i].painLevel < 5) colors.add(red) else colors.add(green)
 
-            if(displayLastWeek){
-                //Handle adding the proper date labels
+            //Only display X axis labels if there is enough space (or are small enough)
+            //Handle adding the proper date labels
                 xAxisLabel.add(dataList[i].getFormattedStartTime())
-            }
 
         }
 
@@ -181,24 +177,20 @@ class PainTrackingFragment : Fragment() {
         xAxis.position = XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
-        xAxis.textColor = Color.LTGRAY
+        xAxis.textColor = Color.BLACK
 
-
-        xAxis.textSize = 13f
         xAxis.setCenterAxisLabels(true)
         xAxis.granularity = 1f
         xAxis.valueFormatter = (MyAxisValueFormatter(xAxisLabel))
         xAxis.setCenterAxisLabels(false)
 
 
-
-
         if(displayLastWeek){
             xAxis.labelCount = 7
-            chart.legend.isEnabled = true
+            xAxis.textSize = 13f
         }else{
             xAxis.labelCount = 31
-            chart.legend.isEnabled = false
+            xAxis.textSize = 5f
         }
 
         //Setup the axis itself and the formatting
@@ -234,14 +226,22 @@ class PainTrackingFragment : Fragment() {
             set.setValueTextColors(colors)
             val data = BarData(set)
 
-            data.setValueTextSize(13f)
-            data.barWidth = 0.8f
-            data.setValueFormatter(MyDataValueFormatter())
 
 
 
+            //Enable or disable bar values
+            if(displayLastWeek){
+                data.setValueTextSize(13f)
+                data.barWidth = 0.8f
+                data.setValueFormatter(MyDataValueFormatter())
+                data.setDrawValues(true)
+            }else{
+                data.setValueTextSize(5f)
+                data.barWidth = 0.8f
+                data.setValueFormatter(MyDataValueFormatter())
+                data.setDrawValues(true)
+            }
 
-            data.setDrawValues(false)
 
 
             chart.data = data
@@ -285,9 +285,12 @@ class PainTrackingFragment : Fragment() {
 
             R.id.action_filter_toggle -> {
                 displayLastWeek = displayLastWeek != true
-                displayLastMonth = displayLastMonth != true
-                chart.notifyDataSetChanged();
-                chart.invalidate();
+                chart.notifyDataSetChanged()
+                chart.invalidate()
+                chart.clearValues()
+                chart.clear()
+
+
 
                 //Redraw Chart
                 drawChart()

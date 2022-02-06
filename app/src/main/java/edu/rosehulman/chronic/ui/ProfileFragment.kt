@@ -56,12 +56,14 @@ class ProfileFragment : Fragment() {
         binding.TagsRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
         //Fixed size text view, this makes all happier
         binding.TagsRecyclerView.setHasFixedSize(true)
-        //Adds nice little gaps around each object in the recylcer view
+        //Adds nice little gaps around each object in the recycler view
         binding.TagsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
         // Now that we have set up our adapter, we need to set up our listeners
-        adapter.addUserListener(fragmentName)
-        adapter.addListener(fragmentName, "MyTags")
+        adapter.addUserListener(fragmentName){
+            adapter.addListener(fragmentName, "MyTags")
+        }
+
 
         readFromFireStore()
         setUpButtons()

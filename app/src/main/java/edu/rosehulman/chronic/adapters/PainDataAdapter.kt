@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataViewModel
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
@@ -45,7 +44,7 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
 
     fun addModelListener(fragmentName: String, UserID: String, isCalenderFragment: Boolean){
         if(isCalenderFragment){
-            model.addCalanderListener(fragmentName, UserID){notifyDataSetChanged()}
+            model.addCalendarListener(fragmentName, UserID){notifyDataSetChanged()}
         }else{
             model.addListener(fragmentName, UserID){notifyDataSetChanged()}
         }
@@ -93,11 +92,11 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
             //Bind the model object's specific data to the text view for each
             titleText.text = painObject.title
             painLevelText.text = painObject.painLevel.toString()
-            var startDate:LocalDateTime = convertToLocalDateViaInstant(painObject.startTime.toDate())
-            var endDate:LocalDateTime = convertToLocalDateViaInstant(painObject.endTime.toDate())
+            val startDate:LocalDateTime = convertToLocalDateViaInstant(painObject.startTime.toDate())
+            val endDate:LocalDateTime = convertToLocalDateViaInstant(painObject.endTime.toDate())
 
-            var startDateFormatted = "${startDate.month}/${startDate.dayOfMonth}/${startDate.year} : ${startDate.hour}:${startDate.minute}"
-            var endDateFormatted ="${endDate.month}/${endDate.dayOfMonth}/${endDate.year} : ${endDate.hour}:${endDate.minute}"
+            val startDateFormatted = "${startDate.month}/${startDate.dayOfMonth}/${startDate.year} : ${startDate.hour}:${startDate.minute}"
+            val endDateFormatted ="${endDate.month}/${endDate.dayOfMonth}/${endDate.year} : ${endDate.hour}:${endDate.minute}"
 
             startText.text = startDateFormatted
             endText.text = endDateFormatted

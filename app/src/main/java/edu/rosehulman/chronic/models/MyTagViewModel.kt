@@ -35,7 +35,7 @@ class MyTagViewModel : ViewModel() {
     val tagSubscriptions = HashMap<String, ListenerRegistration>()
     val userSubscriptions = HashMap<String, ListenerRegistration>()
 
-    fun addUserListener(fragmentName: String) {
+    fun addUserListener(fragmentName: String, observer: () -> Unit) {
         Log.d(Constants.TAG, "Adding user listener for user $uid for fragment $fragmentName")
         // Now to create the user and then add the current firebase reference
         val userSubscription = userRef
@@ -48,6 +48,10 @@ class MyTagViewModel : ViewModel() {
                 myTags.clear()
                 var tempTags = snapshot!!.get("myTags") as List<String>
                 myTags.addAll(tempTags)
+                Log.d(Constants.TAG,"There are a total of ${myTags.size} tags for user $uid")
+
+                //Now call then next function to update the adapter data
+                observer()
             }
         userSubscriptions[fragmentName]
         Log.d(Constants.TAG, "Successfully grabbed user with id of ${uid}")
@@ -70,7 +74,7 @@ class MyTagViewModel : ViewModel() {
                 Log.d(Constants.TAG, "My tags is empty so no listener to add")
             } else {
                 val subscription = ref
-                    .whereIn("id", myTags)
+                    .whereIn(FieldPath.documentId(), myTags)
                     .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                         error?.let {
                             Log.d(Constants.TAG, "Error $error")
@@ -196,11 +200,7 @@ class MyTagViewModel : ViewModel() {
     // This is a very important function that checks if the creator of a tag is the current user
     // We use this before doing updates and deletions
     fun creatorIsUser(): Boolean {
-        if (getCurrentTag().creator.equals(uid)) {
-            return true
-        } else {
-            return false
-        }
+        return getCurrentTag().creator.equals(uid)
     }
 
     // Grabbing the size of the tags overall

@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -18,8 +17,6 @@ import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.MyTagViewModel
 import edu.rosehulman.chronic.models.Tag
-import edu.rosehulman.chronic.models.UserData
-import edu.rosehulman.chronic.ui.MyTagsFragment
 
 // Author: Natalie Koenig
 // Description: MyTagAdapter holds the MyTagViewModels that will show up in the profile page and my tags page. It contains relevant functions to help us interact with the tags.
@@ -43,9 +40,9 @@ class MyTagAdapter(fragment: Fragment, fragmentName: String) : RecyclerView.Adap
     }
 
     // This does a listener on the current user so we can grab their tags
-    fun addUserListener(fragmentName: String) {
+    fun addUserListener(fragmentName: String, observer: () -> Unit) {
         Log.d(Constants.TAG, "Jumping into the addUserListener from adapter")
-        model.addUserListener(fragmentName)
+        model.addUserListener(fragmentName, observer)
     }
 
     fun removeUserListener(fragmentName: String) {
