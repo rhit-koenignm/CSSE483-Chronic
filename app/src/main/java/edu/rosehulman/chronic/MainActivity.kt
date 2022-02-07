@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             //Top level destinations get a menu, and all others get back buttons in the app bar
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_profile, R.id.nav_reminder_list, R.id.nav_pain_tracking, R.id.nav_data, R.id.nav_settings
+                R.id.nav_profile, R.id.nav_reminder_list, R.id.nav_pain_tracking, R.id.nav_data, R.id.nav_settings, R.id.nav_forum_home
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -117,9 +118,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
-
     //Add and Remove Authentication State Listeners
     override fun onStart() {
         super.onStart()
@@ -149,7 +147,7 @@ class MainActivity : AppCompatActivity() {
                 userModel.getOrMakeUser{
                     //Not an instant call, so this can cause a race condition that really isn't great
                     //This is a callback function that is being passed into, and will trigger internally in the function
-                    //Wooo non-linear codeee
+                    //Wow non-linear code
 
                     if(userModel.hasCompletedSetup()){
                         //Navigate to the quotes list page when adding the splash screen
@@ -157,7 +155,7 @@ class MainActivity : AppCompatActivity() {
                         setupHeaderBar(userModel)
                     }else{
                         //Navigate to the settings page to fill out all of the user data
-                        navController.navigate(R.id.navigation_user_edit)
+                        navController.navigate(R.id.nav_user_edit)
                     }
                 }
             }

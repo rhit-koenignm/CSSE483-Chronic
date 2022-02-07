@@ -102,6 +102,7 @@
     <string name="your_posts_button">Your Posts</string>
     <string name="post_content_preview_text">Post content preview, only should show the first however many characters it takes to fill this thing. I guess I\'ll just keep going until I hit max</string>
     <string name="post_author_text">Author: Put username here</string>
+    <string name="nav_forum_label">Global Forum</string>
 
 
 </resources>
