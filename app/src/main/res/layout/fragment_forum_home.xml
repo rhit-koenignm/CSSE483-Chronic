@@ -47,7 +47,6 @@
         android:layout_below="@id/forum_divider_view"
         />
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/forum_add_fab"
         android:layout_width="wrap_content"
