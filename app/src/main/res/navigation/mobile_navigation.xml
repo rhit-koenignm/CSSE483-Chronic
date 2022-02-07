@@ -25,9 +25,9 @@
 
     <fragment
         android:id="@+id/nav_reminder_detail"
-        android:name="edu.rosehulman.chronic.ui.ReminderDetailFragment"
+        android:name="edu.rosehulman.chronic.ui.ReminderEditFragment"
         android:label="Reminder Details"
-        tools:layout="@layout/fragment_reminder_detail"/>
+        tools:layout="@layout/fragment_reminder_edit"/>
 
     <fragment
         android:id="@+id/nav_data"

@@ -79,7 +79,7 @@ class ReminderViewModel : ViewModel() {
         }
     }
 
-    fun removeReminder() {
+    fun removeCurrentReminder() {
         ref.document(getCurrentReminder().id).delete()
         currentPos = 0
     }

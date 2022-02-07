@@ -26,6 +26,35 @@ class Reminder(
         return clone
     }
 
+    fun getTimeString(): String {
+        var tempHour: Int = 0
+        var hourString: String = ""
+        var minutesString: String = ""
+        var ampmString: String = ""
+
+        if(hours < 12) {
+            tempHour = hours
+            ampmString = "AM"
+        } else {
+            tempHour = hours - 12
+            ampmString = "PM"
+        }
+
+        if(tempHour < 10){
+            hourString = "0" + tempHour.toString()
+        } else {
+            hourString = tempHour.toString()
+        }
+
+        if(minutes < 10){
+            minutesString = "0" + minutes.toString()
+        } else {
+            minutesString = minutes.toString()
+        }
+
+        return hourString + ":" + minutesString + " " + ampmString
+    }
+
     companion object {
         const val COLLECTION_PATH = "reminders"
 
@@ -35,4 +64,6 @@ class Reminder(
             return reminder
         }
     }
+
+
 }
