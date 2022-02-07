@@ -88,7 +88,7 @@ class ReminderAdapter(val fragment: ReminderListFragment) : RecyclerView.Adapter
                     dayTextViews[i].setTextColor(itemView.resources.getColor(R.color.plum))
                     dayTextViews[i].setTypeface(dayTextViews[i].typeface, Typeface.BOLD)
                 } else{
-                    dayTextViews[i].setTextColor(itemView.resources.getColor(R.color.grape))
+                    dayTextViews[i].setTextColor(itemView.resources.getColor(R.color.pearl))
                     dayTextViews[i].setTypeface(dayTextViews[i].typeface, Typeface.NORMAL)
                 }
             }
