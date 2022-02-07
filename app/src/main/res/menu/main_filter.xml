@@ -7,4 +7,12 @@
         android:title="@string/action_settings"
         app:showAsAction="never"
         />
-    </menu>
+
+    <item
+        android:id="@+id/action_filter_toggle"
+        android:icon="@drawable/ic_baseline_filter_alt_24"
+        android:title="@string/filter_weekly_monthly_action"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

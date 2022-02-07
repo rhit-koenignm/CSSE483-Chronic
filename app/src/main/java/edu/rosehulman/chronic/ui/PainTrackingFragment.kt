@@ -2,10 +2,7 @@ package edu.rosehulman.chronic.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -24,7 +21,6 @@ import edu.rosehulman.chronic.databinding.FragmentPaintrackingBinding
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataListViewModel
 import edu.rosehulman.chronic.models.UserData
-import kotlin.collections.ArrayList
 
 
 class PainTrackingFragment : Fragment() {
@@ -68,7 +64,7 @@ class PainTrackingFragment : Fragment() {
     private fun setupAverageValue() {
 
         if(modelList.size() != 0){
-            if(modelList.getAveragePain() >= 5){
+            if(modelList.getAveragePain() < 5){
                 binding.averageText.text = "Doing Well"
                 binding.averageIcon.load(resources.getDrawable( R.drawable.ic_baseline_keyboard_arrow_up_24))
                 binding.averageText.setTextColor(resources.getColor(R.color.green))
@@ -127,13 +123,13 @@ class PainTrackingFragment : Fragment() {
         for (i in dataList.indices) {
             //Flip to be negative and red for bad entries, and green and positive for good entries
             var dataValue = dataList[i].painLevel.toFloat();
-            if(dataValue < 5){
+            if(dataValue >= 5){
                 dataValue = - dataList[i].painLevel.toFloat();
             }
 
             values.add(BarEntry((i).toFloat(), dataValue))
             // specific colors, less than 5 is red, otherwise it is green
-            if (dataList[i].painLevel < 5) colors.add(red) else colors.add(green)
+            if (dataList[i].painLevel >= 5) colors.add(red) else colors.add(green)
 
             //Only display X axis labels if there is enough space (or are small enough)
             //Handle adding the proper date labels
@@ -269,6 +265,14 @@ class PainTrackingFragment : Fragment() {
 
 
     }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflator: MenuInflater) {
+        inflator.inflate(R.menu.main_filter, menu)
+        super.onCreateOptionsMenu(menu, inflator)
+    }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
