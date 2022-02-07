@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_loading_Screen">
+    app:startDestination="@+id/nav_loading_Screen">
 
     <fragment
         android:id="@+id/nav_profile"
@@ -56,15 +56,22 @@
         />
 
     <fragment
-        android:id="@+id/navigation_loading_Screen"
+        android:id="@+id/nav_loading_Screen"
         android:name="edu.rosehulman.chronic.ui.LoadingFragment"
         android:label="@string/Loading_Screen_Title"
         tools:layout="@layout/fragment_loading"/>
 
     <fragment
-        android:id="@+id/navigation_user_edit"
+        android:id="@+id/nav_user_edit"
         android:name="edu.rosehulman.chronic.ui.UserEditFragment"
         android:label="@string/User_Edit_Screen_Label"
         tools:layout="@layout/fragment_user_edit"/>
+
+
+    <fragment
+        android:id="@+id/nav_forum_home"
+        android:name="edu.rosehulman.chronic.ui.GlobalForumFragment"
+        android:label="@string/nav_forum_label"
+        tools:layout="@layout/fragment_forum_home"/>
 
 </navigation>

@@ -21,7 +21,7 @@
             android:icon="@drawable/ic_baseline_show_chart_24"
             android:title="@string/menu_my_data" />
         <item
-            android:id="@+id/nav_pain_tracking"
+            android:id="@+id/nav_forum_home"
             android:icon="@drawable/ic_baseline_chat_bubble_outline_24"
             android:title="@string/menu_global_forum" />
         <item

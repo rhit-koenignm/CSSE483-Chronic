@@ -4,8 +4,8 @@ import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -47,7 +47,7 @@ class ReminderAdapter(val fragment: ReminderListFragment) : RecyclerView.Adapter
     inner class ReminderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var titleTextView = itemView.findViewById<TextView>(R.id.row_reminder_title_textview)
         var timeTitleView = itemView.findViewById<TextView>(R.id.row_reminder_time_textview)
-        var isActiveSwitch = itemView.findViewById<Switch>(R.id.row_reminder_on_switch)
+        var isActiveSwitch = itemView.findViewById<SwitchCompat>(R.id.row_reminder_on_switch)
         var dayTextViews = mutableListOf<TextView>(
             itemView.findViewById<TextView>(R.id.letter_view_0),
             itemView.findViewById<TextView>(R.id.letter_view_1),
