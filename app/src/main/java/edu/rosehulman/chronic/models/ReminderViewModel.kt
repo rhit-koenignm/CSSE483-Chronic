@@ -95,7 +95,7 @@ class ReminderViewModel : ViewModel() {
     fun size() = reminders.size
 
     fun toggleCurrentReminder() {
-        reminders[currentPos].isActive = !reminders[currentPos].isActive
+        reminders[currentPos].toggleIsActive()
         ref.document(getCurrentReminder().id).set(reminders[currentPos])
     }
 
