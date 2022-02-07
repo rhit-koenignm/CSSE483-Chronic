@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -23,17 +22,15 @@ import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.databinding.FragmentPaintrackingBinding
 import edu.rosehulman.chronic.models.PainData
-import edu.rosehulman.chronic.models.PainDataViewModel
+import edu.rosehulman.chronic.models.PainDataListViewModel
 import edu.rosehulman.chronic.models.UserData
-import java.lang.Math.abs
-import java.util.*
 import kotlin.collections.ArrayList
 
 
 class PainTrackingFragment : Fragment() {
 
     private lateinit var binding: FragmentPaintrackingBinding
-    private lateinit var model: PainDataViewModel
+    private lateinit var modelList: PainDataListViewModel
 
     private lateinit var chart: BarChart
 
@@ -46,7 +43,7 @@ class PainTrackingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        model = ViewModelProvider(requireActivity()).get(PainDataViewModel::class.java)
+        modelList = ViewModelProvider(requireActivity()).get(PainDataListViewModel::class.java)
         binding = FragmentPaintrackingBinding.inflate(inflater, container, false)
         val root: View = binding.root
         setHasOptionsMenu(true)
@@ -65,13 +62,13 @@ class PainTrackingFragment : Fragment() {
     }
 
     private fun readDataModelFromFireStoreUpdate(observer: () -> Unit) {
-        model.addListener(fragmentName, Firebase.auth.uid!!, observer)
+        modelList.addListener(fragmentName, Firebase.auth.uid!!, observer)
     }
 
     private fun setupAverageValue() {
 
-        if(model.size() != 0){
-            if(model.getAveragePain() >= 5){
+        if(modelList.size() != 0){
+            if(modelList.getAveragePain() >= 5){
                 binding.averageText.text = "Doing Well"
                 binding.averageIcon.load(resources.getDrawable( R.drawable.ic_baseline_keyboard_arrow_up_24))
                 binding.averageText.setTextColor(resources.getColor(R.color.green))
@@ -82,7 +79,7 @@ class PainTrackingFragment : Fragment() {
                 binding.averageText.setTextColor(resources.getColor(R.color.red))
                 binding.averageIcon.setBackgroundColor(resources.getColor(R.color.red))
             }
-            binding.painTrackingAverage.text = model.getAveragePain().toString()
+            binding.painTrackingAverage.text = modelList.getAveragePain().toString()
         }
     }
 
@@ -115,9 +112,9 @@ class PainTrackingFragment : Fragment() {
         val dataList = ArrayList<PainData>()
         if(displayLastWeek){
             // grab the last seven entries (if they exist)
-            dataList.addAll(model.getSpecifedDataPoints(7))
+            dataList.addAll(modelList.getSpecifedDataPoints(7))
         }else{
-            dataList.addAll(model.getSpecifedDataPoints(31))
+            dataList.addAll(modelList.getSpecifedDataPoints(31))
         }
 
         val values = ArrayList<BarEntry>()
@@ -308,7 +305,7 @@ class PainTrackingFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        model.removeListener(fragmentName)
+        modelList.removeListener(fragmentName)
     }
 
     companion object{

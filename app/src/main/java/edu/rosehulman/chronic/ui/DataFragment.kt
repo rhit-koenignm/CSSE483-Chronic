@@ -43,6 +43,12 @@ class DataFragment : Fragment() {
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 Log.d("Chronic","On Page Scrolled")
+                //val oldPosition = binding.ViewPager.currentItem
+                //val oldFragment = binding.ViewPager.adapter?.instantiateItem(binding.ViewPager, oldPosition)
+                //oldFragment.onPauseStuff() // Hint: do as here call onPause
+                //val newFragment = binding.ViewPager.adapter?.instantiateItem(binding.ViewPager, position)
+                //newFragment.onResumeStuff() // Hint: do as here call onResume
+
 
             }
             override fun onPageSelected(position: Int) {
