@@ -27,13 +27,89 @@
         android:textColor="@color/plum"
         android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/row_reminder_days_textview"
+<!--    <TextView-->
+<!--        android:id="@+id/row_reminder_days_textview"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/row_reminder_time_textview"-->
+<!--        android:text="@string/reminder_days_default"-->
+<!--        android:textColor="@color/plum" />-->
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/row_reminder_time_textview"
-        android:text="@string/reminder_days_default"
-        android:textColor="@color/plum" />
+        android:orientation="horizontal"
+        android:layout_alignLeft="@id/row_reminder_time_textview"
+        android:layout_alignRight="@id/row_reminder_time_textview"
+        >
+
+        <TextView
+            android:id="@+id/letter_view_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/plum"
+            android:textStyle="bold"
+            android:text="S"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/letter_view_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/plum"
+            android:text="M"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/letter_view_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/plum"
+            android:text="T"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/letter_view_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/plum"
+            android:text="W"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/letter_view_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/plum"
+            android:text="T"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/letter_view_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/plum"
+            android:text="F"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/letter_view_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/plum"
+            android:text="S"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
 
     <Switch
         android:id="@+id/row_reminder_on_switch"
