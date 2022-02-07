@@ -40,21 +40,27 @@ class ReminderEditFragment: Fragment() {
 
     fun setUpButtons() {
         binding.reminderSaveButton.setOnClickListener {
-            val updatedReminder = reminderViewModel.getCurrentReminder().makeACopy()
+            var current = reminderViewModel.getCurrentReminder()
+            var newTitle = current.title
+            var newContent = current.content
+            var newHours = current.hours
+            var newMinutes = current.minutes
+            var activeBool = current.isActive
+
 
             if(binding.reminderDetailTitleEdit.text.isNotEmpty()) {
-                updatedReminder.title = binding.reminderDetailTitleEdit.text.toString()
+                newTitle = binding.reminderDetailTitleEdit.text.toString()
             }
             if(binding.reminderDetailContentEdit.text.isNotEmpty()) {
-                updatedReminder.content = binding.reminderDetailContentEdit.text.toString()
+                newContent = binding.reminderDetailContentEdit.text.toString()
             }
 
-            updatedReminder.daysActive = buttonBools
+            newHours = binding.reminderDetailTimepicker.hour
+            newMinutes = binding.reminderDetailTimepicker.minute
 
-            updatedReminder.hours = binding.reminderDetailTimepicker.hour
-            updatedReminder.minutes = binding.reminderDetailTimepicker.minute
-
-            reminderViewModel.updateCurrentReminder(updatedReminder)
+            var newReminder = Reminder(newTitle, newContent, newHours, newMinutes, activeBool, buttonBools)
+            newReminder.id = current.id
+            reminderViewModel.updateCurrentReminder(newReminder)
             updateView()
 
             findNavController().navigate(R.id.nav_reminder_list)
@@ -73,7 +79,7 @@ class ReminderEditFragment: Fragment() {
                 .show()
         }
 
-        for (i in buttonBools.indices) {
+        for (i in 0 until buttonBools.size) {
             val id = resources.getIdentifier("dayButton$i", "id", activity?.packageName)
             dayButtons[i] = binding.root.findViewById<Button>(id)
 
@@ -98,7 +104,7 @@ class ReminderEditFragment: Fragment() {
     }
 
     fun updateDayButtons() {
-        for(i in dayButtons.indices) {
+        for(i in 0 until buttonBools.size) {
             if(buttonBools.get(i)) {
                 dayButtons[i].setBackgroundColor(resources.getColor(R.color.plum))
             } else {

@@ -9,7 +9,7 @@ class Reminder(
     var hours: Int = 0,
     var minutes: Int = 0,
     var isActive: Boolean = true,
-    var daysActive: List<Boolean> = listOf(true, true, true, true, true)
+    var daysActive: List<Boolean> = listOf(true, true, true, true, true, true, true)
 ) {
 
     @get:Exclude

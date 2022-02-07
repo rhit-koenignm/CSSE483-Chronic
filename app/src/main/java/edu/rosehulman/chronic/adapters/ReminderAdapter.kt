@@ -1,6 +1,7 @@
 package edu.rosehulman.chronic.adapters
 
 import android.graphics.Typeface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.Reminder
 import edu.rosehulman.chronic.models.ReminderViewModel
@@ -48,7 +50,7 @@ class ReminderAdapter(val fragment: ReminderListFragment) : RecyclerView.Adapter
         var titleTextView = itemView.findViewById<TextView>(R.id.row_reminder_title_textview)
         var timeTitleView = itemView.findViewById<TextView>(R.id.row_reminder_time_textview)
         var isActiveSwitch = itemView.findViewById<SwitchCompat>(R.id.row_reminder_on_switch)
-        var dayTextViews = mutableListOf<TextView>(
+        var dayTextViews = listOf<TextView>(
             itemView.findViewById<TextView>(R.id.letter_view_0),
             itemView.findViewById<TextView>(R.id.letter_view_1),
             itemView.findViewById<TextView>(R.id.letter_view_2),
@@ -77,7 +79,9 @@ class ReminderAdapter(val fragment: ReminderListFragment) : RecyclerView.Adapter
             timeTitleView.text = reminder.getTimeString()
             isActiveSwitch.isSelected = reminder.isActive
 
-            for (i in dayTextViews.indices) {
+            Log.d(Constants.TAG, "dayTextViews size: ${dayTextViews.size}")
+            Log.d(Constants.TAG, "daysActive size: ${reminder.daysActive.size}")
+            for (i in 0 until dayTextViews.size) {
                 var dayBool = reminder.daysActive[i]
 
                 if(dayBool) {
