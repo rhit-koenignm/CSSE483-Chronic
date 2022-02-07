@@ -10,13 +10,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.PainData
-import edu.rosehulman.chronic.models.PainDataViewModel
+import edu.rosehulman.chronic.models.PainDataCalenderViewModel
+import edu.rosehulman.chronic.models.PainDataListViewModel
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
 
-class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAdapter.PainDataViewHolder>() {
-    val model = ViewModelProvider(fragment.requireActivity()).get(PainDataViewModel::class.java)
+class PainDataCalenderAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataCalenderAdapter.PainDataViewHolder>() {
+    val model = ViewModelProvider(fragment.requireActivity()).get(PainDataCalenderViewModel::class.java)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PainDataViewHolder {
         val view =
@@ -42,31 +43,20 @@ class PainDataAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataAda
     }
 
 
-    fun addModelListener(fragmentName: String, UserID: String, isCalenderFragment: Boolean){
-        if(isCalenderFragment){
-            model.addCalendarListener(fragmentName, UserID){notifyDataSetChanged()}
-        }else{
-            model.addListener(fragmentName, UserID){notifyDataSetChanged()}
-        }
-
-
-
-
-
-        Log.d("Chronic","Added Listener in the Adapter")
-    }
-
     fun removeModelListener(fragmentName: String) {
         model.removeListener(fragmentName)
         Log.d("Chronic","Removed Listener in the Adapter")
+        notifyDataSetChanged()
     }
 
     fun removeAt(adapterPosition: Int) {
         model.removeAt(adapterPosition)
+        notifyDataSetChanged()
     }
 
-    fun addDateListener(fragmentName: String, newDate: Date, uid: String) {
-        model.addDateListener(fragmentName, newDate, uid){notifyDataSetChanged()}
+    fun addDateListener(fragmentName: String, newDate: Date, uid: String, observer: () -> Unit) {
+        model.addDateListener(fragmentName, newDate, uid){observer}
+        notifyDataSetChanged()
     }
 
 

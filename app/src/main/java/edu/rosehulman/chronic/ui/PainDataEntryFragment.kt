@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.Timestamp
 import edu.rosehulman.chronic.databinding.FragmentPainDataEntryBinding
 import edu.rosehulman.chronic.models.PainData
-import edu.rosehulman.chronic.models.PainDataViewModel
+import edu.rosehulman.chronic.models.PainDataListViewModel
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -20,7 +20,7 @@ import java.util.*
 class PainDataEntryFragment : Fragment() {
 
     private lateinit var binding: FragmentPainDataEntryBinding
-    private lateinit var model: PainDataViewModel
+    private lateinit var modelList: PainDataListViewModel
 
 
     override fun onCreateView(
@@ -28,7 +28,7 @@ class PainDataEntryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        model = ViewModelProvider(requireActivity()).get(PainDataViewModel::class.java)
+        modelList = ViewModelProvider(requireActivity()).get(PainDataListViewModel::class.java)
         binding = FragmentPainDataEntryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -41,7 +41,7 @@ class PainDataEntryFragment : Fragment() {
 
 
     fun setupExistingData(){
-        val currentObject = model.getCurrentObject()
+        val currentObject = modelList.getCurrentObject()
 
         //Bind the model object's specific data to the text view for each
         binding.titleInput.setText(currentObject.title)
@@ -110,7 +110,7 @@ class PainDataEntryFragment : Fragment() {
             val endTimestamp:Timestamp = Timestamp(endDateTime)
 
             val newObject: PainData = PainData(painDataInt,title,startTimestamp, endTimestamp)
-            model.updateCurrentObject(title,painDataInt,startTimestamp,endTimestamp)
+            modelList.updateCurrentObject(title,painDataInt,startTimestamp,endTimestamp)
             findNavController().popBackStack()
         }
     }

@@ -15,18 +15,19 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
-import edu.rosehulman.chronic.adapters.PainDataAdapter
+import edu.rosehulman.chronic.adapters.PainDataCalenderAdapter
 import edu.rosehulman.chronic.adapters.SwipeToDeleteCallback
 import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
 import edu.rosehulman.chronic.models.PainData
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.*
 
 
 class DataCalenderFragment : Fragment(){
 
     private lateinit var binding: FragmentDataCalenderBinding
-    private lateinit var adapter: PainDataAdapter
-    val isCalenderFragment = true
+    private lateinit var adapter: PainDataCalenderAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +38,11 @@ class DataCalenderFragment : Fragment(){
 
 
         //Add recycler view
-        adapter = PainDataAdapter(this)
+        adapter = PainDataCalenderAdapter(this)
         val newDate = Date(binding.CalenderData.date)
-        adapter.addDateListener(fragmentName,newDate,Firebase.auth.uid!!)
+        adapter.addDateListener(fragmentName,newDate,Firebase.auth.uid!!){
+            adapter.notifyDataSetChanged()
+        }
         adapter.notifyDataSetChanged()
         //Set Adapter properties
         //Match the adapter class to the xml
@@ -73,15 +76,21 @@ class DataCalenderFragment : Fragment(){
             adapter.addObject(defaultEntry)
             //Need to update the adapter to tell that it's changed
             adapter.notifyDataSetChanged()
-            Log.d(Constants.TAG,"CLicked Add New Entry")
+            Log.d(Constants.TAG,"Clicked Add New Entry")
         }
 
             //Handle the use of the calander itself for filtering
         binding.CalenderData.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            val newDate = Date(binding.CalenderData.date)
+            Log.d(Constants.TAG,"The date callback is ${month+1}/$dayOfMonth/$year")
+            var calender = GregorianCalendar(year, month, dayOfMonth)
+            var newDate = Date(calender.timeInMillis)
+
+            Log.d(Constants.TAG,"New Date Selected: ${newDate.toString()}")
+
             adapter.removeModelListener(fragmentName)
-            adapter.addDateListener(fragmentName,newDate,Firebase.auth.uid!!)
+            adapter.addDateListener(fragmentName,newDate,Firebase.auth.uid!!){adapter.notifyDataSetChanged()}
             adapter.notifyDataSetChanged()
+
 
         }
 
@@ -111,5 +120,6 @@ class DataCalenderFragment : Fragment(){
         super.onStop()
         adapter.removeModelListener(fragmentName)
     }
+
 }
 

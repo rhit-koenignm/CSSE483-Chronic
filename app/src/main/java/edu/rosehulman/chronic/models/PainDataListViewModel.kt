@@ -15,7 +15,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-class PainDataViewModel : ViewModel() {
+class PainDataListViewModel : ViewModel() {
         var objectList = ArrayList<PainData>()
         var currentPosition = 0         //Defaults to looking at the zeroth position
 
@@ -67,7 +67,7 @@ class PainDataViewModel : ViewModel() {
     var subscriptions = HashMap<String, ListenerRegistration>()
 
     fun addListener(fragmentName: String, userID: String, observer: () -> Unit) {
-        Log.d("Chronic","Added FireStore Listener in Model")
+        Log.d(Constants.TAG,"Added FireStore Listener in Model")
         val subscription = fireBaseReference
             .orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
             .addSnapshotListener() { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
@@ -76,44 +76,21 @@ class PainDataViewModel : ViewModel() {
                     return@addSnapshotListener
                 }
 
-                Log.d("Chronic","Triggered Callback")
+                Log.d(Constants.TAG,"Triggered Callback")
                 objectList.clear()
                 snapshot?.documents?.forEach() {
-                    Log.d("Chronic","Adding a data from Firestore to arraylist")
+                    Log.d(Constants.TAG,"Adding a data from Firestore to arraylist")
                     objectList.add(PainData.from(it))
                 }
                 observer()
             }
         subscriptions.put(fragmentName, subscription)
     }
-
-    fun addCalendarListener(fragmentName: String, userID: String, observer: () -> Unit) {
-        Log.d("Chronic","Added FireStore Listener in Model")
-        val subscription = fireBaseReference
-            .orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
-            //.whereEqualTo()
-            .addSnapshotListener() { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
-                error?.let {
-                    Log.d("Chronic","Error in adding Snapshot Listener")
-                    return@addSnapshotListener
-                }
-
-                Log.d("Chronic","Triggered Callback")
-                objectList.clear()
-                snapshot?.documents?.forEach() {
-                    Log.d("Chronic","Adding a data from Firestore to arraylist")
-                    objectList.add(PainData.from(it))
-                }
-                observer()
-            }
-        subscriptions.put(fragmentName, subscription)
-    }
-
 
     fun removeListener(fragmentName: String) {
         subscriptions[fragmentName]?.remove()
         subscriptions.remove(fragmentName)
-        Log.d("PB","Removed FireStore Listener in Model")
+        Log.d(Constants.TAG,"Removed FireStore Listener in Model")
     }
 
     fun getAveragePain():Int {
@@ -147,27 +124,6 @@ class PainDataViewModel : ViewModel() {
     return output
     }
 
-    fun addDateListener(fragmentName: String, newDate: Date, uid: String, observer: () -> Unit) {
-        Log.d("Chronic","Added FireStore Date Listener in Model")
-        val subscription = fireBaseReference
-            .orderBy(PainData.SORTTIME, Query.Direction.DESCENDING)
-            .whereGreaterThan("startTime", newDate)
-            .addSnapshotListener() { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
-                error?.let {
-                    Log.d("Chronic","Error in addinSnapshot Date Listener")
-                    return@addSnapshotListener
-                }
-
-                Log.d("Chronic","Triggered Callback")
-                objectList.clear()
-                snapshot?.documents?.forEach() {
-                    Log.d("Chronic","Adding a data from Firestore to arraylist")
-                    objectList.add(PainData.from(it))
-                }
-                observer()
-            }
-        subscriptions.put(fragmentName, subscription)
-    }
 
 
 }

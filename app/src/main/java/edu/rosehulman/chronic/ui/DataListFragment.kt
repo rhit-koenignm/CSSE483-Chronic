@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,17 +14,16 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
-import edu.rosehulman.chronic.R
-import edu.rosehulman.chronic.adapters.PainDataAdapter
+import edu.rosehulman.chronic.adapters.PainDataListAdapter
 import edu.rosehulman.chronic.adapters.SwipeToDeleteCallback
+
 import edu.rosehulman.chronic.databinding.FragmentDataListBinding
 import edu.rosehulman.chronic.models.PainData
 
-class DataListFragment : Fragment(){
+class DataListFragment : Fragment() {
 
     private lateinit var binding: FragmentDataListBinding
-    private lateinit var adapter: PainDataAdapter
-    val isCalenderFragment = false
+    private lateinit var listAdapter: PainDataListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,12 +34,12 @@ class DataListFragment : Fragment(){
 
 
         //Add recycler view
-        adapter = PainDataAdapter(this)
-        adapter.addModelListener(fragmentName, Firebase.auth.uid!!,isCalenderFragment)
-        adapter.notifyDataSetChanged()
+        listAdapter = PainDataListAdapter(this)
+        listAdapter.addModelListener(fragmentName, Firebase.auth.uid!!)
+        listAdapter.notifyDataSetChanged()
         //Set Adapter properties
         //Match the adapter class to the xml
-        binding.CalenderListRecyclerView.adapter = adapter
+        binding.CalenderListRecyclerView.adapter = listAdapter
         //Chose a linear layout manager for rows, grid is for grid
         binding.CalenderListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         //Fixed size text view, this makes all happier
@@ -57,7 +55,7 @@ class DataListFragment : Fragment(){
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                adapter.removeAt(viewHolder.adapterPosition)
+                listAdapter.removeAt(viewHolder.adapterPosition)
             }
         }
 
@@ -66,9 +64,9 @@ class DataListFragment : Fragment(){
 
         binding.FABListData.setOnClickListener(){
             val defaultEntry = PainData(0,"CHANGEME", Timestamp.now(), Timestamp.now())
-            adapter.addObject(defaultEntry)
+            listAdapter.addObject(defaultEntry)
             //Need to update the adapter to tell that it's changed
-            adapter.notifyDataSetChanged()
+            listAdapter.notifyDataSetChanged()
             Log.d(Constants.TAG,"CLicked Add New Entry")
         }
 
@@ -82,7 +80,7 @@ class DataListFragment : Fragment(){
     }
 
     fun updateDataSet(){
-        adapter.updateDataSet()
+        listAdapter.updateDataSet()
     }
 
 
@@ -97,6 +95,7 @@ class DataListFragment : Fragment(){
 
     override fun onStop() {
         super.onStop()
-        adapter.removeModelListener(fragmentName = DataCalenderFragment.fragmentName)
+        listAdapter.removeModelListener(fragmentName = DataCalenderFragment.fragmentName)
     }
+
 }
