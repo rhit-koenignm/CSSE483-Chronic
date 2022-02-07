@@ -1,14 +1,21 @@
 package edu.rosehulman.chronic.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Timestamp
+import edu.rosehulman.chronic.Constants
+import edu.rosehulman.chronic.adapters.PainDataEntryTagAdapter
 import edu.rosehulman.chronic.databinding.FragmentPainDataEntryBinding
+import edu.rosehulman.chronic.models.MyTagViewModel
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataListViewModel
 import java.time.LocalDateTime
@@ -20,7 +27,8 @@ import java.util.*
 class PainDataEntryFragment : Fragment() {
 
     private lateinit var binding: FragmentPainDataEntryBinding
-    private lateinit var modelList: PainDataListViewModel
+    private lateinit var painDataModel: PainDataListViewModel
+    private lateinit var myTagViewModel: MyTagViewModel
 
 
     override fun onCreateView(
@@ -28,20 +36,53 @@ class PainDataEntryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        modelList = ViewModelProvider(requireActivity()).get(PainDataListViewModel::class.java)
+        painDataModel = ViewModelProvider(requireActivity()).get(PainDataListViewModel::class.java)
+        myTagViewModel = ViewModelProvider(requireActivity()).get(MyTagViewModel::class.java)
         binding = FragmentPainDataEntryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        //Add the listener for the user my tags
+        myTagViewModel.addUserListener(fragmentName){
+            myTagViewModel.addMyTagsByTypeListener(fragmentName){
+                pullInExistingMyTags()
+        }
+        }
+
         setupButtons()
         setupExistingData()
-
         return root
     }
 
+    private fun pullInExistingMyTags() {
+        Log.d(Constants.TAG,"Setting up all three tag adapters")
+        val treatmentsAdapter = PainDataEntryTagAdapter(this, fragmentName, "Treatments")
+        treatmentsAdapter.notifyDataSetChanged()
+        binding.treatmentsRecyclerView.adapter = treatmentsAdapter
+        binding.treatmentsRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
+        binding.treatmentsRecyclerView.setHasFixedSize(true)
+        binding.treatmentsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        binding.treatmentsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
+
+        val triggersAdapter = PainDataEntryTagAdapter(this, fragmentName, "Triggers")
+        triggersAdapter.notifyDataSetChanged()
+        binding.triggersRecyclerView.adapter = triggersAdapter
+        binding.triggersRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
+        binding.triggersRecyclerView.setHasFixedSize(true)
+        binding.triggersRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        binding.triggersRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
+
+        val symptomsAdapter = PainDataEntryTagAdapter(this, fragmentName, "Symptoms")
+        symptomsAdapter.notifyDataSetChanged()
+        binding.symptomsRecyclerView.adapter = symptomsAdapter
+        binding.symptomsRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
+        binding.symptomsRecyclerView.setHasFixedSize(true)
+        binding.symptomsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        binding.symptomsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
+    }
 
 
     fun setupExistingData(){
-        val currentObject = modelList.getCurrentObject()
+        val currentObject = painDataModel.getCurrentObject()
 
         //Bind the model object's specific data to the text view for each
         binding.titleInput.setText(currentObject.title)
@@ -66,7 +107,6 @@ class PainDataEntryFragment : Fragment() {
             .atZone(ZoneId.systemDefault())
             .toLocalDateTime()
     }
-
 
     fun setupButtons(){
         binding.addEntryButton.setOnClickListener(){
@@ -110,11 +150,21 @@ class PainDataEntryFragment : Fragment() {
             val endTimestamp:Timestamp = Timestamp(endDateTime)
 
             val newObject: PainData = PainData(painDataInt,title,startTimestamp, endTimestamp)
-            modelList.updateCurrentObject(title,painDataInt,startTimestamp,endTimestamp)
+            painDataModel.updateCurrentObject(title,painDataInt,startTimestamp,endTimestamp)
             findNavController().popBackStack()
         }
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myTagViewModel.removeUserListener(fragmentName)
+    }
+
+
+    companion object {
+        const val fragmentName = "PainDataEntryFragment"
+    }
 
 
 
