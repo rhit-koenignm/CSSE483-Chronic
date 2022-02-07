@@ -19,7 +19,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Chronic.Switch" parent="TextAppearance.AppCompat.Widget.Switch">
+    <style name="Theme.Chronic.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
         <item name="colorControlActivated">@color/plum</item>
         <item name="colorSwitchThumbNormal">@color/soft_pink</item>
         <item name="android:colorForeground">@color/plum</item>
