@@ -85,6 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/reminder_detail_dayButtons"
         android:text = "@string/button_description_text"
+        android:layout_centerHorizontal="true"
         />
 
     <LinearLayout
