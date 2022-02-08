@@ -3,6 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    
+    <View
+        android:id="@+id/forum_filter_divider_view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/plum"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/post_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/forum_filter_divider_view"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/forum_add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_baseline_add_24"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"/>
 
 </RelativeLayout>
