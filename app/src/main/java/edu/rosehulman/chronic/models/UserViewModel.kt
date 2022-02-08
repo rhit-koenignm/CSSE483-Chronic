@@ -33,6 +33,7 @@ class UserViewModel : ViewModel() {
                 } else {
                     //There is no corresponding user on firebase
                     with(Firebase.auth.currentUser) {
+                        //TODO Fix this, Emily broke it by not using a standardized format that can be parsed
                         var firstNameInput = this?.displayName?.split(" ")?.get(0)
                         var lastNameInput = this?.displayName?.split(" ")?.get(1)
                         var photoURLInput = this?.photoUrl.toString()

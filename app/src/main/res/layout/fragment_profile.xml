@@ -196,7 +196,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/TagsRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp" />
+                    android:layout_height="wrap_content" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
