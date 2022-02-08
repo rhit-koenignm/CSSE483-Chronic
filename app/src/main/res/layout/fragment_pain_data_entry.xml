@@ -242,7 +242,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/symptoms_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/symptoms_label"
             android:layout_margin="10dp"
             android:layout_marginStart="10dp"
@@ -270,7 +270,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/triggers_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/triggers_label"
             android:layout_margin="10dp"
             android:layout_marginStart="10dp"
@@ -298,7 +298,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/treatments_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/treatments_label"
             android:layout_margin="10dp"
             android:layout_marginStart="10dp"
