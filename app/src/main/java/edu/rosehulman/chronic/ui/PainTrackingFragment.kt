@@ -19,14 +19,14 @@ import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.databinding.FragmentPaintrackingBinding
 import edu.rosehulman.chronic.models.PainData
-import edu.rosehulman.chronic.models.PainDataListViewModel
+import edu.rosehulman.chronic.models.PainDataViewModel
 import edu.rosehulman.chronic.models.UserData
 
 
 class PainTrackingFragment : Fragment() {
 
     private lateinit var binding: FragmentPaintrackingBinding
-    private lateinit var modelList: PainDataListViewModel
+    private lateinit var model: PainDataViewModel
 
     private lateinit var chart: BarChart
 
@@ -39,7 +39,7 @@ class PainTrackingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        modelList = ViewModelProvider(requireActivity()).get(PainDataListViewModel::class.java)
+        model = ViewModelProvider(requireActivity()).get(PainDataViewModel::class.java)
         binding = FragmentPaintrackingBinding.inflate(inflater, container, false)
         val root: View = binding.root
         setHasOptionsMenu(true)
@@ -58,13 +58,13 @@ class PainTrackingFragment : Fragment() {
     }
 
     private fun readDataModelFromFireStoreUpdate(observer: () -> Unit) {
-        modelList.addListener(fragmentName, Firebase.auth.uid!!, observer)
+        model.addListener(fragmentName, Firebase.auth.uid!!, observer)
     }
 
     private fun setupAverageValue() {
 
-        if(modelList.size() != 0){
-            if(modelList.getAveragePain() < 5){
+        if(model.size() != 0){
+            if(model.getAveragePain() < 5){
                 binding.averageText.text = "Doing Well"
                 binding.averageIcon.load(resources.getDrawable( R.drawable.ic_baseline_keyboard_arrow_up_24))
                 binding.averageText.setTextColor(resources.getColor(R.color.green))
@@ -75,7 +75,7 @@ class PainTrackingFragment : Fragment() {
                 binding.averageText.setTextColor(resources.getColor(R.color.red))
                 binding.averageIcon.setBackgroundColor(resources.getColor(R.color.red))
             }
-            binding.painTrackingAverage.text = modelList.getAveragePain().toString()
+            binding.painTrackingAverage.text = model.getAveragePain().toString()
         }
     }
 
@@ -108,9 +108,9 @@ class PainTrackingFragment : Fragment() {
         val dataList = ArrayList<PainData>()
         if(displayLastWeek){
             // grab the last seven entries (if they exist)
-            dataList.addAll(modelList.getSpecifedDataPoints(7))
+            dataList.addAll(model.getSpecifedDataPoints(7))
         }else{
-            dataList.addAll(modelList.getSpecifedDataPoints(31))
+            dataList.addAll(model.getSpecifedDataPoints(31))
         }
 
         val values = ArrayList<BarEntry>()
@@ -309,7 +309,7 @@ class PainTrackingFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        modelList.removeListener(fragmentName)
+        model.removeListener(fragmentName)
     }
 
     companion object{

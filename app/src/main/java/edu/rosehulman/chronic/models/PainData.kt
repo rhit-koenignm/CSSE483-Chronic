@@ -13,8 +13,7 @@ data class PainData(
     var title: String = "Null",
     var startTime:Timestamp = Timestamp.now(),
     var endTime:Timestamp = Timestamp.now(),
-    var attachedTags: ArrayList<Tag> = ArrayList<Tag>(),
-    var myTags: ArrayList<String> = ArrayList<String>(),
+    var attachedTags: ArrayList<String> = ArrayList<String>(),
 ){
     @get:Exclude
     var id = ""

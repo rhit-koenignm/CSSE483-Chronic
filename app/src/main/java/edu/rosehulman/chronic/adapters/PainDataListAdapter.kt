@@ -10,13 +10,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.PainData
-import edu.rosehulman.chronic.models.PainDataListViewModel
+import edu.rosehulman.chronic.models.PainDataViewModel
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
 
 class PainDataListAdapter(val fragment: Fragment) : RecyclerView.Adapter<PainDataListAdapter.PainDataViewHolder>() {
-    val model = ViewModelProvider(fragment.requireActivity()).get(PainDataListViewModel::class.java)
+    val model = ViewModelProvider(fragment.requireActivity()).get(PainDataViewModel::class.java)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PainDataViewHolder {
         val view =

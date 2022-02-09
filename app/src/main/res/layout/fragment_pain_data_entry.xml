@@ -5,17 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_entry_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_baseline_add_24"
-        android:backgroundTint="?colorPrimary"
-        android:tint="@color/pearl"
-        android:contentDescription="@string/press_button_to_add_entry_hint" />
 
     <ScrollView
         android:id="@+id/Entry_Scroll_Bar"
@@ -244,7 +233,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/symptoms_label"
-            android:layout_margin="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
@@ -300,11 +288,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/treatments_label"
-            android:layout_margin="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/Submit_Button"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@id/treatments_recycler_view"
+            android:text="@string/submit_new_entry_label"
+            android:textSize="30sp"
+            />
+
     </RelativeLayout>
     </ScrollView>
 

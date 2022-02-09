@@ -16,19 +16,17 @@ import coil.load
 import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.MyTagViewModel
+import edu.rosehulman.chronic.models.PainDataEntryTagViewModel
 import edu.rosehulman.chronic.models.Tag
 
 class PainDataEntryTagAdapter(fragment: Fragment, fragmentName: String, dataTypeIn:String) : RecyclerView.Adapter<PainDataEntryTagAdapter.PainDataEntryTagViewHolder>() {
-        private lateinit var dataType: String
-        init {
-            dataType = dataTypeIn
-        }
+        private var dataType: String = dataTypeIn
 
-        val fragment: Fragment = fragment
+    val fragment: Fragment = fragment
 
         // Newly added: this fragment name will allow us to limit functionality if the fragment is ProfileFragment
         val fragmentName = fragmentName
-        val model = ViewModelProvider(fragment.requireActivity()).get(MyTagViewModel::class.java)
+        val model = ViewModelProvider(fragment.requireActivity()).get(PainDataEntryTagViewModel::class.java)
 
         fun removeListener(fragmentName: String) {
             model.removeListener(fragmentName)
@@ -62,7 +60,7 @@ class PainDataEntryTagAdapter(fragment: Fragment, fragmentName: String, dataType
             init {
                 tagImageView.setOnClickListener {
                     model.updateTypePos(adapterPosition,dataType)
-                    model.toggleTypeTracked(dataType)
+                    model.toggleTypeTracked(adapterPosition,dataType)
                     notifyDataSetChanged()
                 }
             }

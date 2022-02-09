@@ -1,9 +1,11 @@
 package edu.rosehulman.chronic.ui
 
 import android.app.AlertDialog
+import android.content.Context
 import android.icu.lang.UCharacter
 import android.os.Bundle
 import android.text.InputType
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.adapters.MyTagAdapter
@@ -48,7 +51,9 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
         adapter = MyTagAdapter(this, fragmentName)
         binding.myTagsRecyler.adapter = adapter
         binding.myTagsRecyler.setHasFixedSize(true)
-        binding.myTagsRecyler.layoutManager = LinearLayoutManager(requireContext())
+        //binding.myTagsRecyler.layoutManager = LinearLayoutManager(requireContext())
+        binding.myTagsRecyler.layoutManager = WrapContentLinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+
 
         adapter.addUserListener(fragmentName){}
 
@@ -105,6 +110,32 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
     companion object {
         const val fragmentName = "MyTagsFragment"
+    }
+
+    inner class WrapContentLinearLayoutManager : LinearLayoutManager {
+        constructor(context: Context?) : super(context) {}
+        constructor(context: Context?, orientation: Int, reverseLayout: Boolean) : super(
+            context,
+            orientation,
+            reverseLayout
+        ) {
+        }
+
+        constructor(
+            context: Context?,
+            attrs: AttributeSet?,
+            defStyleAttr: Int,
+            defStyleRes: Int
+        ) : super(context, attrs, defStyleAttr, defStyleRes) {
+        }
+
+        override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+            try {
+                super.onLayoutChildren(recycler, state)
+            } catch (e: IndexOutOfBoundsException) {
+                Log.e("TAG", "meet a IOOBE in RecyclerView")
+            }
+        }
     }
 
 }

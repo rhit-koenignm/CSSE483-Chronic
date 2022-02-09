@@ -104,6 +104,7 @@
     <string name="post_author_text">Author: Put username here</string>
     <string name="nav_forum_label">Global Forum</string>
     <string name="button_description_text">Select the days you want notifications, dark purple is selected.</string>
+    <string name="submit_new_entry_label">Submit New Entry</string>
 
 
 </resources>

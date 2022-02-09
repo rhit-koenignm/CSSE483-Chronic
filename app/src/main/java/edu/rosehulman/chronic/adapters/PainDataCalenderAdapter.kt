@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataCalenderViewModel
-import edu.rosehulman.chronic.models.PainDataListViewModel
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*

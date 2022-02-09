@@ -21,98 +21,11 @@ class MyTagViewModel : ViewModel() {
     var myTags = ArrayList<String>()
     var currentPos = 0
 
-    //Special Variables for Entry Tag Tracking
-    var myTriggers = ArrayList<Tag>()
-    var triggersPosition = 0;
-    var myTreatments = ArrayList<Tag>()
-    var treatmentsPosition = 0;
-    var mySymptoms = ArrayList<Tag>()
-    var symptomsPosition = 0;
-
-    fun getTypeSize(dataType: String): Int {
-        if(dataType == "Treatments"){
-            return myTreatments.size
-        }else if(dataType == "Symptoms"){
-            return mySymptoms.size
-        }else if(dataType == "Triggers"){
-            return myTriggers.size
-        }else{
-            Log.d(Constants.TAG,"Failed to Bind Non-existant Data Type")
-            return 0
-        }
-
-    }
-
-    fun getTypeTagAt(position: Int, dataType: String): Tag {
-        if(dataType == "Treatments"){
-            return myTreatments[position]
-        }else if(dataType == "Symptoms"){
-            return mySymptoms[position]
-        }else{
-            return myTriggers[position]
-        }
-    }
-
-    fun updateTypePos(adapterPosition: Int, dataType: String) {
-        if(dataType == "Treatments"){
-            treatmentsPosition = adapterPosition
-        }else if(dataType == "Symptoms"){
-            symptomsPosition = adapterPosition
-        }else{
-            triggersPosition = adapterPosition
-        }
-    }
-
-    fun toggleTypeTracked(dataType: String) {
-        //not implemented yet
-    }
-
-    fun addMyTagsByTypeListener(fragmentName: String, observer: () -> Unit) {
-        Log.d(Constants.TAG, "Adding listener for $fragmentName")
-
-        // Checking what the type is. Since MyTags is not a type, we are going to check that first
-
-        if (myTags.isEmpty()) {
-            Log.d(Constants.TAG, "My tags is empty so no listener to add")
-        } else {
-            val subscription = ref
-                .whereIn(FieldPath.documentId(), myTags)
-                .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
-                    error?.let {
-                        Log.d(Constants.TAG, "Error $error")
-                        return@addSnapshotListener
-                    }
-                    Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
-                    myTriggers.clear()
-                    mySymptoms.clear()
-                    myTreatments.clear()
-                    snapshot?.documents?.forEach {
-                        var tag = Tag.from(it)
-                        if(tag.type == "Symptom"){
-                            mySymptoms.add(tag)
-                        }else if(tag.type == "Trigger"){
-                            myTriggers.add(tag)
-                        }else if(tag.type == "Treatment"){
-                            myTreatments.add(tag)
-                        }else{
-                            Log.d(Constants.TAG,"Tag Has No Type")
-                        }
-                    }
-                    Log.d(Constants.TAG,"Grabbed a total of ${snapshot?.size()} docs, with ${myTreatments.size} Treatments, ${myTriggers.size} Triggers and ${mySymptoms.size} Symptoms")
-                    observer()
-                }
-            tagSubscriptions[fragmentName] = subscription
-        }
-    }
-
-
-
 
     fun getTagAt(pos: Int) = tags[pos]
     fun getCurrentTag() = tags[currentPos]
 
     var uid = Firebase.auth.uid!!
-
     var ref = Firebase.firestore.collection(Tag.COLLECTION_PATH)
     var userRef = Firebase
         .firestore

@@ -1,6 +1,9 @@
 package edu.rosehulman.chronic.ui
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Recycler
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.firebase.auth.ktx.auth
@@ -20,6 +26,7 @@ import edu.rosehulman.chronic.adapters.MyTagAdapter
 import edu.rosehulman.chronic.databinding.FragmentProfileBinding
 import edu.rosehulman.chronic.models.UserData
 import edu.rosehulman.chronic.models.UserViewModel
+
 
 class ProfileFragment : Fragment() {
 
@@ -46,11 +53,13 @@ class ProfileFragment : Fragment() {
         //Match the adapter class to the xml
         binding.TagsRecyclerView.adapter = adapter
         //Chose a linear layout manager for rows, grid is for grid
-        binding.TagsRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
+        //binding.TagsRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
         //Fixed size text view, this makes all happier
         binding.TagsRecyclerView.setHasFixedSize(true)
         //Adds nice little gaps around each object in the recycler view
         binding.TagsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+
+        binding.TagsRecyclerView.layoutManager = WrapContentLinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
 
         // Now that we have set up our adapter, we need to set up our listeners
         adapter.addUserListener(fragmentName){
@@ -106,4 +115,33 @@ class ProfileFragment : Fragment() {
     companion object {
         const val fragmentName = "ProfileFragment"
     }
+
+
+
+    inner class WrapContentLinearLayoutManager : LinearLayoutManager {
+        constructor(context: Context?) : super(context) {}
+        constructor(context: Context?, orientation: Int, reverseLayout: Boolean) : super(
+            context,
+            orientation,
+            reverseLayout
+        ) {
+        }
+
+        constructor(
+            context: Context?,
+            attrs: AttributeSet?,
+            defStyleAttr: Int,
+            defStyleRes: Int
+        ) : super(context, attrs, defStyleAttr, defStyleRes) {
+        }
+
+        override fun onLayoutChildren(recycler: Recycler, state: RecyclerView.State) {
+            try {
+                super.onLayoutChildren(recycler, state)
+            } catch (e: IndexOutOfBoundsException) {
+                Log.e("TAG", "meet a IOOBE in RecyclerView")
+            }
+        }
+    }
+
 }

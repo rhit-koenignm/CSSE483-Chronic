@@ -15,7 +15,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-class PainDataListViewModel : ViewModel() {
+class PainDataViewModel : ViewModel() {
         var objectList = ArrayList<PainData>()
         var currentPosition = 0         //Defaults to looking at the zeroth position
 
@@ -29,11 +29,12 @@ class PainDataListViewModel : ViewModel() {
             fireBaseReference.add(objectInput)
         }
 
-        fun updateCurrentObject(title: String, painvalue: Int, startTime:Timestamp,  endTime:Timestamp){
+        fun updateCurrentObject(title: String, painvalue: Int, startTime:Timestamp,  endTime:Timestamp, newAttachedTags:ArrayList<String>){
             objectList[currentPosition].title = title
             objectList[currentPosition].painLevel = painvalue
             objectList[currentPosition].startTime = startTime
             objectList[currentPosition].endTime = endTime
+            objectList[currentPosition].attachedTags = newAttachedTags
 
             fireBaseReference.document(getCurrentObject().id).set(getCurrentObject())
         }
