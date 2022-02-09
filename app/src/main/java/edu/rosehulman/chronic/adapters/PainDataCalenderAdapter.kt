@@ -54,8 +54,8 @@ class PainDataCalenderAdapter(val fragment: Fragment) : RecyclerView.Adapter<Pai
     }
 
     fun addDateListener(fragmentName: String, newDate: Date, uid: String, observer: () -> Unit) {
-        model.addDateListener(fragmentName, newDate, uid){observer}
-        notifyDataSetChanged()
+        model.addDateListener(fragmentName, newDate, uid){notifyDataSetChanged()}
+        observer()
     }
 
 

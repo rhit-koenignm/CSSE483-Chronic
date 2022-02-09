@@ -45,13 +45,11 @@ class PainDataCalenderViewModel : ViewModel() {
         }
 
         fun removeAt(adapterPosition: Int) {
-            var objectAtPosition = objectList[adapterPosition]
+            val objectAtPosition = objectList[adapterPosition]
             fireBaseReference.document(objectAtPosition.id).delete()
             objectList.remove(objectAtPosition)
             currentPosition = 0
         }
-
-
 
         fun updatePosition(position: Int){
             currentPosition = position
@@ -85,8 +83,8 @@ class PainDataCalenderViewModel : ViewModel() {
     }
 
     fun getSpecifedDataPoints(inputNumDataPoints: Int ): ArrayList<PainData> {
-        var output = ArrayList<PainData>()
-        var objectsToGrab = inputNumDataPoints;
+        val output = ArrayList<PainData>()
+        var objectsToGrab = inputNumDataPoints
 
         //Only grab what exists
         if(objectList.size <objectsToGrab){
@@ -123,6 +121,7 @@ class PainDataCalenderViewModel : ViewModel() {
                 }
                 observer()
             }
+        observer()
         subscriptions.put(fragmentName, subscription)
     }
 

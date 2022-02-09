@@ -19,8 +19,6 @@ import edu.rosehulman.chronic.adapters.PainDataCalenderAdapter
 import edu.rosehulman.chronic.adapters.SwipeToDeleteCallback
 import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
 import edu.rosehulman.chronic.models.PainData
-import java.time.LocalDate
-import java.time.ZoneId
 import java.util.*
 
 
@@ -63,6 +61,7 @@ class DataCalenderFragment : Fragment(){
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 adapter.removeAt(viewHolder.adapterPosition)
+                adapter.notifyDataSetChanged()
             }
         }
 
@@ -82,18 +81,15 @@ class DataCalenderFragment : Fragment(){
             //Handle the use of the calander itself for filtering
         binding.CalenderData.setOnDateChangeListener { view, year, month, dayOfMonth ->
             Log.d(Constants.TAG,"The date callback is ${month+1}/$dayOfMonth/$year")
-            var calender = GregorianCalendar(year, month, dayOfMonth)
-            var newDate = Date(calender.timeInMillis)
+            val calender = GregorianCalendar(year, month, dayOfMonth)
+            val myNewDate = Date(calender.timeInMillis)
 
-            Log.d(Constants.TAG,"New Date Selected: ${newDate.toString()}")
+            Log.d(Constants.TAG,"New Date Selected: ${myNewDate.toString()}")
 
             adapter.removeModelListener(fragmentName)
-            adapter.addDateListener(fragmentName,newDate,Firebase.auth.uid!!){adapter.notifyDataSetChanged()}
+            adapter.addDateListener(fragmentName,myNewDate,Firebase.auth.uid!!){adapter.notifyDataSetChanged()}
             adapter.notifyDataSetChanged()
-
-
         }
-
         return root
     }
 
