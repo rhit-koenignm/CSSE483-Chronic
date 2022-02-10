@@ -21,7 +21,6 @@ class MyTagViewModel : ViewModel() {
     var myTags = ArrayList<String>()
     var currentPos = 0
 
-
     fun getTagAt(pos: Int) = tags[pos]
     fun getCurrentTag() = tags[currentPos]
 
@@ -35,7 +34,9 @@ class MyTagViewModel : ViewModel() {
     val tagSubscriptions = HashMap<String, ListenerRegistration>()
     val userSubscriptions = HashMap<String, ListenerRegistration>()
 
-    fun addUserListener(fragmentName: String, observer: () -> Unit) {
+    // This function adds the listener for the tags collection overall
+    // We grab the type so we can know what type we are filtering by, if it is myTags then it is ONLY the ones that have been added
+    fun addListener(fragmentName: String, type: String, observer: () -> Unit) {
         Log.d(Constants.TAG, "Adding user listener for user $uid for fragment $fragmentName")
         // Now to create the user and then add the current firebase reference
         val userSubscription = userRef
@@ -55,23 +56,36 @@ class MyTagViewModel : ViewModel() {
             }
         userSubscriptions[fragmentName]
         Log.d(Constants.TAG, "Successfully grabbed user with id of ${uid}")
-    }
 
-    fun removeUserListener(fragmentName: String) {
-        Log.d(Constants.TAG, "Removing user listener for $fragmentName")
-        userSubscriptions[fragmentName]?.remove()
-        userSubscriptions.remove(fragmentName)
-    }
-
-    // This function adds the listener for the tags collection overall
-    // We grab the type so we can know what type we are filtering by, if it is myTags then it is ONLY the ones that have been added
-    fun addListener(fragmentName: String, type: String, observer: () -> Unit) {
         Log.d(Constants.TAG, "Adding listener for $fragmentName")
+        currentPos = 0
 
         // Checking what the type is. Since MyTags is not a type, we are going to check that first
         if(type.equals("MyTags")) {
             if(myTags.isEmpty()){
                 Log.d(Constants.TAG, "My tags is empty so no listener to add")
+            } else if (myTags.size > 10){
+                // So Firebase whereIn queries can only handle lists of 10 elements, so for now I'll splice it so that it only grabs the first 10
+                val subscription = ref
+                    .whereIn(FieldPath.documentId(), myTags.subList(0, 10))
+                    .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
+                        error?.let {
+                            Log.d(Constants.TAG, "Error $error")
+                            return@addSnapshotListener
+                        }
+                        Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
+                        tags.clear()
+                        snapshot?.documents?.forEach {
+                            var tag = Tag.from(it)
+                            //Here is where we'll track our tags and see if it is already tracked
+                            //For now we will just set the value to false
+                            tag.isTracked = myTags.contains(tag.id)
+                            tags.add(tag)
+                        }
+                        observer()
+                    }
+                tagSubscriptions[fragmentName] = subscription
+
             } else {
                 val subscription = ref
                     .whereIn(FieldPath.documentId(), myTags)
@@ -121,7 +135,6 @@ class MyTagViewModel : ViewModel() {
             val subscription = ref
                 .whereIn("creator", listOf("admin", uid))
                 .whereEqualTo("type", type)
-                .orderBy("type")
                 .orderBy("title")
                 .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                     error?.let {
@@ -146,6 +159,10 @@ class MyTagViewModel : ViewModel() {
 
     // Removing our tag listener
     fun removeListener(fragmentName: String) {
+        Log.d(Constants.TAG, "Removing user listener for $fragmentName")
+        userSubscriptions[fragmentName]?.remove()
+        userSubscriptions.remove(fragmentName)
+
         Log.d(Constants.TAG, "Removing listener for $fragmentName")
         tagSubscriptions[fragmentName]?.remove()
         tagSubscriptions.remove(fragmentName)
@@ -159,7 +176,7 @@ class MyTagViewModel : ViewModel() {
             return false
         }else {
             tag.creator = uid
-            tag.isTracked
+            tag.isTracked = false
             ref.add(tag)
             return true
         }
@@ -209,19 +226,21 @@ class MyTagViewModel : ViewModel() {
     fun toggleTracked() {
         // So isTracked will be used locally, but not in firestore.
         // When I load them in I'll set them according to the user's tag collection
-        tags[currentPos].isTracked = !tags[currentPos].isTracked
+        Log.d(Constants.TAG, "In toggle tracked in view model, at pos $currentPos")
+        tags[currentPos].toggleTracked()
         if(getCurrentTag().isTracked && !myTags.contains(getCurrentTag().id)) {
+            Log.d(Constants.TAG, "Trying to add the tag to my tags")
             myTags.add(getCurrentTag().id)
-        } else {
-            myTags.remove(getCurrentTag().id)
+            userRef.update(mapOf(
+                "myTags" to myTags
+            ))
+        } else if (!getCurrentTag().isTracked && myTags.contains(getCurrentTag().id)){
+            Log.d(Constants.TAG, "Trying to remove the tag from my tags")
+            var i = myTags.indexOf(getCurrentTag().id)
+            myTags.removeAt(i)
+            userRef.update(mapOf(
+                "myTags" to myTags
+            ))
         }
-        myTags = myTags
-        userRef.update(mapOf(
-            "myTags" to myTags
-        ))
     }
-
-
-
-
 }

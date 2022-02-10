@@ -51,11 +51,10 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
         adapter = MyTagAdapter(this, fragmentName)
         binding.myTagsRecyler.adapter = adapter
         binding.myTagsRecyler.setHasFixedSize(true)
-        //binding.myTagsRecyler.layoutManager = LinearLayoutManager(requireContext())
-        binding.myTagsRecyler.layoutManager = WrapContentLinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        binding.myTagsRecyler.layoutManager = LinearLayoutManager(requireContext())
+        //binding.myTagsRecyler.layoutManager = WrapContentLinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
 
-
-        adapter.addUserListener(fragmentName){}
+        //adapter.addUserListener(fragmentName)
 
         adapter.addListener(fragmentName, currentType)
 
@@ -69,7 +68,7 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        adapter.removeUserListener(fragmentName)
+        //adapter.removeUserListener(fragmentName)
         adapter.removeListener(fragmentName)
     }
 
@@ -79,7 +78,7 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        //adapter.removeListener(fragmentName)
+        adapter.removeListener(fragmentName)
         var type = parent?.getItemAtPosition(pos)
         Log.d(Constants.TAG, "Getting spinner item selected $type")
         if(type == null) {
@@ -92,9 +91,9 @@ class MyTagsFragment: Fragment(), AdapterView.OnItemSelectedListener {
             var passedInType =
                 when (currentType) {
                     tagFiltersArray[0] -> "All"
-                    tagFiltersArray[1] -> tagTypesArray[0]
-                    tagFiltersArray[2] -> tagTypesArray[1]
-                    tagFiltersArray[3] -> tagTypesArray[2]
+                    tagFiltersArray[2] -> tagTypesArray[0]
+                    tagFiltersArray[3] -> tagTypesArray[1]
+                    tagFiltersArray[4] -> tagTypesArray[2]
                     else -> {
                         "MyTags"
                     }

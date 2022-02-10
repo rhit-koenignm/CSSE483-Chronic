@@ -62,12 +62,11 @@ class ProfileFragment : Fragment() {
         binding.TagsRecyclerView.layoutManager = WrapContentLinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
 
         // Now that we have set up our adapter, we need to set up our listeners
-        adapter.addUserListener(fragmentName){
-            adapter.addListener(fragmentName, "MyTags")
-        }
-
+        //adapter.addUserListener(fragmentName)
+        adapter.addListener(fragmentName, "MyTags")
 
         readFromFireStore()
+
         setUpButtons()
         return root
     }
@@ -108,7 +107,7 @@ class ProfileFragment : Fragment() {
     // When the fragment is destroyed, remove our listeners
     override fun onDestroyView() {
         super.onDestroyView()
-        adapter.removeUserListener(fragmentName)
+        //adapter.removeUserListener(fragmentName)
         adapter.removeListener(fragmentName)
     }
 

@@ -40,14 +40,16 @@ class MyTagAdapter(fragment: Fragment, fragmentName: String) : RecyclerView.Adap
     }
 
     // This does a listener on the current user so we can grab their tags
-    fun addUserListener(fragmentName: String, observer: () -> Unit) {
-        Log.d(Constants.TAG, "Jumping into the addUserListener from adapter")
-        model.addUserListener(fragmentName, observer)
-    }
+//    fun addUserListener(fragmentName: String) {
+//        Log.d(Constants.TAG, "Jumping into the addUserListener from adapter")
+//        model.addUserListener(fragmentName){
+//            notifyDataSetChanged()
+//        }
+//    }
 
-    fun removeUserListener(fragmentName: String) {
-        model.removeUserListener(fragmentName)
-    }
+//    fun removeUserListener(fragmentName: String) {
+//        model.removeUserListener(fragmentName)
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyTagViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.tag_item, parent, false)
