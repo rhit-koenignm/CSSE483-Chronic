@@ -181,7 +181,7 @@ class MyTagAdapter(fragment: Fragment, fragmentName: String) : RecyclerView.Adap
         val tagImageView = itemView.findViewById<ImageView>(R.id.tag_item_icon)
 
         init {
-//            if(!fragmentName.equals("ProfileFragment")) {
+            if(!fragmentName.equals("ProfileFragment")) {
                 itemView.setOnLongClickListener {
                     model.updatePos(adapterPosition)
                     var tag = model.getCurrentTag()
@@ -201,7 +201,7 @@ class MyTagAdapter(fragment: Fragment, fragmentName: String) : RecyclerView.Adap
                     model.toggleTracked()
                     notifyItemChanged(adapterPosition)
                 }
-            //}
+            }
         }
 
         fun bind(tag: Tag){
