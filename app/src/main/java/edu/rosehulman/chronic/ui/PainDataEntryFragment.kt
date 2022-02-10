@@ -150,8 +150,8 @@ class PainDataEntryFragment : Fragment() {
                 endTimeString = "00:00:00"
             }
 
-            val startLocalDateTime:LocalDateTime = LocalDateTime.parse("$startDateString : $startTimeString", DateTimeFormatter.ofPattern("M/d/yyyy : HH:mm:ss"))
-            val endLocalDateTime:LocalDateTime = LocalDateTime.parse("$endDateString : $endTimeString", DateTimeFormatter.ofPattern("M/d/yyyy : HH:mm:ss"))
+            val startLocalDateTime:LocalDateTime = LocalDateTime.parse("$startDateString : $startTimeString", DateTimeFormatter.ofPattern("M/d/yyyy : H:m:s"))
+            val endLocalDateTime:LocalDateTime = LocalDateTime.parse("$endDateString : $endTimeString", DateTimeFormatter.ofPattern("M/d/yyyy : H:m:s"))
 
             val startDateTime: Date = Date.from(startLocalDateTime.atZone(ZoneId.systemDefault()).toInstant())
             val endDateTime: Date = Date.from(endLocalDateTime.atZone(ZoneId.systemDefault()).toInstant())

@@ -209,6 +209,14 @@ class MyTagViewModel : ViewModel() {
     fun toggleTracked() {
         // So isTracked will be used locally, but not in firestore.
         // When I load them in I'll set them according to the user's tag collection
+
+
+        //TODO -> Figure out why this happens rather than just bodging the solution
+        if(currentPos >= tags.size){
+            Log.d(Constants.TAG,"Current Position Out of Bounds for My Tag View Model")
+            return
+        }
+
         tags[currentPos].isTracked = !tags[currentPos].isTracked
         if(getCurrentTag().isTracked && !myTags.contains(getCurrentTag().id)) {
             myTags.add(getCurrentTag().id)
