@@ -30,6 +30,7 @@ class PainDataEntryTagAdapter(fragment: Fragment, fragmentName: String, dataType
 
         fun removeListener(fragmentName: String) {
             model.removeListener(fragmentName)
+            model.removeUserListener(fragmentName)
         }
 
 

@@ -228,6 +228,15 @@ class MyTagViewModel : ViewModel() {
         // When I load them in I'll set them according to the user's tag collection
         Log.d(Constants.TAG, "In toggle tracked in view model, at pos $currentPos")
         tags[currentPos].toggleTracked()
+
+
+        //TODO -> Figure out why this happens rather than just bodging the solution
+        if(currentPos >= tags.size){
+            Log.d(Constants.TAG,"Current Position Out of Bounds for My Tag View Model")
+            return
+        }
+
+        tags[currentPos].isTracked = !tags[currentPos].isTracked
         if(getCurrentTag().isTracked && !myTags.contains(getCurrentTag().id)) {
             Log.d(Constants.TAG, "Trying to add the tag to my tags")
             myTags.add(getCurrentTag().id)
