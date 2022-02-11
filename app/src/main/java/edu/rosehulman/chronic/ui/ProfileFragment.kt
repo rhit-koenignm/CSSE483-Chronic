@@ -1,6 +1,8 @@
 package edu.rosehulman.chronic.ui
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
@@ -11,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
@@ -87,6 +88,25 @@ class ProfileFragment : Fragment() {
         binding.LogoutButton.setOnClickListener(){
             Firebase.auth.signOut()
         }
+        binding.ShareButton.setOnClickListener(){
+            val url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        }
+        binding.WebsiteButton.setOnClickListener(){
+            val url = "https://rosehulmanprojectvault.org/project/-Mr8sTDKHqXn-ZyrEATz"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        }
+        binding.SupportButton.setOnClickListener(){
+            val url = "https://stackoverflow.com/"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        }
+
 
     }
 

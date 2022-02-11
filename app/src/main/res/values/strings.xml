@@ -105,6 +105,7 @@
     <string name="nav_forum_label">Global Forum</string>
     <string name="button_description_text">Select the days you want notifications, dark purple is selected.</string>
     <string name="submit_new_entry_label">Submit New Entry</string>
+    <string name="list_of_my_tags_label">List Of My Tags:</string>
 
 
 </resources>

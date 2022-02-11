@@ -176,7 +176,34 @@
                     android:background="@drawable/roundbutton"
                     android:text="@string/complete_button"
                     android:textColor="@color/white"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    android:layout_marginBottom="20dp"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/tagIcon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/SubmitPainTrackingButton"
+                    android:src="@drawable/ic_baseline_bookmarks_24"
+                    app:tint="?colorPrimary"
+                    />
+
+                <TextView
+                    android:id="@+id/tagLabels"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/SubmitPainTrackingButton"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/tagIcon"
+                    android:gravity="center_vertical"
+                    android:text="@string/list_of_my_tags_label"
+                    android:textSize="40sp"
+                    android:textColor="@color/grape" />
+
+
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -187,6 +214,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/TrackingCardView"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp">
 
             <RelativeLayout
@@ -212,6 +240,7 @@
             android:layout_marginBottom="4dp"
             >
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ShareButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:backgroundTint="@color/white"
@@ -233,6 +262,7 @@
                 android:layout_marginBottom="4dp"
                 >
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/SupportButton"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:backgroundTint="@color/white"
@@ -253,6 +283,7 @@
                 android:layout_marginBottom="4dp"
                 >
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/WebsiteButton"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:backgroundTint="@color/white"
