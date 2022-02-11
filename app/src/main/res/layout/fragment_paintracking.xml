@@ -78,14 +78,14 @@
                 android:id="@+id/PainTrackingDataGraph"
                 android:layout_width="match_parent"
                 android:layout_height="425dp"
-                android:layout_below="@id/ViewMoreDetailsButton" />
+                android:layout_below="@id/PainTrackingPieChart" />
 
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/PainTrackingPieChart"
                 android:layout_width="match_parent"
                 android:layout_height="425dp"
-                android:layout_below="@id/PainTrackingDataGraph" />
+                android:layout_below="@id/ViewMoreDetailsButton" />
             
         </RelativeLayout>
     </ScrollView>

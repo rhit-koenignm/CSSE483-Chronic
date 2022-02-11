@@ -1,6 +1,5 @@
 package edu.rosehulman.chronic.ui
 
-import android.app.Activity
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -8,9 +7,8 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
-import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
-import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -27,12 +25,17 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.R
+import edu.rosehulman.chronic.R.*
 import edu.rosehulman.chronic.databinding.FragmentPaintrackingBinding
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataViewModel
+import edu.rosehulman.chronic.models.Tag
 import edu.rosehulman.chronic.models.UserData
 
 
@@ -43,8 +46,12 @@ class PainTrackingFragment : Fragment() {
 
     private lateinit var barChart: BarChart
     private lateinit var pieChart: PieChart
+
+    private var AllUserTagsByID = HashMap<String, Int>()
+    private var AllTagsList  = ArrayList<Tag>()
+
     //Display 31 or 7
-    var displayLastWeek = true;
+    var displayLastWeek = true
 
 
     override fun onCreateView(
@@ -57,15 +64,16 @@ class PainTrackingFragment : Fragment() {
         val root: View = binding.root
         setHasOptionsMenu(true)
 
-        //TODO Clear backstack so you can't get to the loading screen
-
 
         setupButtons()
         readUserFromFireStore()
         readDataModelFromFireStoreUpdate(){
             setupAverageValue()
-            drawBarChart()
-            drawPieChart()
+            getAllTagsFromFireStore {
+                AllUserTagsByID = model.getTagsAndAmounts()
+                drawBarChart()
+                drawPieChart()
+            }
         }
 
         return root
@@ -80,14 +88,14 @@ class PainTrackingFragment : Fragment() {
         if(model.size() != 0){
             if(model.getAveragePain() < 5){
                 binding.averageText.text = "Doing Well"
-                binding.averageIcon.load(resources.getDrawable( R.drawable.ic_baseline_keyboard_arrow_up_24))
-                binding.averageText.setTextColor(resources.getColor(R.color.green))
-                binding.averageIcon.setBackgroundColor(resources.getColor(R.color.green))
+                binding.averageIcon.load(resources.getDrawable( drawable.ic_baseline_keyboard_arrow_up_24))
+                binding.averageText.setTextColor(resources.getColor(color.green))
+                binding.averageIcon.setBackgroundColor(resources.getColor(color.green))
             }else{
                 binding.averageText.text = "Doing Poorly"
-                binding.averageIcon.load(resources.getDrawable( R.drawable.ic_baseline_keyboard_arrow_down_24))
-                binding.averageText.setTextColor(resources.getColor(R.color.red))
-                binding.averageIcon.setBackgroundColor(resources.getColor(R.color.red))
+                binding.averageIcon.load(resources.getDrawable( drawable.ic_baseline_keyboard_arrow_down_24))
+                binding.averageText.setTextColor(resources.getColor(color.red))
+                binding.averageIcon.setBackgroundColor(resources.getColor(color.red))
             }
             binding.painTrackingAverage.text = model.getAveragePain().toString()
         }
@@ -108,6 +116,36 @@ class PainTrackingFragment : Fragment() {
 
         }
 
+    }
+
+    var ref = Firebase.firestore.collection(Tag.COLLECTION_PATH)
+    fun getAllTagsFromFireStore(observer: () -> Unit) {
+        Firebase.firestore.collection(Tag.COLLECTION_PATH)
+            .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
+                error?.let {
+                    Log.d(Constants.TAG, "Error $error")
+                    return@addSnapshotListener
+                }
+                Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
+                AllTagsList.clear()
+                snapshot?.documents?.forEach {
+                    var tag = Tag.from(it)
+                    tag.isTracked = false
+                    AllTagsList.add(tag)
+                }
+        observer()
+    }
+    }
+
+    fun convertTagID2Name(tagID:String):String{
+        var TagName = ""
+
+        AllTagsList.forEach(){
+            if(it.id == tagID){
+                TagName = it.title
+            }
+        }
+        return TagName
     }
 
     private fun drawBarChart(){
@@ -210,7 +248,7 @@ class PainTrackingFragment : Fragment() {
         left.setDrawZeroLine(true) // draw a zero line
 
         //Setup the zero line color and format
-        left.zeroLineColor = resources.getColor(R.color.plum)
+        left.zeroLineColor = resources.getColor(color.plum)
         left.zeroLineWidth = 1f
         barChart.axisRight.isEnabled = false
         barChart.legend.isEnabled = false
@@ -287,10 +325,43 @@ class PainTrackingFragment : Fragment() {
         pieChart.setRotationAngle(180f)
         pieChart.setCenterTextOffset(0f, -20f)
 
-        setData(4, 100f, pieChart)
 
+        //Load in the Data
+        val values = java.util.ArrayList<PieEntry>()
+
+        AllUserTagsByID.forEach(){
+            //Data, and then label
+            Log.d(Constants.TAG,"Current Tag ${convertTagID2Name(it.key)} has ${it.value} instances")
+            values.add(PieEntry(it.value.toFloat(), convertTagID2Name(it.key)))
+        }
+
+        //Remove any with no tag names, aka the data for the tag has been removed
+        val valuesToRemove = java.util.ArrayList<PieEntry>()
+        values.forEach(){
+            if(it.label ==""){
+                valuesToRemove.add(it)
+            }
+        }
+        //Remove all
+        values.removeAll(valuesToRemove)
+
+
+        val dataSet = PieDataSet(values, "<- Tags Legend")
+
+        dataSet.sliceSpace = 3f
+        dataSet.selectionShift = 5f
+        dataSet.setColors(*ColorTemplate.MATERIAL_COLORS)
+
+        val data = PieData(dataSet)
+        data.setValueFormatter(PercentFormatter())
+        data.setValueTextSize(11f)
+        data.setValueTextColor(Color.WHITE)
+
+        pieChart.setData(data)
+        pieChart.invalidate()
+
+        //Animation and Legend Setup
         pieChart.animateY(1400, Easing.EaseInOutQuad)
-
         val l: Legend = pieChart.getLegend()
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
@@ -300,9 +371,8 @@ class PainTrackingFragment : Fragment() {
         l.yEntrySpace = 0f
         l.yOffset = 0f
 
-        // entry label styling
 
-        // entry label styling
+       // entry label styling
         pieChart.setEntryLabelColor(Color.WHITE)
         pieChart.setEntryLabelTextSize(12f)
     }
@@ -332,42 +402,16 @@ class PainTrackingFragment : Fragment() {
 
     }
 
-    private fun generateCenterSpannableText(): SpannableString? {
-        val s = SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda")
-        s.setSpan(RelativeSizeSpan(1.7f), 0, 14, 0)
-        s.setSpan(StyleSpan(Typeface.NORMAL), 14, s.length - 15, 0)
-        s.setSpan(ForegroundColorSpan(Color.GRAY), 14, s.length - 15, 0)
-        s.setSpan(RelativeSizeSpan(.8f), 14, s.length - 15, 0)
-        s.setSpan(StyleSpan(Typeface.ITALIC), s.length - 14, s.length, 0)
-        s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length - 14, s.length, 0)
+    private fun generateCenterSpannableText(): SpannableString {
+        val s = SpannableString("Chronic\ndeveloped by Nicholas Snow and Natalie Koenig")
+        s.setSpan(RelativeSizeSpan(1.7f), 0, 7, 0)
+        s.setSpan(StyleSpan(Typeface.NORMAL), 7, 17, 0)
+        s.setSpan(ForegroundColorSpan(Color.GRAY), 7, 17, 0)
+        s.setSpan(RelativeSizeSpan(.9f), 17, s.length , 0)
+        s.setSpan(StyleSpan(Typeface.ITALIC), 17, s.length, 0)
+        s.setSpan(ForegroundColorSpan(resources.getColor(color.grape)), 17, s.length, 0)
         return s
     }
-
-    private fun setData(count: Int, range: Float,chart: PieChart) {
-        val values = java.util.ArrayList<PieEntry>()
-        for (i in 0 until count) {
-            values.add(
-                PieEntry(
-                    (Math.random() * range + range / 5).toFloat(),
-                    parties.get(i % parties.size)
-                )
-            )
-        }
-        val dataSet = PieDataSet(values, "Election Results")
-        dataSet.sliceSpace = 3f
-        dataSet.selectionShift = 5f
-        dataSet.setColors(*ColorTemplate.MATERIAL_COLORS)
-        //dataSet.setSelectionShift(0f);
-        val data = PieData(dataSet)
-        data.setValueFormatter(PercentFormatter())
-        data.setValueTextSize(11f)
-        data.setValueTextColor(Color.WHITE)
-        chart.setData(data)
-        chart.invalidate()
-    }
-
-
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflator: MenuInflater) {
         inflator.inflate(R.menu.main_filter, menu)
@@ -413,14 +457,4 @@ class PainTrackingFragment : Fragment() {
     companion object{
         const val fragmentName = "PainTrackingFragment"
     }
-
-    protected val parties = arrayOf(
-        "Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H",
-        "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P",
-        "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X",
-        "Party Y", "Party Z"
-    )
-
-
-
 }

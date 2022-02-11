@@ -8,9 +8,6 @@ import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
-import java.sql.Time
-import java.time.LocalDateTime
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -107,7 +104,7 @@ class PainDataViewModel : ViewModel() {
     }
 
     fun getSpecifedDataPoints(inputNumDataPoints: Int ): ArrayList<PainData> {
-        var output = ArrayList<PainData>()
+        val output = ArrayList<PainData>()
         var objectsToGrab = inputNumDataPoints;
 
         //Only grab what exists
@@ -123,6 +120,34 @@ class PainDataViewModel : ViewModel() {
         output.reverse()
 
     return output
+    }
+
+    fun getTagsAndAmounts(): HashMap<String, Int> {
+
+        val tagsToQuantities = HashMap<String,Int>()
+
+        if(objectList.size == 0){
+            return tagsToQuantities
+        }
+
+
+        for(index in 0 until objectList.size){
+            //Get the tags in each object, and then add them to the total number of tags
+            val currentEntryTags = objectList[index].attachedTags
+            for(tagsIndex in 0 until currentEntryTags.size){
+                val currentTag = currentEntryTags[tagsIndex]
+                //check if it already exists, and if not add it
+                if(tagsToQuantities.containsKey(currentTag)){
+                    val existingEntryInt = tagsToQuantities.get(currentTag)
+                    tagsToQuantities.put(currentTag,existingEntryInt!! + 1)
+                }else{
+                    tagsToQuantities.put(currentTag, 1)
+                }
+            }
+
+        }
+        return tagsToQuantities
+
     }
 
 
