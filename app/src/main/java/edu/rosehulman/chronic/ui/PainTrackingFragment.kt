@@ -1,17 +1,30 @@
 package edu.rosehulman.chronic.ui
 
+import android.app.Activity
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
+import android.util.DisplayMetrics
 import android.view.*
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import coil.load
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -28,8 +41,8 @@ class PainTrackingFragment : Fragment() {
     private lateinit var binding: FragmentPaintrackingBinding
     private lateinit var model: PainDataViewModel
 
-    private lateinit var chart: BarChart
-
+    private lateinit var barChart: BarChart
+    private lateinit var pieChart: PieChart
     //Display 31 or 7
     var displayLastWeek = true;
 
@@ -51,7 +64,8 @@ class PainTrackingFragment : Fragment() {
         readUserFromFireStore()
         readDataModelFromFireStoreUpdate(){
             setupAverageValue()
-            drawChart()
+            drawBarChart()
+            drawPieChart()
         }
 
         return root
@@ -96,10 +110,9 @@ class PainTrackingFragment : Fragment() {
 
     }
 
-
-    private fun drawChart(){
+    private fun drawBarChart(){
         //Create the graph
-        chart = binding.PainTrackingDataGraph
+        barChart = binding.PainTrackingDataGraph
 
         //Setup Chart data
         //Setup Data on Chart
@@ -139,34 +152,34 @@ class PainTrackingFragment : Fragment() {
 
 
         //Set Colors
-        chart.setBackgroundColor(Color.WHITE)
-        chart.setDrawBarShadow(false)
-        chart.setDrawValueAboveBar(true)
+        barChart.setBackgroundColor(Color.WHITE)
+        barChart.setDrawBarShadow(false)
+        barChart.setDrawValueAboveBar(true)
 
         //Set Graph Padding
-        chart.extraTopOffset = -30f
-        chart.extraBottomOffset = 10f
-        chart.extraLeftOffset = 70f
-        chart.extraRightOffset = 70f
+        barChart.extraTopOffset = -30f
+        barChart.extraBottomOffset = 10f
+        barChart.extraLeftOffset = 70f
+        barChart.extraRightOffset = 70f
 
         //Setup the chart description based on which type of data to record
-        chart.description.isEnabled = false
+        barChart.description.isEnabled = false
        if(displayLastWeek){
-           chart.description.text = "Weekly Data"
+           barChart.description.text = "Weekly Data"
        }else{
-           chart.description.text = "Monthly Data"
+           barChart.description.text = "Monthly Data"
        }
 
         //Can't scale chart in any direction
-        chart.setPinchZoom(false)
+        barChart.setPinchZoom(false)
         //Don't draw grids
-        chart.setDrawGridBackground(false)
+        barChart.setDrawGridBackground(false)
 
 
 
 
         //Initialize the X axis formatting
-        val xAxis = chart.xAxis
+        val xAxis = barChart.xAxis
         xAxis.position = XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
@@ -187,7 +200,7 @@ class PainTrackingFragment : Fragment() {
         }
 
         //Setup the axis itself and the formatting
-        val left = chart.axisLeft
+        val left = barChart.axisLeft
         left.setDrawLabels(false)
         left.spaceTop = 25f
         left.spaceBottom = 25f
@@ -198,21 +211,21 @@ class PainTrackingFragment : Fragment() {
         //Setup the zero line color and format
         left.zeroLineColor = resources.getColor(R.color.plum)
         left.zeroLineWidth = 1f
-        chart.axisRight.isEnabled = false
-        chart.legend.isEnabled = false
+        barChart.axisRight.isEnabled = false
+        barChart.legend.isEnabled = false
 
 
 
 
         //Take the data, and add it to the chart
         val set: BarDataSet
-        if (chart.data != null &&
-            chart.data.dataSetCount > 0
+        if (barChart.data != null &&
+            barChart.data.dataSetCount > 0
         ) {
-            set = chart.data.getDataSetByIndex(0) as BarDataSet
+            set = barChart.data.getDataSetByIndex(0) as BarDataSet
             set.values = values
-            chart.data.notifyDataChanged()
-            chart.notifyDataSetChanged()
+            barChart.data.notifyDataChanged()
+            barChart.notifyDataSetChanged()
         } else {
             set = BarDataSet(values, "Values")
             set.colors = colors
@@ -237,10 +250,62 @@ class PainTrackingFragment : Fragment() {
 
 
 
-            chart.data = data
-            chart.invalidate()
+            barChart.data = data
+            barChart.invalidate()
         }
     }
+
+    private fun drawPieChart(){
+        //Create the graph
+        pieChart = binding.PainTrackingPieChart
+
+        //Setup Chart data
+        //Setup Data on Chart
+        pieChart.setBackgroundColor(Color.WHITE)
+
+        pieChart.setUsePercentValues(true)
+        pieChart.getDescription().setEnabled(false)
+        pieChart.setCenterText(generateCenterSpannableText())
+
+        pieChart.setDrawHoleEnabled(true)
+        pieChart.setHoleColor(Color.WHITE)
+
+        pieChart.setTransparentCircleColor(Color.WHITE)
+        pieChart.setTransparentCircleAlpha(110)
+
+        pieChart.setHoleRadius(58f)
+        pieChart.setTransparentCircleRadius(61f)
+
+        pieChart.setDrawCenterText(true)
+
+        pieChart.setRotationEnabled(false)
+        pieChart.setHighlightPerTapEnabled(true)
+
+        pieChart.setMaxAngle(180f) // HALF CHART
+
+        pieChart.setRotationAngle(180f)
+        pieChart.setCenterTextOffset(0f, -20f)
+
+        setData(4, 100f, pieChart)
+
+        pieChart.animateY(1400, Easing.EaseInOutQuad)
+
+        val l: Legend = pieChart.getLegend()
+        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        l.orientation = Legend.LegendOrientation.HORIZONTAL
+        l.setDrawInside(false)
+        l.xEntrySpace = 7f
+        l.yEntrySpace = 0f
+        l.yOffset = 0f
+
+        // entry label styling
+
+        // entry label styling
+        pieChart.setEntryLabelColor(Color.WHITE)
+        pieChart.setEntryLabelTextSize(12f)
+    }
+
 
     class MyAxisValueFormatter(private val xValsDateLabel: ArrayList<String>) : ValueFormatter() {
 
@@ -266,13 +331,47 @@ class PainTrackingFragment : Fragment() {
 
     }
 
+    private fun generateCenterSpannableText(): SpannableString? {
+        val s = SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda")
+        s.setSpan(RelativeSizeSpan(1.7f), 0, 14, 0)
+        s.setSpan(StyleSpan(Typeface.NORMAL), 14, s.length - 15, 0)
+        s.setSpan(ForegroundColorSpan(Color.GRAY), 14, s.length - 15, 0)
+        s.setSpan(RelativeSizeSpan(.8f), 14, s.length - 15, 0)
+        s.setSpan(StyleSpan(Typeface.ITALIC), s.length - 14, s.length, 0)
+        s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length - 14, s.length, 0)
+        return s
+    }
+
+    private fun setData(count: Int, range: Float,chart: PieChart) {
+        val values = java.util.ArrayList<PieEntry>()
+        for (i in 0 until count) {
+            values.add(
+                PieEntry(
+                    (Math.random() * range + range / 5).toFloat(),
+                    parties.get(i % parties.size)
+                )
+            )
+        }
+        val dataSet = PieDataSet(values, "Election Results")
+        dataSet.sliceSpace = 3f
+        dataSet.selectionShift = 5f
+        dataSet.setColors(*ColorTemplate.MATERIAL_COLORS)
+        //dataSet.setSelectionShift(0f);
+        val data = PieData(dataSet)
+        data.setValueFormatter(PercentFormatter())
+        data.setValueTextSize(11f)
+        data.setValueTextColor(Color.WHITE)
+        chart.setData(data)
+        chart.invalidate()
+    }
+
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflator: MenuInflater) {
         inflator.inflate(R.menu.main_filter, menu)
         super.onCreateOptionsMenu(menu, inflator)
     }
-
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
@@ -286,15 +385,15 @@ class PainTrackingFragment : Fragment() {
 
             R.id.action_filter_toggle -> {
                 displayLastWeek = displayLastWeek != true
-                chart.notifyDataSetChanged()
-                chart.invalidate()
-                chart.clearValues()
-                chart.clear()
+                barChart.notifyDataSetChanged()
+                barChart.invalidate()
+                barChart.clearValues()
+                barChart.clear()
 
 
 
                 //Redraw Chart
-                drawChart()
+                drawBarChart()
                 true
             }
             else -> {
@@ -305,8 +404,6 @@ class PainTrackingFragment : Fragment() {
         }
     }
 
-
-
     override fun onStop() {
         super.onStop()
         model.removeListener(fragmentName)
@@ -316,7 +413,12 @@ class PainTrackingFragment : Fragment() {
         const val fragmentName = "PainTrackingFragment"
     }
 
-
+    protected val parties = arrayOf(
+        "Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H",
+        "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P",
+        "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X",
+        "Party Y", "Party Z"
+    )
 
 
 
