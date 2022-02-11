@@ -54,7 +54,7 @@ class MyTagViewModel : ViewModel() {
                 //Now call then next function to update the adapter data
                 observer()
             }
-        userSubscriptions[fragmentName]
+        userSubscriptions[fragmentName] = userSubscription
         Log.d(Constants.TAG, "Successfully grabbed user with id of ${uid}")
 
         Log.d(Constants.TAG, "Adding listener for $fragmentName")
