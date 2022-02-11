@@ -113,6 +113,7 @@ class PainTrackingFragment : Fragment() {
     private fun drawBarChart(){
         //Create the graph
         barChart = binding.PainTrackingDataGraph
+        barChart.animateY(1400, Easing.EaseInOutQuad)
 
         //Setup Chart data
         //Setup Data on Chart
