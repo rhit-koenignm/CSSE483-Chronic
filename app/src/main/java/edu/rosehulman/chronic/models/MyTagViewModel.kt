@@ -62,51 +62,28 @@ class MyTagViewModel : ViewModel() {
 
         // Checking what the type is. Since MyTags is not a type, we are going to check that first
         if(type.equals("MyTags")) {
-            if(myTags.isEmpty()){
-                Log.d(Constants.TAG, "My tags is empty so no listener to add")
-            } else if (myTags.size > 10){
-                // So Firebase whereIn queries can only handle lists of 10 elements, so for now I'll splice it so that it only grabs the first 10
-                val subscription = ref
-                    .whereIn(FieldPath.documentId(), myTags.subList(0, 10))
-                    .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
-                        error?.let {
-                            Log.d(Constants.TAG, "Error $error")
-                            return@addSnapshotListener
-                        }
-                        Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
-                        tags.clear()
-                        snapshot?.documents?.forEach {
-                            var tag = Tag.from(it)
-                            //Here is where we'll track our tags and see if it is already tracked
-                            //For now we will just set the value to false
+            // Trying a new workaround
+            val subscription = ref
+                .whereIn("creator", listOf("admin", uid))
+                .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
+                    error?.let {
+                        Log.d(Constants.TAG, "Error $error")
+                        return@addSnapshotListener
+                    }
+                    Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
+                    tags.clear()
+                    snapshot?.documents?.forEach {
+                        var tag = Tag.from(it)
+                        //Here is where we'll track our tags and see if it is already tracked
+                        //For now we will just set the value to false
+                        if(myTags.contains(tag.id)) {
                             tag.isTracked = myTags.contains(tag.id)
                             tags.add(tag)
                         }
-                        observer()
                     }
-                tagSubscriptions[fragmentName] = subscription
-
-            } else {
-                val subscription = ref
-                    .whereIn(FieldPath.documentId(), myTags)
-                    .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
-                        error?.let {
-                            Log.d(Constants.TAG, "Error $error")
-                            return@addSnapshotListener
-                        }
-                        Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
-                        tags.clear()
-                        snapshot?.documents?.forEach {
-                            var tag = Tag.from(it)
-                            //Here is where we'll track our tags and see if it is already tracked
-                            //For now we will just set the value to false
-                            tag.isTracked = myTags.contains(tag.id)
-                            tags.add(tag)
-                        }
-                        observer()
-                    }
-                tagSubscriptions[fragmentName] = subscription
-            }
+                    observer()
+                }
+            tagSubscriptions[fragmentName] = subscription
         } else if(type.equals("All")){
             // This case will handle the default filtering on the MyTagsFragment which displays all of the tags
             val subscription = ref

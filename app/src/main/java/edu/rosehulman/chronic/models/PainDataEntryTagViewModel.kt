@@ -71,7 +71,6 @@ class PainDataEntryTagViewModel : ViewModel() {
         }
     }
 
-    
 
     fun addMyTagsByTypeListener(fragmentName: String, observer: () -> Unit) {
         Log.d(Constants.TAG, "Adding listener for $fragmentName")
@@ -82,7 +81,7 @@ class PainDataEntryTagViewModel : ViewModel() {
             Log.d(Constants.TAG, "My tags is empty so no listener to add")
         } else {
             val subscription = tagsRef
-                .whereIn(FieldPath.documentId(), myTags)
+                .whereIn("creator", listOf("admin", uid))
                 .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                     error?.let {
                         Log.d(Constants.TAG, "Error $error")
@@ -95,20 +94,21 @@ class PainDataEntryTagViewModel : ViewModel() {
                     snapshot?.documents?.forEach {
                         var tag = Tag.from(it)
 
-                        //If the tag is attached to the entry, set it as tracked
-                        if(attachedTag.contains(tag.id)){
-                            tag.isTracked = true;
-                        }
+                        if(myTags.contains(tag.id)){
+                            //If the tag is attached to the entry, set it as tracked
+                            if(attachedTag.contains(tag.id)){
+                                tag.isTracked = true;
+                            }
 
-
-                        if(tag.type == "Symptom"){
-                            mySymptoms.add(tag)
-                        }else if(tag.type == "Trigger"){
-                            myTriggers.add(tag)
-                        }else if(tag.type == "Treatment"){
-                            myTreatments.add(tag)
-                        }else{
-                            Log.d(Constants.TAG,"Tag Has No Type")
+                            if(tag.type == "Symptom"){
+                                mySymptoms.add(tag)
+                            }else if(tag.type == "Trigger"){
+                                myTriggers.add(tag)
+                            }else if(tag.type == "Treatment"){
+                                myTreatments.add(tag)
+                            }else{
+                                Log.d(Constants.TAG,"Tag Has No Type")
+                            }
                         }
                     }
                     Log.d(Constants.TAG,"Grabbed a total of ${snapshot?.size()} docs, with ${myTreatments.size} Treatments, ${myTriggers.size} Triggers and ${mySymptoms.size} Symptoms")
