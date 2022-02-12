@@ -7,9 +7,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import edu.rosehulman.chronic.Constants
-import java.sql.Time
-import java.time.LocalDateTime
+import edu.rosehulman.chronic.utilities.Constants
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap

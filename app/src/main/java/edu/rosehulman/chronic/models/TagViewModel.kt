@@ -8,7 +8,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import edu.rosehulman.chronic.Constants
+import edu.rosehulman.chronic.utilities.Constants
 
 // This view model is used by the my tags page
 class TagViewModel : ViewModel() {

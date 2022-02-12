@@ -11,10 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.Timestamp
-import edu.rosehulman.chronic.Constants
+import edu.rosehulman.chronic.utilities.Constants
 import edu.rosehulman.chronic.adapters.PainDataEntryTagAdapter
 import edu.rosehulman.chronic.databinding.FragmentPainDataEntryBinding
-import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataEntryTagViewModel
 import edu.rosehulman.chronic.models.PainDataViewModel
 import java.time.LocalDateTime

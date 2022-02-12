@@ -6,8 +6,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import edu.rosehulman.chronic.Constants
-import java.nio.file.attribute.UserDefinedFileAttributeView
+import edu.rosehulman.chronic.utilities.Constants
 
 class PainDataEntryTagViewModel : ViewModel() {
     val tagSubscriptions = HashMap<String, ListenerRegistration>()

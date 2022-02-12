@@ -1,4 +1,4 @@
-package edu.rosehulman.chronic.adapters
+package edu.rosehulman.chronic.utilities
 
 import android.content.Context
 import androidx.recyclerview.widget.ItemTouchHelper

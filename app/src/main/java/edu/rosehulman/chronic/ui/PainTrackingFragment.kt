@@ -29,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import edu.rosehulman.chronic.Constants
+import edu.rosehulman.chronic.utilities.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.R.color
 import edu.rosehulman.chronic.R.drawable

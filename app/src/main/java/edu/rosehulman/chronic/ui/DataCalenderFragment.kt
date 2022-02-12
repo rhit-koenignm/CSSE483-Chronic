@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import edu.rosehulman.chronic.Constants
+import edu.rosehulman.chronic.utilities.Constants
 import edu.rosehulman.chronic.adapters.PainDataCalenderAdapter
-import edu.rosehulman.chronic.adapters.SwipeToDeleteCallback
+import edu.rosehulman.chronic.utilities.SwipeToDeleteCallback
 import edu.rosehulman.chronic.databinding.FragmentDataCalenderBinding
 import edu.rosehulman.chronic.models.PainData
 import java.util.*
@@ -52,6 +52,7 @@ class DataCalenderFragment : Fragment(){
         //Adds nice little gaps around each object in the recylcer view
         binding.CalenderDataRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
+        //Handle the Swipe to Delete
         val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder
             ): Boolean {

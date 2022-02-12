@@ -8,9 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import edu.rosehulman.chronic.Constants
+import edu.rosehulman.chronic.utilities.Constants
 import edu.rosehulman.chronic.R
-import edu.rosehulman.chronic.databinding.FragmentDataBinding
 import edu.rosehulman.chronic.databinding.FragmentSettingsBinding
 import edu.rosehulman.chronic.models.UserViewModel
 

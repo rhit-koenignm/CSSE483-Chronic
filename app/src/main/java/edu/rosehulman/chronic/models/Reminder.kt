@@ -8,7 +8,7 @@ class Reminder(
     var content: String = "Default content",
     var hours: Int = 0,
     var minutes: Int = 0,
-    var isActive: Boolean = true,
+    var isActive: Boolean = false,
     var daysActive: List<Boolean> = listOf(true, true, true, true, true, true, true)
 ) {
 

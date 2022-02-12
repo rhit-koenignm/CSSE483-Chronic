@@ -1,16 +1,12 @@
 package edu.rosehulman.chronic.models
 
-import android.app.usage.ConfigurationStats
-import android.location.GnssAntennaInfo
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import coil.load
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import edu.rosehulman.chronic.Constants
+import edu.rosehulman.chronic.utilities.Constants
 
 // Author: Natalie Koenig
 // Description: The view model class to be used in the MyTagAdapter that will show up in the profile page and my tags page

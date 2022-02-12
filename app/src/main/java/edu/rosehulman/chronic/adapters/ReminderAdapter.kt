@@ -10,7 +10,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import edu.rosehulman.chronic.Constants
+import edu.rosehulman.chronic.utilities.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.Reminder
 import edu.rosehulman.chronic.models.ReminderViewModel
@@ -18,7 +18,7 @@ import edu.rosehulman.chronic.ui.ReminderListFragment
 
 class ReminderAdapter(val fragment: ReminderListFragment) : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>() {
 
-    val model = ViewModelProvider(fragment.requireActivity()).get(ReminderViewModel::class.java)
+    val model = ViewModelProvider(fragment.requireActivity())[ReminderViewModel::class.java]
 
     fun addListener(fragmentName: String) {
         model.addListener(fragmentName) {
@@ -45,6 +45,12 @@ class ReminderAdapter(val fragment: ReminderListFragment) : RecyclerView.Adapter
         model.addReminder(reminder)
         this.notifyDataSetChanged()
     }
+    fun removeAt(adapterPosition: Int) {
+        model.removeReminderAt(adapterPosition)
+        this.notifyDataSetChanged()
+    }
+
+
 
     inner class ReminderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var titleTextView = itemView.findViewById<TextView>(R.id.row_reminder_title_textview)

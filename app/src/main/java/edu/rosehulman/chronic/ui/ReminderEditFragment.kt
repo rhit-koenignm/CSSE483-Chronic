@@ -26,7 +26,7 @@ class ReminderEditFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        reminderViewModel = ViewModelProvider(requireActivity()).get(ReminderViewModel::class.java)
+        reminderViewModel = ViewModelProvider(requireActivity())[ReminderViewModel::class.java]
         buttonBools = reminderViewModel.getCurrentReminder().daysActive as MutableList<Boolean>
 
         binding = FragmentReminderEditBinding.inflate(inflater, container, false)

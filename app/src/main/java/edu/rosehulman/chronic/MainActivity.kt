@@ -27,6 +27,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.databinding.ActivityMainBinding
 import edu.rosehulman.chronic.models.UserViewModel
+import edu.rosehulman.chronic.utilities.Constants
 
 class MainActivity : AppCompatActivity() {
 
