@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
 
                     if(userModel.hasCompletedSetup()){
                         //Navigate to the quotes list page when adding the splash screen
-                        navController.navigate(R.id.nav_profile)
+                        navController.navigate(R.id.nav_pain_tracking)
                         setupHeaderBar(userModel)
                     }else{
                         //Navigate to the settings page to fill out all of the user data

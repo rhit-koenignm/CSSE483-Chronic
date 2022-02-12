@@ -31,7 +31,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.Constants
 import edu.rosehulman.chronic.R
-import edu.rosehulman.chronic.R.*
+import edu.rosehulman.chronic.R.color
+import edu.rosehulman.chronic.R.drawable
 import edu.rosehulman.chronic.databinding.FragmentPaintrackingBinding
 import edu.rosehulman.chronic.models.PainData
 import edu.rosehulman.chronic.models.PainDataViewModel
@@ -112,7 +113,7 @@ class PainTrackingFragment : Fragment() {
         var user = UserData()
         Firebase.firestore.collection(UserData.COLLECTION_PATH).document(Firebase.auth.uid!!).get().addOnSuccessListener { snapshot: DocumentSnapshot ->
             user = snapshot.toObject(UserData::class.java)!!
-            binding.profileName.text = user.userName
+            binding.profileName.text = "Hello ${user.userName}!"
 
         }
 
@@ -152,6 +153,7 @@ class PainTrackingFragment : Fragment() {
         //Create the graph
         barChart = binding.PainTrackingDataGraph
         barChart.animateY(1400, Easing.EaseInOutQuad)
+
 
         //Setup Chart data
         //Setup Data on Chart
@@ -301,29 +303,21 @@ class PainTrackingFragment : Fragment() {
         //Setup Chart data
         //Setup Data on Chart
         pieChart.setBackgroundColor(Color.WHITE)
-
         pieChart.setUsePercentValues(true)
         pieChart.getDescription().setEnabled(false)
         pieChart.setCenterText(generateCenterSpannableText())
-
         pieChart.setDrawHoleEnabled(true)
         pieChart.setHoleColor(Color.WHITE)
-
         pieChart.setTransparentCircleColor(Color.WHITE)
         pieChart.setTransparentCircleAlpha(110)
-
         pieChart.setHoleRadius(58f)
         pieChart.setTransparentCircleRadius(61f)
-
         pieChart.setDrawCenterText(true)
-
-        pieChart.setRotationEnabled(false)
+        pieChart.setRotationEnabled(true)
         pieChart.setHighlightPerTapEnabled(true)
-
         pieChart.setMaxAngle(180f) // HALF CHART
-
         pieChart.setRotationAngle(180f)
-        pieChart.setCenterTextOffset(0f, -20f)
+        pieChart.setCenterTextOffset(0f, -30f)
 
 
         //Load in the Data
@@ -346,35 +340,61 @@ class PainTrackingFragment : Fragment() {
         values.removeAll(valuesToRemove)
 
 
-        val dataSet = PieDataSet(values, "<- Tags Legend")
+        val dataSet = PieDataSet(values,"Legend")
 
         dataSet.sliceSpace = 3f
         dataSet.selectionShift = 5f
-        dataSet.setColors(*ColorTemplate.MATERIAL_COLORS)
+
 
         val data = PieData(dataSet)
         data.setValueFormatter(PercentFormatter())
         data.setValueTextSize(11f)
         data.setValueTextColor(Color.WHITE)
 
-        pieChart.setData(data)
-        pieChart.invalidate()
+
 
         //Animation and Legend Setup
         pieChart.animateY(1400, Easing.EaseInOutQuad)
-        val l: Legend = pieChart.getLegend()
-        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-        l.orientation = Legend.LegendOrientation.HORIZONTAL
-        l.setDrawInside(false)
-        l.xEntrySpace = 7f
-        l.yEntrySpace = 0f
-        l.yOffset = 0f
-
+        pieChart.spin(2000, 0F, 180F,Easing.EaseInOutCirc)
+        val pieLegend: Legend = pieChart.legend
+        pieLegend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+        pieLegend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        pieLegend.orientation = Legend.LegendOrientation.HORIZONTAL
+        pieLegend.isWordWrapEnabled = true
+        pieLegend.setDrawInside(false)
+        pieLegend.xEntrySpace = 7f
+        pieLegend.yEntrySpace = 0f
+        pieLegend.yOffset = 50f
+        pieLegend.isWordWrapEnabled = true
 
        // entry label styling
         pieChart.setEntryLabelColor(Color.WHITE)
-        pieChart.setEntryLabelTextSize(12f)
+        pieChart.setEntryLabelTextSize(8f)
+        pieChart.setDrawEntryLabels(true)
+        pieChart.setUsePercentValues(true)
+
+
+        //Define all the possible colors for the objects in the pie chart
+        // add a lot of colors
+        val colors = java.util.ArrayList<Int>()
+
+        for (c in ColorTemplate.VORDIPLOM_COLORS) colors.add(c)
+
+        for (c in ColorTemplate.JOYFUL_COLORS) colors.add(c)
+
+        for (c in ColorTemplate.COLORFUL_COLORS) colors.add(c)
+
+        for (c in ColorTemplate.LIBERTY_COLORS) colors.add(c)
+
+        for (c in ColorTemplate.PASTEL_COLORS) colors.add(c)
+
+        colors.add(ColorTemplate.getHoloBlue())
+
+        dataSet.colors = colors
+
+        pieChart.setData(data)
+        pieChart.invalidate()
+
     }
 
 
@@ -405,6 +425,7 @@ class PainTrackingFragment : Fragment() {
     private fun generateCenterSpannableText(): SpannableString {
         val s = SpannableString("Chronic\ndeveloped by Nicholas Snow and Natalie Koenig")
         s.setSpan(RelativeSizeSpan(1.7f), 0, 7, 0)
+        s.setSpan(ForegroundColorSpan(resources.getColor(color.plum)), 0, 7, 0)
         s.setSpan(StyleSpan(Typeface.NORMAL), 7, 17, 0)
         s.setSpan(ForegroundColorSpan(Color.GRAY), 7, 17, 0)
         s.setSpan(RelativeSizeSpan(.9f), 17, s.length , 0)

@@ -13,7 +13,7 @@
         >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/profileName"
@@ -59,33 +59,53 @@
                 android:layout_toLeftOf="@id/averageText"
                 android:layout_below="@id/painTrackingAverage"
                 />
+
+            <HorizontalScrollView
+                android:id="@+id/HorizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="420dp"
+                android:layout_below="@id/averageIcon"
+                android:scrollbarTrackHorizontal="@color/plum">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/PainTrackingDataGraph"
+                        android:layout_width="420dp"
+                        android:layout_height="420dp"
+                        android:layout_toEndOf="@id/PainTrackingPieChart"
+                        />
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/PainTrackingPieChart"
+                        android:layout_width="420dp"
+                        android:layout_height="420dp" />
+
+
+                </RelativeLayout>
+            </HorizontalScrollView>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ViewMoreDetailsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/averageText"
+                android:layout_below="@id/HorizontalScrollView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/roundbutton"
-                android:text="View More Details"
+                android:text="@string/view_more_details_button"
                 android:textColor="@color/white"
+                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                android:drawableLeft="@drawable/ic_baseline_keyboard_arrow_left_24"
+                android:drawableTint="@color/white"
                 />
 
 
-            <com.github.mikephil.charting.charts.BarChart
-
-                android:id="@+id/PainTrackingDataGraph"
-                android:layout_width="match_parent"
-                android:layout_height="425dp"
-                android:layout_below="@id/PainTrackingPieChart" />
 
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/PainTrackingPieChart"
-                android:layout_width="match_parent"
-                android:layout_height="425dp"
-                android:layout_below="@id/ViewMoreDetailsButton" />
+
             
         </RelativeLayout>
     </ScrollView>

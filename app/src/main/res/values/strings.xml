@@ -106,6 +106,7 @@
     <string name="button_description_text">Select the days you want notifications, dark purple is selected.</string>
     <string name="submit_new_entry_label">Submit New Entry</string>
     <string name="list_of_my_tags_label">List Of My Tags:</string>
+    <string name="view_more_details_button">View More Details</string>
 
 
 </resources>
