@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.rosehulman.chronic.adapters.ReminderAdapter
 import edu.rosehulman.chronic.databinding.FragmentReminderListBinding
+import edu.rosehulman.chronic.utilities.NotificationUtilities
 import edu.rosehulman.chronic.utilities.SwipeToDeleteCallback
 
 class ReminderListFragment: Fragment() {
@@ -23,7 +24,7 @@ class ReminderListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentReminderListBinding.inflate(inflater, container, false)
-
+        NotificationUtilities.createChannel(requireContext())
         adapter = ReminderAdapter(this)
 
         //set recyclerview and adapter properties
@@ -46,6 +47,8 @@ class ReminderListFragment: Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 adapter.removeAt(viewHolder.adapterPosition)
+
+                //adapter.disableAlarmAt(viewHolder.adapterPosition)
             }
         }
 

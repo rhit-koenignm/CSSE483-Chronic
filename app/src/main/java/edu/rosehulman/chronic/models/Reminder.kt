@@ -15,9 +15,6 @@ class Reminder(
     @get:Exclude
     var id = ""
 
-    fun toggleIsActive() {
-        isActive = !isActive
-    }
 
     fun makeACopy(): Reminder {
         var clone = Reminder()

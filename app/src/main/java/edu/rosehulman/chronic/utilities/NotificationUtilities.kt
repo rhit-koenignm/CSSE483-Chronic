@@ -55,8 +55,8 @@ object NotificationUtilities {
         // DONE 2 Create a basic notification with at least title, text,
         //  small icon, and high priority. Use the data passed in as part of the text.
         val builder = NotificationCompat.Builder(context, channelId)
-            .setContentTitle("Wake up!")
-            .setContentText("$data Alarm is going off")
+            .setContentTitle("Chronic:")
+            .setContentText("$data Alarm")
             .setSmallIcon(R.drawable.ic_baseline_access_alarm_24)
             .setContentIntent(contentPendingIntent)
             .setAutoCancel(true)

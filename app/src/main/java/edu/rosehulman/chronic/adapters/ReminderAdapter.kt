@@ -50,6 +50,9 @@ class ReminderAdapter(val fragment: ReminderListFragment) : RecyclerView.Adapter
         this.notifyDataSetChanged()
     }
 
+    fun disableAlarmAt(adapterPosition: Int) {
+        model.disableReminderAt(adapterPosition)
+    }
 
 
     inner class ReminderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -66,12 +69,14 @@ class ReminderAdapter(val fragment: ReminderListFragment) : RecyclerView.Adapter
             itemView.findViewById<TextView>(R.id.letter_view_6)
         )
 
+
         init {
-            isActiveSwitch.setOnClickListener {
+            isActiveSwitch.setOnCheckedChangeListener { _, isChecked ->
                 model.updatePos(adapterPosition)
-                model.toggleCurrentReminder()
+                model.setCurrentReminder(isChecked)
                 notifyItemChanged(adapterPosition)
-            }
+                }
+
 
             itemView.setOnClickListener {
                 model.updatePos(adapterPosition)
@@ -88,7 +93,7 @@ class ReminderAdapter(val fragment: ReminderListFragment) : RecyclerView.Adapter
             Log.d(Constants.TAG, "dayTextViews size: ${dayTextViews.size}")
             Log.d(Constants.TAG, "daysActive size: ${reminder.daysActive.size}")
             for (i in 0 until dayTextViews.size) {
-                var dayBool = reminder.daysActive[i]
+                val dayBool = reminder.daysActive[i]
 
                 if(dayBool) {
                     dayTextViews[i].setTextColor(itemView.resources.getColor(R.color.plum))

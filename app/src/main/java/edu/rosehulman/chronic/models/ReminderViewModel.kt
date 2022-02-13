@@ -19,6 +19,7 @@ import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.receivers.RemindersReceiver
 import edu.rosehulman.chronic.utilities.Constants
 import edu.rosehulman.chronic.utilities.NotificationUtilities
+import java.time.DayOfWeek
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -112,44 +113,119 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
 
     fun size() = reminders.size
 
-    fun toggleCurrentReminder() {
-        reminders[currentPos].toggleIsActive()
-        ref.document(getCurrentReminder().id).set(getCurrentReminder())
 
-        if(reminders[currentPos].isActive){
-            enableReminder(reminders[currentPos])
-        }else{
-            disableReminder(reminders[currentPos])
-        }
-
-    }
-
-    enum class AlarmType {
-        NOW,
-        SOON,
-        SCHEDULED,
-        RECURRING,
-    }
 
     fun enableReminder(currentReminder:Reminder){
         Log.d(Constants.TAG,"Enable Reminder ${currentReminder.hours}:${currentReminder.minutes}")
 
-        val selectedInterval = 5 * 1000
-        val triggerTime = SystemClock.elapsedRealtime() + selectedInterval
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,triggerTime,makePendingIntent(AlarmType.SOON.toString().toLowerCase()))
+        //Set a reminder for all the days selected
+        var dayOfWeek = 0
+        for(index in 0 until 7){
+            //Grab the day of the week, and if it is true, enable it
+            if(currentReminder.daysActive[index]){
+                if(index == 0){
+                    dayOfWeek = 7
+                    val calender = Calendar.getInstance().apply {
+                        set(Calendar.DAY_OF_WEEK,dayOfWeek)
+                        set(Calendar.HOUR_OF_DAY, currentReminder.hours)
+                        set(Calendar.MINUTE, currentReminder.minutes)
+                    }
+
+                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+
+                    //Set a weekly alarm for the time and date specified
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                }
+                if(index == 1){
+                    dayOfWeek = 1
+                    val calender = Calendar.getInstance().apply {
+                        set(Calendar.DAY_OF_WEEK,dayOfWeek)
+                        set(Calendar.HOUR_OF_DAY, currentReminder.hours)
+                        set(Calendar.MINUTE, currentReminder.minutes)
+                    }
+
+                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+
+                    //Set a weekly alarm for the time and date specified
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                }
+                if(index == 2){
+                    dayOfWeek = 2
+                    val calender = Calendar.getInstance().apply {
+                        set(Calendar.DAY_OF_WEEK,dayOfWeek)
+                        set(Calendar.HOUR_OF_DAY, currentReminder.hours)
+                        set(Calendar.MINUTE, currentReminder.minutes)
+                    }
+
+                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+
+                    //Set a weekly alarm for the time and date specified
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                }
+                if(index == 3){
+                    dayOfWeek = 3
+                    val calender = Calendar.getInstance().apply {
+                        set(Calendar.DAY_OF_WEEK,dayOfWeek)
+                        set(Calendar.HOUR_OF_DAY, currentReminder.hours)
+                        set(Calendar.MINUTE, currentReminder.minutes)
+                    }
+
+                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+
+                    //Set a weekly alarm for the time and date specified
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                }
+                if(index == 4){
+                    dayOfWeek = 4
+                    val calender = Calendar.getInstance().apply {
+                        set(Calendar.DAY_OF_WEEK,dayOfWeek)
+                        set(Calendar.HOUR_OF_DAY, currentReminder.hours)
+                        set(Calendar.MINUTE, currentReminder.minutes)
+                    }
+
+                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+
+                    //Set a weekly alarm for the time and date specified
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                }
+                if(index == 5){
+                    dayOfWeek = 5
+                    val calender = Calendar.getInstance().apply {
+                        set(Calendar.DAY_OF_WEEK,dayOfWeek)
+                        set(Calendar.HOUR_OF_DAY, currentReminder.hours)
+                        set(Calendar.MINUTE, currentReminder.minutes)
+                    }
+
+                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+
+                    //Set a weekly alarm for the time and date specified
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                }
+                if(index == 6){
+                    dayOfWeek = 6
+                    val calender = Calendar.getInstance().apply {
+                        set(Calendar.DAY_OF_WEEK,dayOfWeek)
+                        set(Calendar.HOUR_OF_DAY, currentReminder.hours)
+                        set(Calendar.MINUTE, currentReminder.minutes)
+                    }
+
+                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+
+                    //Set a weekly alarm for the time and date specified
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                }
+
+            }
+
+        }
 
 
-//        val calender = Calendar.getInstance().apply {
-//            set(Calendar.HOUR_OF_DAY, currentReminder.hours)
-//            set(Calendar.MINUTE, currentReminder.minutes)
-//          }
-//
-//        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,calender.timeInMillis,makePendingIntent(currentReminder.id))
+        
     }
 
     fun disableReminder(currentReminder:Reminder){
         Log.d(Constants.TAG,"Disable Reminder ${currentReminder.hours}:${currentReminder.minutes}")
-        alarmManager.cancel(makePendingIntent(currentReminder.id))
+        alarmManager.cancel(makePendingIntent(currentReminder.title))
     }
 
     private fun makePendingIntent(message: String): PendingIntent {
@@ -166,5 +242,18 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
         )
     }
 
+    fun setCurrentReminder(checked: Boolean) {
+        reminders[currentPos].isActive = checked
+        ref.document(getCurrentReminder().id).set(getCurrentReminder())
 
+        if(reminders[currentPos].isActive){
+            enableReminder(reminders[currentPos])
+        }else{
+            disableReminder(reminders[currentPos])
+        }
+    }
+
+    fun disableReminderAt(adapterPosition: Int) {
+        disableReminder(getReminderAt(adapterPosition))
+    }
 }
