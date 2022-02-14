@@ -57,6 +57,7 @@ class PostViewModel: ViewModel() {
                     snapshot?.documents?.forEach {
                         posts.add(Post.from(it))
                     }
+                    observer()
                 }
             observer()
             subscriptions[fragmentName] = AuthorSubscription
