@@ -64,9 +64,9 @@ class PostAdapter(val fragment: GlobalForumFragment) : Adapter<PostAdapter.PostV
         }
 
         fun bind(post: Post) {
-            if(post.content.length > 40) {
-                val shortContent = post.content.substring(0, 40)
-                postContentPreview.text = shortContent
+            if(post.content.length > 300) {
+                val shortContent = post.content.substring(0, 300)
+                postContentPreview.text = shortContent + "... "
             } else {
                 postContentPreview.text = post.content
             }
