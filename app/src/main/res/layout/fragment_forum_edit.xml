@@ -3,4 +3,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <EditText
+        android:id="@+id/edit_title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:hint="@string/enter_title_here_hint"
+        android:textColor="@color/plum"
+        android:textSize="30sp"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/edit_photo_url_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_below="@id/edit_title_text"
+        android:hint="@string/enter_image_url_here_hint"
+        android:textColor="@color/plum"
+        android:textSize="30sp"
+        android:inputType="textUri" />
+
+    <EditText
+        android:id="@+id/edit_detail_content_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/edit_photo_url_text"
+        android:hint="@string/placeholder_text"
+        android:textColor="@color/plum"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="10dp"
+        android:inputType="textMultiLine"/>
+
+    <Button
+        android:id="@+id/edit_submit_post_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/post_button"
+        android:drawableLeft="@drawable/ic_baseline_post_add_24"
+        android:drawableTint="@color/white"
+        />
+
+
+
+
 </RelativeLayout>

@@ -7,7 +7,70 @@
         android:id="@+id/detail_title_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="10dp"
+        android:text="@string/title_placeholder"
+        android:textColor="@color/plum"
+        android:textSize="30sp"
+        />
 
+    <TextView
+        android:id="@+id/detail_author_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="10dp"
+        android:layout_below="@+id/detail_title_view"
+        android:text="@string/author_username_placeholder"
+        android:textColor="@color/plum"
+        android:textSize="15sp"
+        />
+
+    <ImageView
+        android:id="@+id/Post_Image_View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="10dp"
+        android:layout_below="@+id/detail_author_view"
+        android:src="@drawable/ic_baseline_add_24"
+        />
+
+    <TextView
+        android:id="@+id/detail_content_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/Post_Image_View"
+        android:text="@string/placeholder_text"
+        android:textColor="@color/plum"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <Button
+        android:id="@+id/add_reply_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detail_content_view"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:layout_alignParentStart="true"
+        android:text="@string/reply_button_text"
+        android:drawableLeft="@drawable/ic_baseline_reply_24"
+        android:drawableTint="@color/white"
+        />
+    <Button
+        android:id="@+id/share_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detail_content_view"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:layout_alignParentEnd="true"
+        android:text="@string/share_button_Text"
+        android:drawableLeft="@drawable/ic_baseline_share_24"
+        android:drawableTint="@color/white"
         />
 
 
@@ -16,7 +79,14 @@
         android:id="@+id/reply_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/add_reply_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
         />
+
+
+
 
 
 </RelativeLayout>
