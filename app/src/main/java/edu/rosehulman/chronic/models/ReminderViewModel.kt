@@ -32,7 +32,7 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
 
     //Variables for System Alarms
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private val REQUEST_CODE = 1
+
 
     //The reminders will be stored in an arraylist
     var reminders = ArrayList<Reminder>()
@@ -117,8 +117,11 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
 
     fun enableReminder(currentReminder:Reminder){
         Log.d(Constants.TAG,"Enable Reminder ${currentReminder.hours}:${currentReminder.minutes}")
+         setReoccuringAlarms(currentReminder)
+    }
 
-        //Set a reminder for all the days selected
+    private fun setReoccuringAlarms(currentReminder: Reminder) {
+    //Set a reminder for all the days selected
         var dayOfWeek = 0
         for(index in 0 until 7){
             //Grab the day of the week, and if it is true, enable it
@@ -131,10 +134,10 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
                         set(Calendar.MINUTE, currentReminder.minutes)
                     }
 
-                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+                    Log.d(Constants.TAG,"Current Time in MS is ${System.currentTimeMillis()} and Alarm Time is ${calender.timeInMillis}")
 
                     //Set a weekly alarm for the time and date specified
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title, currentReminder.title.hashCode() + index))
                 }
                 if(index == 1){
                     dayOfWeek = 1
@@ -144,10 +147,10 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
                         set(Calendar.MINUTE, currentReminder.minutes)
                     }
 
-                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+                    Log.d(Constants.TAG,"Current Time in MS is ${System.currentTimeMillis()} and Alarm Time is ${calender.timeInMillis}")
 
                     //Set a weekly alarm for the time and date specified
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title,currentReminder.title.hashCode() + index))
                 }
                 if(index == 2){
                     dayOfWeek = 2
@@ -157,10 +160,10 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
                         set(Calendar.MINUTE, currentReminder.minutes)
                     }
 
-                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+                    Log.d(Constants.TAG,"Current Time in MS is ${System.currentTimeMillis()} and Alarm Time is ${calender.timeInMillis}")
 
                     //Set a weekly alarm for the time and date specified
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title,currentReminder.title.hashCode() + index))
                 }
                 if(index == 3){
                     dayOfWeek = 3
@@ -170,10 +173,10 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
                         set(Calendar.MINUTE, currentReminder.minutes)
                     }
 
-                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+                    Log.d(Constants.TAG,"Current Time in MS is ${System.currentTimeMillis()} and Alarm Time is ${calender.timeInMillis}")
 
                     //Set a weekly alarm for the time and date specified
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title,currentReminder.title.hashCode() + index))
                 }
                 if(index == 4){
                     dayOfWeek = 4
@@ -183,10 +186,10 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
                         set(Calendar.MINUTE, currentReminder.minutes)
                     }
 
-                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+                    Log.d(Constants.TAG,"Current Time in MS is ${System.currentTimeMillis()} and Alarm Time is ${calender.timeInMillis}")
 
                     //Set a weekly alarm for the time and date specified
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title,currentReminder.title.hashCode() + index))
                 }
                 if(index == 5){
                     dayOfWeek = 5
@@ -196,10 +199,10 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
                         set(Calendar.MINUTE, currentReminder.minutes)
                     }
 
-                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+                    Log.d(Constants.TAG,"Current Time in MS is ${System.currentTimeMillis()} and Alarm Time is ${calender.timeInMillis}")
 
                     //Set a weekly alarm for the time and date specified
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title,currentReminder.title.hashCode() + index))
                 }
                 if(index == 6){
                     dayOfWeek = 6
@@ -209,31 +212,92 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
                         set(Calendar.MINUTE, currentReminder.minutes)
                     }
 
-                    Log.d(Constants.TAG,"Current Time in MS is ${SystemClock.elapsedRealtime()} and Alarm Time is ${calender.timeInMillis}")
+                    Log.d(Constants.TAG,"Current Time in MS is ${System.currentTimeMillis()} and Alarm Time is ${calender.timeInMillis}")
 
                     //Set a weekly alarm for the time and date specified
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title))
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calender.timeInMillis,AlarmManager.INTERVAL_DAY*7,makePendingIntent(currentReminder.title,currentReminder.title.hashCode() + index))
                 }
 
             }
 
         }
-
-
-        
     }
 
     fun disableReminder(currentReminder:Reminder){
         Log.d(Constants.TAG,"Disable Reminder ${currentReminder.hours}:${currentReminder.minutes}")
-        alarmManager.cancel(makePendingIntent(currentReminder.title))
-    }
 
-    private fun makePendingIntent(message: String): PendingIntent {
+
+        var dayOfWeek = 0
+        for(index in 0 until 7) {
+            //Grab the day of the week, and if it is true, enable it
+            if (currentReminder.daysActive[index]) {
+                if (index == 0) {
+                    alarmManager.cancel(
+                        makePendingIntent(
+                            currentReminder.title,
+                            currentReminder.title.hashCode() + index
+                        )
+                    )
+                }
+                if (index == 1) {
+                    alarmManager.cancel(
+                        makePendingIntent(
+                            currentReminder.title,
+                            currentReminder.title.hashCode() + index
+                        )
+                    )
+                }
+                if (index == 2) {
+                    alarmManager.cancel(
+                        makePendingIntent(
+                            currentReminder.title,
+                            currentReminder.title.hashCode() + index
+                        )
+                    )
+                }
+                if (index == 3) {
+                    alarmManager.cancel(
+                        makePendingIntent(
+                            currentReminder.title,
+                            currentReminder.title.hashCode() + index
+                        )
+                    )
+                }
+                if (index == 4) {
+                    alarmManager.cancel(
+                        makePendingIntent(
+                            currentReminder.title,
+                            currentReminder.title.hashCode() + index
+                        )
+                    )
+                }
+                if (index == 5) {
+                    alarmManager.cancel(
+                        makePendingIntent(
+                            currentReminder.title,
+                            currentReminder.title.hashCode() + index
+                        )
+                    )
+                }
+                if (index == 6) {
+                    alarmManager.cancel(
+                        makePendingIntent(
+                            currentReminder.title,
+                            currentReminder.title.hashCode() + index
+                        )
+                    )
+                }
+            }
+        }
+        }
+
+    private fun makePendingIntent(message: String, REQUEST_CODE: Int): PendingIntent {
 
         //Pass in the message of the alarm title to send back
         val notifyIntent = Intent(app, RemindersReceiver::class.java).also {
             it.putExtra(NotificationUtilities.MESSAGE_KEY, message)
         }
+
         return PendingIntent.getBroadcast(
             app,
             REQUEST_CODE,

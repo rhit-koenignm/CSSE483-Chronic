@@ -13,8 +13,8 @@ import edu.rosehulman.chronic.R
 
 object NotificationUtilities {
     private const val NOTIFICATION_ID = 1
-    private const val channelId = "AlarmNotifierChannelId"
-    private const val channelName = "AlarmNotifierChannel"
+    private const val channelId = "ReminderNotifierChannelId"
+    private const val channelName = "Chronic Reminders"
     const val MESSAGE_KEY = "message"
 
 
@@ -32,7 +32,7 @@ object NotificationUtilities {
             lightColor = Color.RED
             enableVibration(true)
             vibrationPattern = longArrayOf(50, 25, 100, 50)
-            description = "Alarm notification channel"
+            description = "Chronic Reminder Notification channel"
         }
 
         // Required
