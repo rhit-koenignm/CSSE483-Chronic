@@ -55,7 +55,7 @@ class PostViewModel: ViewModel() {
     fun addPost(post: Post): Boolean {
         val newPost = post
         if(newPost.title.isEmpty() || newPost.content.isEmpty() || newPost.authorID.isEmpty()) {
-            // We can't make a post if any of these are empty
+            // We can't make a post if any of these are empty OR CAN WE
             return false
         } else {
             ref.add(newPost)
@@ -63,9 +63,11 @@ class PostViewModel: ViewModel() {
         }
     }
 
-    fun updateCurrentPost(newTitle: String, newContent: String) {
+    fun updateCurrentPost(newTitle: String, newContent: String, newAuthor:String, newPhotoURL:String) {
         posts[currentPos].title = newTitle
         posts[currentPos].content = newContent
+        posts[currentPos].author = newAuthor
+        posts[currentPos].photoUrl = newPhotoURL
         ref.document(getCurrentPost().id).set(getCurrentPost())
         // note you can use update if you want to overwrite only specific fields
     }

@@ -73,15 +73,15 @@
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/PainTrackingDataGraph"
-                        android:layout_width="400dp"
-                        android:layout_height="400dp"
+                        android:layout_width="390dp"
+                        android:layout_height="390dp"
                         android:layout_toEndOf="@id/PainTrackingPieChart"
                         />
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/PainTrackingPieChart"
-                        android:layout_width="420dp"
-                        android:layout_height="400dp" />
+                        android:layout_width="390dp"
+                        android:layout_height="390dp" />
 
 
                 </RelativeLayout>

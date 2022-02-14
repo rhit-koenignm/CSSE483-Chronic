@@ -115,6 +115,8 @@
     <string name="post_button">Post</string>
     <string name="enter_title_here_hint">Enter Title Here:</string>
     <string name="enter_image_url_here_hint">Enter Image URL Here:</string>
+    <string name="forum_edit_label">Forum Edit Page</string>
+    <string name="forum_detail_label">Forum Detail</string>
 
 
 </resources>

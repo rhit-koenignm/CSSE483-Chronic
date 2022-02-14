@@ -9,8 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.models.Post
 import edu.rosehulman.chronic.models.PostViewModel
@@ -60,6 +64,17 @@ class PostAdapter(val fragment: GlobalForumFragment) : Adapter<PostAdapter.PostV
             itemView.setOnClickListener {
                 model.updatePos(adapterPosition)
                 Log.d(Constants.TAG, "Pressed post at pos $adapterPosition")
+
+                //Check ownership, if you are the user
+                val currentObject = model.getCurrentPost()
+                if(currentObject.authorID == Firebase.auth.uid){
+                    itemView.findNavController().navigate(R.id.nav_forum_edit)
+                }else{
+                    itemView.findNavController().navigate(R.id.nav_forum_detail)
+                }
+
+
+
             }
         }
 

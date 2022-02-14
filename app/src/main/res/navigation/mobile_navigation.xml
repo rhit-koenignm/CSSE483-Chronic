@@ -74,4 +74,16 @@
         android:label="@string/nav_forum_label"
         tools:layout="@layout/fragment_forum_home"/>
 
+    <fragment
+        android:id="@+id/nav_forum_edit"
+        android:name="edu.rosehulman.chronic.ui.ForumEditFragment"
+        android:label="@string/forum_edit_label"
+        tools:layout="@layout/fragment_forum_edit"/>
+
+    <fragment
+        android:id="@+id/nav_forum_detail"
+        android:name="edu.rosehulman.chronic.ui.ForumDetailFragment"
+        android:label="@string/forum_detail_label"
+        tools:layout="@layout/fragment_forum_detail"/>
+
 </navigation>
