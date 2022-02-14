@@ -2,15 +2,22 @@ package edu.rosehulman.chronic.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.databinding.FragmentForumDetailBinding
 import edu.rosehulman.chronic.models.PostViewModel
+import edu.rosehulman.chronic.utilities.Constants
 
 
 class ForumDetailFragment : Fragment(){
@@ -35,7 +42,7 @@ class ForumDetailFragment : Fragment(){
 
     private fun setupButtons() {
         binding.addReplyButton.setOnClickListener {
-            //todo
+
         }
         binding.shareButton.setOnClickListener {
             val currentObject = model.getCurrentPost()
@@ -50,6 +57,17 @@ class ForumDetailFragment : Fragment(){
             startActivity(shareIntent)
         }
 
+        val currentPost = model.getCurrentPost()
+        if (currentPost.authorID == Firebase.auth.uid) {
+            binding.forumDetailEditButton.isVisible = true
+            binding.forumDetailEditButton.setOnClickListener {
+                Log.d(Constants.TAG, "Pressed forum detail edit button")
+                findNavController().navigate(R.id.nav_forum_edit)
+            }
+        } else {
+            binding.forumDetailEditButton.isVisible = false
+        }
+
     }
 
     private fun loadPostDataToFragment() {
@@ -62,8 +80,6 @@ class ForumDetailFragment : Fragment(){
             crossfade(true)
             transformations(CircleCropTransformation())
         }
-
-
     }
 
     companion object {

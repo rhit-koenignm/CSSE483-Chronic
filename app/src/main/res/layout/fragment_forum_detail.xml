@@ -14,6 +14,16 @@
         android:textSize="30sp"
         />
 
+    <ImageButton
+        android:id="@+id/forum_detail_edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/grape"
+        android:src="@drawable/ic_baseline_edit_24"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        />
+
     <TextView
         android:id="@+id/detail_author_view"
         android:layout_width="wrap_content"

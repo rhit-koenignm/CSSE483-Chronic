@@ -27,8 +27,9 @@ class PostViewModel: ViewModel() {
 
     fun addListener(fragmentName: String, filterBy: String, observer: () -> Unit) {
         Log.d(Constants.TAG, "Adding listener for $fragmentName")
+//        posts.clear()
         if(filterBy.equals("Time")){
-            val subscription = ref
+            val Timesubscription = ref
                 .orderBy(Post.CREATED_KEY, Query.Direction.ASCENDING)
                 .addSnapshotListener { snapshot: QuerySnapshot?, error:FirebaseFirestoreException? ->
                     error?.let {
@@ -42,7 +43,23 @@ class PostViewModel: ViewModel() {
                     }
                     observer()
                 }
-            subscriptions[fragmentName] = subscription
+            subscriptions[fragmentName] = Timesubscription
+        } else if(filterBy.equals("Author")) {
+            val AuthorSubscription = ref
+                .whereEqualTo("authorID", Firebase.auth.uid)
+                .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
+                    error?.let {
+                        Log.d(Constants.TAG, "Error $error")
+                        return@addSnapshotListener
+                    }
+                    Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
+                    posts.clear()
+                    snapshot?.documents?.forEach {
+                        posts.add(Post.from(it))
+                    }
+                }
+            observer()
+            subscriptions[fragmentName] = AuthorSubscription
         }
     }
 

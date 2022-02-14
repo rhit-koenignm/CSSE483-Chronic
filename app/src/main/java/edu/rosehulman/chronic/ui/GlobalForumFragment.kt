@@ -1,5 +1,6 @@
 package edu.rosehulman.chronic.ui
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import edu.rosehulman.chronic.utilities.Constants
 class GlobalForumFragment: Fragment() {
     private lateinit var binding: FragmentForumHomeBinding
     private lateinit var adapter: PostAdapter
+    private var isYourPosts: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +34,7 @@ class GlobalForumFragment: Fragment() {
 
         adapter = PostAdapter(this)
         binding.postRecyclerView.adapter = adapter
-        adapter.addListener(fragmentName, "Time")
+        updateListener()
         binding.postRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.postRecyclerView.setHasFixedSize(true)
 
@@ -43,12 +45,51 @@ class GlobalForumFragment: Fragment() {
             adapter.addPost(defaultPost)
         }
 
+        binding.forumYourpostsButton.setOnClickListener {
+            Log.d(Constants.TAG, "Pressed your posts buttons")
+            isYourPosts = true
+            updateListener()
+            updateButtons()
+        }
+
+        binding.forumGlobalButton.setOnClickListener {
+            Log.d(Constants.TAG, "Pressed global posts buttons")
+            isYourPosts = false
+            updateListener()
+            updateButtons()
+        }
+
+        updateButtons()
         return binding.root
+    }
+
+    fun updateListener() {
+        if(isYourPosts) {
+            adapter.removeListener(fragmentName + "Time")
+            adapter.addListener(fragmentName + "Author", "Author")
+        } else {
+            adapter.removeListener(fragmentName + "Author")
+            adapter.addListener(fragmentName + "Time", "Time")
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         adapter.removeListener(fragmentName)
+    }
+
+    fun updateButtons() {
+        if(!isYourPosts){
+            binding.forumGlobalButton.setBackgroundColor(resources.getColor(R.color.plum))
+            binding.forumYourpostsButton.setBackgroundColor(resources.getColor(R.color.grape))
+//            binding.forumGlobalButton.isSelected = true
+//            binding.forumYourpostsButton.isSelected = false
+        } else {
+            binding.forumGlobalButton.setBackgroundColor(resources.getColor(R.color.grape))
+            binding.forumYourpostsButton.setBackgroundColor(resources.getColor(R.color.plum))
+//            binding.forumGlobalButton.isSelected = false
+//            binding.forumYourpostsButton.isSelected = true
+        }
     }
 
     companion object {

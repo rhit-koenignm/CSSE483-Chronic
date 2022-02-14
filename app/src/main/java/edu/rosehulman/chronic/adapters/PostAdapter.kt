@@ -66,21 +66,20 @@ class PostAdapter(val fragment: GlobalForumFragment) : Adapter<PostAdapter.PostV
                 Log.d(Constants.TAG, "Pressed post at pos $adapterPosition")
 
                 //Check ownership, if you are the user
-                val currentObject = model.getCurrentPost()
-                if(currentObject.authorID == Firebase.auth.uid){
-                    itemView.findNavController().navigate(R.id.nav_forum_edit)
-                }else{
-                    itemView.findNavController().navigate(R.id.nav_forum_detail)
-                }
+//                val currentObject = model.getCurrentPost()
+//                if(currentObject.authorID == Firebase.auth.uid){
+//                    itemView.findNavController().navigate(R.id.nav_forum_edit)
+//                }else{
+//                    itemView.findNavController().navigate(R.id.nav_forum_detail)
+//                }
 
-
-
+                itemView.findNavController().navigate(R.id.nav_forum_detail)
             }
         }
 
         fun bind(post: Post) {
-            if(post.content.length > 300) {
-                val shortContent = post.content.substring(0, 300)
+            if(post.content.length > 200) {
+                val shortContent = post.content.substring(0, 200)
                 postContentPreview.text = shortContent + "... "
             } else {
                 postContentPreview.text = post.content
