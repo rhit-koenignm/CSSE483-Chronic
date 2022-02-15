@@ -28,6 +28,7 @@ import edu.rosehulman.chronic.adapters.MyTagAdapter
 import edu.rosehulman.chronic.databinding.FragmentProfileBinding
 import edu.rosehulman.chronic.models.UserData
 import edu.rosehulman.chronic.models.UserViewModel
+import edu.rosehulman.chronic.utilities.Constants
 
 
 class ProfileFragment : Fragment() {
@@ -81,12 +82,17 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.nav_my_tags)
         }
         binding.paindataButton.setOnClickListener() {
-            //findNavController().navigate(R.id.nav_data)
-            findNavController().navigate(R.id.nav_data, null, NavOptions.Builder().setPopUpTo(R.id.nav_data, true).build());
+            Log.d(Constants.TAG,"${findNavController().backQueue}")
+            val temp1 = findNavController().clearBackStack(R.id.nav_profile)
+            val temp2 = findNavController().clearBackStack(R.id.nav_data)
+            Log.d(Constants.TAG,"${findNavController().backQueue}")
+            Log.d(Constants.TAG,"$temp1 Cleared, $temp2 Cleared")
+            findNavController().navigate(R.id.nav_data)
+            //findNavController().navigate(R.id.nav_data, null, NavOptions.Builder().setPopUpTo(R.id.nav_pain_tracking, true).build());
         }
         binding.settingsButton.setOnClickListener() {
 //            findNavController().navigate(R.id.nav_settings)
-            findNavController().navigate(R.id.nav_settings, null, NavOptions.Builder().setPopUpTo(R.id.nav_settings, true).build());
+            findNavController().navigate(R.id.nav_settings, null, NavOptions.Builder().setPopUpTo(R.id.nav_pain_tracking, true).build());
         }
         binding.SubmitPainTrackingButton.setOnClickListener{
 //            findNavController().navigate(R.id.nav_data)
