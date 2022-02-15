@@ -18,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.firebase.ui.auth.AuthUI
@@ -90,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.action_settings -> {
+                findNavController(R.id.nav_host_fragment_content_main).popBackStack()
                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_settings)
                 true
             }
