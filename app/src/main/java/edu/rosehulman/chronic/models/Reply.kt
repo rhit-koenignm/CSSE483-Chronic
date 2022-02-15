@@ -5,6 +5,9 @@ import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ServerTimestamp
 import java.sql.Timestamp
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.*
 
 class Reply(
     var authorID: String="",
@@ -15,7 +18,7 @@ class Reply(
     var id = ""
 
     @ServerTimestamp
-    var created: Timestamp? = null
+    var created: com.google.firebase.Timestamp? = null
 
     companion object {
         const val COLLECTION_PATH = "replies"
@@ -26,5 +29,29 @@ class Reply(
             reply.id = snapshot.id
             return reply
         }
+    }
+
+    fun getDate():String{
+        if(this.created != null){
+            val objectDate: LocalDateTime = convertToLocalDateViaInstant(this.created!!.toDate())
+            return "${objectDate.month}/${objectDate.dayOfMonth}/${objectDate.year}"
+        }else{
+            return ""
+        }
+    }
+
+    fun getTime():String{
+        if(this.created != null){
+            val objectDate: LocalDateTime = convertToLocalDateViaInstant(this.created!!.toDate())
+            return "${objectDate.hour}:${objectDate.minute}"
+        }else{
+            return ""
+        }
+    }
+
+    private fun convertToLocalDateViaInstant(dateToConvert: Date): LocalDateTime {
+        return dateToConvert.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
     }
 }

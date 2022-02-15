@@ -4,6 +4,9 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.ServerTimestamp
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.*
 
 class Post(
     var authorID: String = "",
@@ -27,6 +30,30 @@ class Post(
             post.id = snapshot.id
             return post
         }
+    }
+
+    fun getDate():String{
+        if(this.created != null){
+            val objectDate:LocalDateTime = convertToLocalDateViaInstant(this.created!!.toDate())
+            return "${objectDate.month}/${objectDate.dayOfMonth}/${objectDate.year}"
+        }else{
+            return ""
+        }
+    }
+
+    fun getTime():String{
+        if(this.created != null){
+            val objectDate:LocalDateTime = convertToLocalDateViaInstant(this.created!!.toDate())
+            return "${objectDate.hour}:${objectDate.minute}"
+        }else{
+            return ""
+        }
+    }
+
+    private fun convertToLocalDateViaInstant(dateToConvert: Date): LocalDateTime {
+        return dateToConvert.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
     }
 
 }
