@@ -31,6 +31,13 @@ class Reply(
         }
     }
 
+    fun setAuthorData(authID: String, userName: String) {
+        if(authID.isNotEmpty() && userName.isNotEmpty()) {
+            this.authorID = authID
+            this.author = userName
+        }
+    }
+
     fun getDate():String{
         if(this.created != null){
             val objectDate: LocalDateTime = convertToLocalDateViaInstant(this.created!!.toDate())

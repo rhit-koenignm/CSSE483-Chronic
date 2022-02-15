@@ -10,7 +10,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.firebase.auth.ktx.auth
@@ -44,8 +46,9 @@ class ForumDetailFragment : Fragment(){
         adapter = ReplyAdapter(this)
         binding.replyRecycler.adapter = adapter
         binding.replyRecycler.setHasFixedSize(true)
-        binding.replyRecycler.layoutManager = LinearLayoutManager(requireContext())
-
+        var layoutManager = LinearLayoutManager(requireContext())
+        binding.replyRecycler.layoutManager = layoutManager
+        binding.replyRecycler.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
         adapter.addListener(fragmentName, model.getCurrentPost().id)
 
         return binding.root
@@ -81,6 +84,10 @@ class ForumDetailFragment : Fragment(){
             binding.forumDetailEditButton.isVisible = false
         }
 
+        binding.addReplyButton.setOnClickListener {
+            Log.d(Constants.TAG, "Pressed add reply button, launching edit dialog")
+            adapter.showEditDialog(this.requireContext(), null)
+        }
     }
 
     private fun loadPostDataToFragment() {
@@ -89,6 +96,7 @@ class ForumDetailFragment : Fragment(){
         binding.detailTitleView.setText(currentObject.title)
         binding.detailAuthorView.setText(currentObject.author)
         binding.detailContentView.setText(currentObject.content)
+        binding.detailTimeView.setText(currentObject.getDate() + "     " + currentObject.getTime())
         binding.PostImageView.load(currentObject.photoUrl){
             crossfade(true)
             transformations(CircleCropTransformation())

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.*
+import androidx.core.view.isVisible
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.R
@@ -49,105 +50,75 @@ class ReplyAdapter(fragment: Fragment) : RecyclerView.Adapter<ReplyAdapter.Reply
         this.notifyDataSetChanged()
     }
 
-    // The nice thing is this edit dialog will show up if we are editing an existing tag or creating a new one
-//    fun showEditDialog(context: Context, tag: Tag?, currentType: String) {
-//        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-//        // Name the dialog
-//        if(tag == null) {
-//            builder.setTitle("Create a new Tag")
-//        } else {
-//            builder.setTitle("Edit your tag")
-//        }
-//
-//
-//        var tagInputsLayout = LinearLayout(context)
-//        tagInputsLayout.orientation = LinearLayout.VERTICAL
-//        tagInputsLayout.setPadding(4, 4, 4, 4)
-//
-//        // Grabbing our filter and tag types arrays
-//        var tagTypesArray = fragment.resources.getStringArray(R.array.tag_types)
-//        var tagFiltersArray = fragment.resources.getStringArray(R.array.tag_filter_types)
-//
-//        // Set up the input for title
-//        val titleInput = EditText(context)
-//        titleInput.inputType = InputType.TYPE_CLASS_TEXT
-//        if(tag == null) {
-//            // This is if we are making a new tag, otherwise set the type to the current
-//            titleInput.setHint("Enter New Tag title")
-//        } else {
-//            titleInput.setText(tag.title.toString())
-//        }
-//
-//        // Set up the input for the type
-//        val spinner: Spinner = Spinner(context)
-//        ArrayAdapter.createFromResource(
-//            context,
-//            R.array.tag_types,
-//            android.R.layout.simple_spinner_item
-//        ).also { filterAdapter ->
-//            //Specify the layout to use when the list of choices appears
-//            filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//            spinner.adapter = filterAdapter
-//        }
-//
-//        // If the tag passed in is null, we want to set the current value to the current type
-//        if (tag == null) {
-//            spinner.setSelection(
-//                when (currentType) {
-//                    tagFiltersArray[0] -> 0
-//                    tagFiltersArray[1] -> 0
-//                    tagFiltersArray[2] -> 1
-//                    tagFiltersArray[3] -> 2
-//                    else -> {
-//                        0
-//                    }
-//                })
-//        } else {
-//            spinner.setSelection(
-//                when (tag.type) {
-//                    tagTypesArray[0] -> 0
-//                    tagTypesArray[1] -> 1
-//                    tagTypesArray[2] -> 2
-//                    else -> {
-//                        0
-//                    }
-//                }
-//            )
-//        }
-//
-//        // Adding our title and spinner to the linear layout
-//        tagInputsLayout.addView(titleInput)
-//        tagInputsLayout.addView(spinner)
-//        builder.setView(tagInputsLayout)
-//
-//        //Set up the buttons
-//        builder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, which ->
-//            var newTitle = titleInput.text.toString()
-//            var newType = spinner.selectedItem.toString()
-//            if(tag == null){
-//                // Call the adapter's method instead actually
-//                this.addTag(Tag(newTitle, newType))
-//            } else {
-//                model.updateTag(Tag(newTitle, newType, tag.creator, tag.isTracked))
-//            }
-//            notifyDataSetChanged()
-//        })
-//
-//        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->  dialog.cancel()})
-//
-//        if(tag != null) {
-//            //Delete will only show up for existing tags
-//            builder.setNeutralButton(
-//                "Delete tag",
-//                DialogInterface.OnClickListener { dialog, which ->
-//                    // This is where we will delete the tag
-//                    model.removeCurrentTag()
-//                })
-//        }
-//        // Showing dialog
-//        builder.show()
-//    }
+    fun updateCurrentReply(reply: Reply?) {
+        model.updateCurrentReply(reply)
+        this.notifyDataSetChanged()
+    }
 
+    // The nice thing is this edit dialog will show up if we are editing an existing tag or creating a new one
+    fun showEditDialog(context: Context, reply: Reply?) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        // Name the dialog
+        if(reply == null) {
+            builder.setTitle("Create a new Reply")
+        } else {
+            builder.setTitle("Edit your reply")
+        }
+
+
+        var replyInputsLayout = LinearLayout(context)
+        replyInputsLayout.orientation = LinearLayout.VERTICAL
+        replyInputsLayout.setPadding(4, 4, 4, 4)
+
+        // Set up the input for content
+        val contentInput = EditText(context)
+        contentInput.inputType = InputType.TYPE_CLASS_TEXT
+        if(reply == null) {
+            // This is if we are making a new reply, otherwise set the content to the current
+            contentInput.setHint("Enter New Reply Content")
+        } else {
+            contentInput.setText(reply.content.toString())
+        }
+
+        // Adding our title and spinner to the linear layout
+        replyInputsLayout.addView(contentInput)
+        builder.setView(replyInputsLayout)
+
+        //Set up the buttons
+        builder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, which ->
+            var newContent = contentInput.text.toString()
+            if(reply == null){
+               this.addReply(Reply(content = newContent))
+            } else {
+               this.updateCurrentReply(Reply(content = newContent))
+            }
+        })
+
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->  dialog.cancel()})
+
+        if(reply != null) {
+            //Delete will only show up for existing tags
+            builder.setNeutralButton(
+                "Delete reply",
+                DialogInterface.OnClickListener { dialog, which ->
+                    // This is where we will delete the tag
+                    model.removeCurrentReply()
+                })
+        }
+        // Showing dialog
+        builder.show()
+    }
+
+    fun showNotAuthorDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(fragment.requireContext())
+
+        builder.setTitle("You are not the author of this reply")
+        builder.setMessage("Users can only update and delete replies created by them.")
+
+        builder.setNegativeButton("Ok", DialogInterface.OnClickListener { dialog, which ->  dialog.cancel()})
+
+        builder.show()
+    }
 
     inner class ReplyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val replyAuthorTextView = itemView.findViewById<TextView>(R.id.reply_author_title)
@@ -156,14 +127,15 @@ class ReplyAdapter(fragment: Fragment) : RecyclerView.Adapter<ReplyAdapter.Reply
         val replyEditButton = itemView.findViewById<ImageButton>(R.id.reply_edit_button)
 
         init {
-//            model.updatePos(adapterPosition)
-//            if(Firebase.auth.uid!! != model.getCurrentReply().authorID) {
-//                replyEditButton.isEnabled = false
-//            } else {
-//                replyEditButton.setOnClickListener {
-//                    //TODO: Put call to edit reply function here
-//                }
-//            }
+            replyEditButton.setOnClickListener {
+                model.updatePos(adapterPosition)
+                var reply = model.getCurrentReply()
+                if (model.isUserCurrentReplyAuthor()) {
+                    showEditDialog(fragment.requireContext(), reply)
+                } else {
+                    showNotAuthorDialog()
+                }
+            }
         }
 
         fun bind(reply: Reply) {
@@ -172,6 +144,7 @@ class ReplyAdapter(fragment: Fragment) : RecyclerView.Adapter<ReplyAdapter.Reply
             replyContentTextView.text = reply.content
             if(Firebase.auth.uid!! != reply.authorID) {
                 replyEditButton.isEnabled = false
+                replyEditButton.isVisible = false
             }
         }
     }
