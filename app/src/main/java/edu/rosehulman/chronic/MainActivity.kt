@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(Constants.TAG,"Auth Complete")
 
 
-            //Top level destinations get a menu, and all others get back buttons in the app bar
+        //Top level destinations get a menu, and all others get back buttons in the app bar
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_profile, R.id.nav_reminder_list, R.id.nav_pain_tracking, R.id.nav_data, R.id.nav_settings, R.id.nav_forum_home
