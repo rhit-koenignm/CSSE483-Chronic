@@ -27,6 +27,7 @@ class PainDataEntryFragment : Fragment() {
     private lateinit var binding: FragmentPainDataEntryBinding
     private lateinit var painDataModel: PainDataViewModel
     private lateinit var myPainDataEntryTagViewModel: PainDataEntryTagViewModel
+    private  var listOfAdapters =  ArrayList<PainDataEntryTagAdapter>()
 
 
     override fun onCreateView(
@@ -61,6 +62,7 @@ class PainDataEntryFragment : Fragment() {
     private fun pullInExistingMyTags() {
         Log.d(Constants.TAG,"Setting up all three tag adapters")
         val treatmentsAdapter = PainDataEntryTagAdapter(this, fragmentName, "Treatments")
+        listOfAdapters.add(treatmentsAdapter)
         treatmentsAdapter.notifyDataSetChanged()
         binding.treatmentsRecyclerView.adapter = treatmentsAdapter
         binding.treatmentsRecyclerView.layoutManager = GridLayoutManager(requireContext(),1)
@@ -69,6 +71,7 @@ class PainDataEntryFragment : Fragment() {
         binding.treatmentsRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
 
         val triggersAdapter = PainDataEntryTagAdapter(this, fragmentName, "Triggers")
+        listOfAdapters.add(triggersAdapter)
         triggersAdapter.notifyDataSetChanged()
         binding.triggersRecyclerView.adapter = triggersAdapter
         binding.triggersRecyclerView.layoutManager = GridLayoutManager(requireContext(),1)
@@ -77,6 +80,7 @@ class PainDataEntryFragment : Fragment() {
         binding.triggersRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
 
         val symptomsAdapter = PainDataEntryTagAdapter(this, fragmentName, "Symptoms")
+        listOfAdapters.add(symptomsAdapter)
         symptomsAdapter.notifyDataSetChanged()
         binding.symptomsRecyclerView.adapter = symptomsAdapter
         binding.symptomsRecyclerView.layoutManager = GridLayoutManager(requireContext(),1)
@@ -169,9 +173,12 @@ class PainDataEntryFragment : Fragment() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        myPainDataEntryTagViewModel.removeUserListener(fragmentName)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        listOfAdapters.forEach(){
+            it.removeListener(fragmentName)
+            it.removeUserListener(fragmentName)
+        }
     }
 
 

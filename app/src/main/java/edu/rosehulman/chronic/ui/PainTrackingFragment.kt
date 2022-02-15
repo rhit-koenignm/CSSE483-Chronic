@@ -108,6 +108,7 @@ class PainTrackingFragment : Fragment() {
 
     fun setupButtons(){
         binding.ViewMoreDetailsButton.setOnClickListener(){
+            findNavController().popBackStack()
             findNavController().navigate(R.id.nav_data)
         }
     }

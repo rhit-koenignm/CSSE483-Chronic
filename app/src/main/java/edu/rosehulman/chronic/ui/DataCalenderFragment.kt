@@ -115,7 +115,12 @@ class DataCalenderFragment : Fragment(){
     }
     override fun onStop() {
         super.onStop()
-        adapter.removeModelListener(fragmentName)
+        adapter.removeModelListener(fragmentName = DataCalenderFragment.fragmentName)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.removeModelListener(fragmentName = DataCalenderFragment.fragmentName)
     }
 
 }

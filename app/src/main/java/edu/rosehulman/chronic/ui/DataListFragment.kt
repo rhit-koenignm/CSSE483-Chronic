@@ -101,4 +101,9 @@ class DataListFragment : Fragment() {
         listAdapter.removeModelListener(fragmentName = DataCalenderFragment.fragmentName)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        listAdapter.removeModelListener(fragmentName = DataCalenderFragment.fragmentName)
+    }
+
 }
