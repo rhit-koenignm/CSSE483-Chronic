@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -37,8 +38,6 @@ class ForumEditFragment : Fragment() {
             setupWithExistingData()
             setupButtons()
 
-
-
             return binding.root
         }
 
@@ -52,6 +51,10 @@ class ForumEditFragment : Fragment() {
 
             model.updateCurrentPost(newTitle, newContent, newAuthor, newPhotoURL)
             findNavController().navigate(R.id.nav_forum_home)
+        }
+
+        binding.editPhotoUrlText.doAfterTextChanged {
+
         }
 
     }
