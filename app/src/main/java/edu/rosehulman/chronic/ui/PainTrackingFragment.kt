@@ -125,7 +125,7 @@ class PainTrackingFragment : Fragment() {
 
     var ref = Firebase.firestore.collection(Tag.COLLECTION_PATH)
     fun getAllTagsFromFireStore(observer: () -> Unit) {
-        var subscription = Firebase.firestore.collection(Tag.COLLECTION_PATH)
+        val subscription = Firebase.firestore.collection(Tag.COLLECTION_PATH)
             .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                 error?.let {
                     Log.d(Constants.TAG, "Error $error")
@@ -134,7 +134,7 @@ class PainTrackingFragment : Fragment() {
                 Log.d(Constants.TAG, "In snapshot listener with ${snapshot?.size()} docs")
                 AllTagsList.clear()
                 snapshot?.documents?.forEach {
-                    var tag = Tag.from(it)
+                    val tag = Tag.from(it)
                     tag.isTracked = false
                     AllTagsList.add(tag)
                 }
@@ -182,9 +182,9 @@ class PainTrackingFragment : Fragment() {
 
         for (i in dataList.indices) {
             //Flip to be negative and red for bad entries, and green and positive for good entries
-            var dataValue = dataList[i].painLevel.toFloat();
+            var dataValue = dataList[i].painLevel.toFloat()
             if(dataValue >= 5){
-                dataValue = - dataList[i].painLevel.toFloat();
+                dataValue = - dataList[i].painLevel.toFloat()
             }
 
             values.add(BarEntry((i).toFloat(), dataValue))
