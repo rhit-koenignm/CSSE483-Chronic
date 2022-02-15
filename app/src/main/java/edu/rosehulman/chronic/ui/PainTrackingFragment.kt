@@ -485,8 +485,8 @@ class PainTrackingFragment : Fragment() {
         Subscriptions.clear()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         model.removeListener(fragmentName)
         Subscriptions.forEach(){
             it.remove()
