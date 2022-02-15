@@ -150,8 +150,6 @@ class ProfileFragment : Fragment() {
         const val fragmentName = "ProfileFragment"
     }
 
-
-
     inner class WrapContentLinearLayoutManager : LinearLayoutManager {
         constructor(context: Context?) : super(context) {}
         constructor(context: Context?, orientation: Int, reverseLayout: Boolean) : super(

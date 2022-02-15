@@ -64,15 +64,7 @@ class PostAdapter(val fragment: GlobalForumFragment) : Adapter<PostAdapter.PostV
             itemView.setOnClickListener {
                 model.updatePos(adapterPosition)
                 Log.d(Constants.TAG, "Pressed post at pos $adapterPosition")
-
-                //Check ownership, if you are the user
-//                val currentObject = model.getCurrentPost()
-//                if(currentObject.authorID == Firebase.auth.uid){
-//                    itemView.findNavController().navigate(R.id.nav_forum_edit)
-//                }else{
-//                    itemView.findNavController().navigate(R.id.nav_forum_detail)
-//                }
-
+                //itemView.findNavController().popBackStack()
                 itemView.findNavController().navigate(R.id.nav_forum_detail)
             }
         }
@@ -87,6 +79,8 @@ class PostAdapter(val fragment: GlobalForumFragment) : Adapter<PostAdapter.PostV
 
             if(post.photoUrl.isNotEmpty()){
                 postImageView.load(post.photoUrl)
+            } else {
+                postImageView.load(fragment.resources.getDrawable(R.drawable.ic_menu_camera))
             }
 
             postTitleView.text = post.title
