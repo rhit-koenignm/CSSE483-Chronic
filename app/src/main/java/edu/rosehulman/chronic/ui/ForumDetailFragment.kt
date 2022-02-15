@@ -97,10 +97,7 @@ class ForumDetailFragment : Fragment(){
         binding.detailAuthorView.setText(currentObject.author)
         binding.detailContentView.setText(currentObject.content)
         binding.detailTimeView.setText(currentObject.getDate() + "     " + currentObject.getTime())
-        binding.PostImageView.load(currentObject.photoUrl){
-            crossfade(true)
-            transformations(CircleCropTransformation())
-        }
+        binding.PostImageView.load(currentObject.photoUrl)
     }
 
     companion object {
