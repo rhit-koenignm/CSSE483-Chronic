@@ -26,6 +26,7 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -50,6 +51,8 @@ class PainTrackingFragment : Fragment() {
 
     private var AllUserTagsByID = HashMap<String, Int>()
     private var AllTagsList  = ArrayList<Tag>()
+
+    private var Subscriptions = ArrayList<ListenerRegistration>()
 
     //Display 31 or 7
     var displayLastWeek = true
@@ -117,11 +120,12 @@ class PainTrackingFragment : Fragment() {
 
         }
 
+
     }
 
     var ref = Firebase.firestore.collection(Tag.COLLECTION_PATH)
     fun getAllTagsFromFireStore(observer: () -> Unit) {
-        Firebase.firestore.collection(Tag.COLLECTION_PATH)
+        var subscription = Firebase.firestore.collection(Tag.COLLECTION_PATH)
             .addSnapshotListener { snapshot: QuerySnapshot?, error: FirebaseFirestoreException? ->
                 error?.let {
                     Log.d(Constants.TAG, "Error $error")
@@ -136,6 +140,8 @@ class PainTrackingFragment : Fragment() {
                 }
         observer()
     }
+
+        Subscriptions.add(subscription)
     }
 
     fun convertTagID2Name(tagID:String):String{
@@ -473,6 +479,19 @@ class PainTrackingFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         model.removeListener(fragmentName)
+        Subscriptions.forEach(){
+            it.remove()
+        }
+        Subscriptions.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        model.removeListener(fragmentName)
+        Subscriptions.forEach(){
+            it.remove()
+        }
+        Subscriptions.clear()
     }
 
     companion object{
