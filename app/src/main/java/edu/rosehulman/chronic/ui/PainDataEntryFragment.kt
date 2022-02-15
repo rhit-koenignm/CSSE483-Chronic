@@ -175,10 +175,8 @@ class PainDataEntryFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        listOfAdapters.forEach(){
-            it.removeListener(fragmentName)
-            it.removeUserListener(fragmentName)
-        }
+        myPainDataEntryTagViewModel.removeTagsByTypeListener(fragmentName)
+        myPainDataEntryTagViewModel.removeUserListener(fragmentName)
     }
 
 

@@ -11,6 +11,8 @@ import edu.rosehulman.chronic.utilities.Constants
 class PainDataEntryTagViewModel : ViewModel() {
     val tagSubscriptions = HashMap<String, ListenerRegistration>()
     val userSubscriptions = HashMap<String, ListenerRegistration>()
+
+
     var myTags = ArrayList<String>()
     var attachedTag = ArrayList<String>()
 
@@ -113,7 +115,7 @@ class PainDataEntryTagViewModel : ViewModel() {
                     Log.d(Constants.TAG,"Grabbed a total of ${snapshot?.size()} docs, with ${myTreatments.size} Treatments, ${myTriggers.size} Triggers and ${mySymptoms.size} Symptoms")
                     observer()
                 }
-            tagSubscriptions[fragmentName] = subscription
+            tagSubscriptions.put(fragmentName,subscription)
         }
     }
 
@@ -136,7 +138,7 @@ class PainDataEntryTagViewModel : ViewModel() {
                 //Now call then next function to update the adapter data
                 observer()
             }
-        userSubscriptions[fragmentName]
+        userSubscriptions.put(fragmentName,userSubscription)
         Log.d(Constants.TAG, "Successfully grabbed user with id of ${uid}")
     }
 
@@ -146,12 +148,12 @@ class PainDataEntryTagViewModel : ViewModel() {
         userSubscriptions.remove(fragmentName)
     }
 
-    // Removing our tag listener
-    fun removeListener(fragmentName: String) {
+    fun removeTagsByTypeListener(fragmentName: String) {
         Log.d(Constants.TAG, "Removing listener for $fragmentName")
         tagSubscriptions[fragmentName]?.remove()
         tagSubscriptions.remove(fragmentName)
     }
+
 
     fun toggleTypeTracked(adapterPosition: Int, dataType: String) {
         if(dataType == "Treatments"){
@@ -180,6 +182,7 @@ class PainDataEntryTagViewModel : ViewModel() {
             }
         }
     }
+
 
 
 }

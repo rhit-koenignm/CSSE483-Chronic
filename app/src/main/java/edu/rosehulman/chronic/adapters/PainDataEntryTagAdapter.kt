@@ -24,7 +24,7 @@ class PainDataEntryTagAdapter(fragment: Fragment, fragmentName: String, dataType
         val model = ViewModelProvider(fragment.requireActivity()).get(PainDataEntryTagViewModel::class.java)
 
         fun removeListener(fragmentName: String) {
-            model.removeListener(fragmentName)
+            model.removeTagsByTypeListener(fragmentName)
             model.removeUserListener(fragmentName)
         }
 

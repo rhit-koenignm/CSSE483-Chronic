@@ -15,8 +15,8 @@ import kotlin.collections.HashMap
 class PainDataViewModel : ViewModel() {
         var objectList = ArrayList<PainData>()
         var currentPosition = 0         //Defaults to looking at the zeroth position
-
-
+        var fireBaseReference = Firebase.firestore.collection(PainData.COLLECTION_PATH).document(Firebase.auth.uid!!).collection(PainData.ENTRY_COLLECTION_PATH)
+        var subscriptions = HashMap<String, ListenerRegistration>()
 
         fun getObjectAtPosition(position: Int) = objectList[position]
         fun getCurrentObject() = getObjectAtPosition(currentPosition)
@@ -61,8 +61,7 @@ class PainDataViewModel : ViewModel() {
 
     //Firebase Stuff
 
-    var fireBaseReference = Firebase.firestore.collection(PainData.COLLECTION_PATH).document(Firebase.auth.uid!!).collection(PainData.ENTRY_COLLECTION_PATH)
-    var subscriptions = HashMap<String, ListenerRegistration>()
+
 
     fun addListener(fragmentName: String, userID: String, observer: () -> Unit) {
         Log.d(Constants.TAG,"Added FireStore Listener in Model")
@@ -149,7 +148,4 @@ class PainDataViewModel : ViewModel() {
         return tagsToQuantities
 
     }
-
-
-
 }
