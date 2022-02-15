@@ -10,19 +10,23 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.chronic.R
+import edu.rosehulman.chronic.adapters.ReplyAdapter
 import edu.rosehulman.chronic.databinding.FragmentForumDetailBinding
 import edu.rosehulman.chronic.models.PostViewModel
+import edu.rosehulman.chronic.models.Reply
 import edu.rosehulman.chronic.utilities.Constants
 
 
 class ForumDetailFragment : Fragment(){
     private lateinit var binding: FragmentForumDetailBinding
     private lateinit var model:PostViewModel
+    lateinit var adapter: ReplyAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +41,22 @@ class ForumDetailFragment : Fragment(){
         loadPostDataToFragment()
         setupButtons()
 
+        adapter = ReplyAdapter(this)
+        binding.replyRecycler.adapter = adapter
+        binding.replyRecycler.setHasFixedSize(true)
+        binding.replyRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        adapter.addListener(fragmentName, model.getCurrentPost().id)
+
         return binding.root
     }
 
-    private fun setupButtons() {
-        binding.addReplyButton.setOnClickListener {
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.removeListener(fragmentName)
+    }
 
-        }
+    private fun setupButtons() {
         binding.shareButton.setOnClickListener {
             val currentObject = model.getCurrentPost()
             val formattedText = "${currentObject.author} talked about ${currentObject.title} on Chronic! Download the App Today!"

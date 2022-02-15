@@ -289,10 +289,9 @@ class ReminderViewModel(private val app: Application) : AndroidViewModel(app) {
                 }
             }
         }
-        }
+    }
 
     private fun makePendingIntent(message: String, REQUEST_CODE: Int): PendingIntent {
-
         //Pass in the message of the alarm title to send back
         val notifyIntent = Intent(app, RemindersReceiver::class.java).also {
             it.putExtra(NotificationUtilities.MESSAGE_KEY, message)

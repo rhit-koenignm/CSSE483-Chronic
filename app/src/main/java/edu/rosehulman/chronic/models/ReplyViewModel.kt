@@ -63,4 +63,24 @@ class ReplyViewModel : ViewModel() {
             ref.document(getCurrentReply().id)
         }
     }
+
+    fun removeCurrentReply() {
+        ref.document(getCurrentReply().id).delete()
+        currentPos = 0
+    }
+
+    fun removeReminder(adapterPosition: Int) {
+        ref.document(getReplyAt(adapterPosition).id).delete()
+    }
+
+    fun updatePos(pos: Int) {
+        currentPos = pos
+    }
+
+    fun clear() {
+        replies.clear()
+    }
+
+    fun size() = replies.size
+
 }
