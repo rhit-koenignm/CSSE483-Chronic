@@ -43,6 +43,7 @@ class SettingsFragment : Fragment() {
             )
             (activity as MainActivity).setupHeaderBar(userModel)
             Log.d(Constants.TAG,"CLicked Done Button for User Edit Page")
+            findNavController().popBackStack()
             findNavController().navigate(R.id.nav_pain_tracking)
         }
 
