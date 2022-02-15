@@ -117,6 +117,6 @@
     <string name="enter_image_url_here_hint">Enter Image URL Here:</string>
     <string name="forum_edit_label">Forum Edit Page</string>
     <string name="forum_detail_label">Forum Detail</string>
-
-
+    <string name="forum_reply_content_default">Here is where a reply would go, look at its wonderful content. :)</string>
+    <string name="forum_reply_date_default">11/11/1111~~~11:11 PM</string>
 </resources>

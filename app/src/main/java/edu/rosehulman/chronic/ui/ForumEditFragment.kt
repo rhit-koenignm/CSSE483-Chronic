@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.adapters.PostAdapter
 import edu.rosehulman.chronic.databinding.FragmentDataBinding
@@ -18,6 +19,7 @@ import edu.rosehulman.chronic.databinding.FragmentForumEditBinding
 import edu.rosehulman.chronic.databinding.FragmentForumHomeBinding
 import edu.rosehulman.chronic.models.PostViewModel
 import edu.rosehulman.chronic.models.UserViewModel
+
 
 class ForumEditFragment : Fragment() {
         private lateinit var binding: FragmentForumEditBinding
@@ -54,7 +56,26 @@ class ForumEditFragment : Fragment() {
         }
 
         binding.editPhotoUrlText.doAfterTextChanged {
+            var currentUrlText = binding.editPhotoUrlText.text.toString()
 
+            if(currentUrlText.isNotEmpty()) {
+                binding.editForumImageView.load(currentUrlText) {
+                    crossfade(true)
+                    transformations(CircleCropTransformation())
+                }
+            }
+        }
+
+        binding.editDeletePostButton.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Are you sure?")
+                .setMessage("Are you sure you want to delete this post?")
+                .setPositiveButton(android.R.string.ok) { dialog, which ->
+                    model.removeCurrentPost()
+                    findNavController().navigate(R.id.nav_forum_home)
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
         }
 
     }
@@ -66,6 +87,12 @@ class ForumEditFragment : Fragment() {
         binding.editDetailContentEdit.setText(currentObject.content)
         binding.editPhotoUrlText.setText(currentObject.photoUrl)
 
+        if(currentObject.photoUrl.isNotEmpty()){
+            binding.editForumImageView.load(currentObject.photoUrl) {
+                crossfade(true)
+                transformations(CircleCropTransformation())
+            }
+        }
     }
 
     companion object {
