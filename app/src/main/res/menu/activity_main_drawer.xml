@@ -25,14 +25,6 @@
             android:icon="@drawable/ic_baseline_chat_bubble_outline_24"
             android:title="@string/menu_global_forum" />
         <item
-            android:id="@+id/nav_pain_tracking"
-            android:icon="@drawable/ic_baseline_dynamic_feed_24"
-            android:title="@string/menu_my_feed" />
-        <item
-            android:id="@+id/nav_pain_tracking"
-            android:icon="@drawable/ic_baseline_create_24"
-            android:title="@string/menu_post" />
-        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_baseline_settings_24"
             android:title="@string/menu_settings" />
