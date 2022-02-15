@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/roundbuttonlavender"
+    android:layout_height="wrap_content"
+    android:background="@color/lavender"
+    android:paddingHorizontal="2dp"
     >
 
     <TextView
         android:id="@+id/reply_author_title"
-
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/plum"
+        android:text="@string/post_author_text"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/reply_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/forum_reply_date_default"
+        android:textColor="@color/plum"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/reply_content_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reply_author_title"
+        android:text="@string/forum_reply_content_default"
+        android:textColor="@color/plum"
+        android:textSize="15sp" />
+
+    <ImageButton
+        android:id="@+id/reply_delete_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/grape"
+        android:src="@drawable/ic_delete_white_24"
+        />
+
+</RelativeLayout>

@@ -52,6 +52,15 @@ class ReplyViewModel : ViewModel() {
     }
 
     fun addReply(reply: Reply?) {
+        if (reply != null) {
+            ref.add(reply)
+        }
+    }
 
+    fun updateCurrentReply(reply: Reply?) {
+        if(reply != null) {
+            replies[currentPos] = reply
+            ref.document(getCurrentReply().id)
+        }
     }
 }

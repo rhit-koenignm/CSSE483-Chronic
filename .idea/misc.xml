@@ -6,6 +6,7 @@
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/drawable/circlebackground.xml" value="0.25384615384615383" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.2045" />
+        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/drawable/ic_baseline_add_comment_24.xml" value="0.1575" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/drawable/ic_baseline_chat_bubble_outline_24.xml" value="0.2045" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/drawable/ic_baseline_commit_24.xml" value="0.2045" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/drawable/ic_baseline_insert_chart_outlined_24.xml" value="0.18425925925925926" />
@@ -23,7 +24,7 @@
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/app_bar_main.xml" value="0.2" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/content_main.xml" value="0.11752786220871327" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_entry.xml" value="0.16197916666666667" />
-        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_forum_detail.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_forum_detail.xml" value="0.33" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_forum_edit.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_forum_filter.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_forum_home.xml" value="0.4" />
@@ -39,7 +40,7 @@
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/fragment_settings.xml" value="0.26992753623188404" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/nav_header_main.xml" value="0.6552763819095477" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/post_row_item.xml" value="0.4" />
-        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/reply_row_item.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/reply_row_item.xml" value="0.33" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/row_reminder.xml" value="0.2" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/layout/tag_item.xml" value="0.264" />
         <entry key="..\:/Users/koenignm/Documents/Winter2022/Android_App_Dev/CSSE483-Chronic/app/src/main/res/menu/activity_main_drawer.xml" value="0.536" />
