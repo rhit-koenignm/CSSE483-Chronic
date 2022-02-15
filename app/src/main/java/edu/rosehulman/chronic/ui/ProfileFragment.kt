@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -72,18 +73,24 @@ class ProfileFragment : Fragment() {
         return root
     }
 
+
+
+
     fun setUpButtons() {
         binding.trackingTagsButton.setOnClickListener {
             findNavController().navigate(R.id.nav_my_tags)
         }
         binding.paindataButton.setOnClickListener() {
-            findNavController().navigate(R.id.nav_data)
+            //findNavController().navigate(R.id.nav_data)
+            findNavController().navigate(R.id.nav_data, null, NavOptions.Builder().setPopUpTo(R.id.nav_data, true).build());
         }
         binding.settingsButton.setOnClickListener() {
-            findNavController().navigate(R.id.nav_settings)
+//            findNavController().navigate(R.id.nav_settings)
+            findNavController().navigate(R.id.nav_settings, null, NavOptions.Builder().setPopUpTo(R.id.nav_settings, true).build());
         }
         binding.SubmitPainTrackingButton.setOnClickListener{
-            findNavController().navigate(R.id.nav_data)
+//            findNavController().navigate(R.id.nav_data)
+            findNavController().navigate(R.id.nav_data, null, NavOptions.Builder().setPopUpTo(R.id.nav_data, true).build());
         }
         binding.LogoutButton.setOnClickListener(){
             Firebase.auth.signOut()
