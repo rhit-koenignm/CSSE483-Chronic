@@ -145,6 +145,9 @@ class ReplyAdapter(fragment: Fragment) : RecyclerView.Adapter<ReplyAdapter.Reply
             if(Firebase.auth.uid!! != reply.authorID) {
                 replyEditButton.isEnabled = false
                 replyEditButton.isVisible = false
+            }else{
+                replyEditButton.isEnabled = true
+                replyEditButton.isVisible = true
             }
         }
     }
