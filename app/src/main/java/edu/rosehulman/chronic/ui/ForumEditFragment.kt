@@ -59,10 +59,7 @@ class ForumEditFragment : Fragment() {
             var currentUrlText = binding.editPhotoUrlText.text.toString()
 
             if(currentUrlText.isNotEmpty()) {
-                binding.editForumImageView.load(currentUrlText) {
-                    crossfade(true)
-                    transformations(CircleCropTransformation())
-                }
+                binding.editForumImageView.load(currentUrlText)
             }
         }
 
@@ -88,10 +85,7 @@ class ForumEditFragment : Fragment() {
         binding.editPhotoUrlText.setText(currentObject.photoUrl)
 
         if(currentObject.photoUrl.isNotEmpty()){
-            binding.editForumImageView.load(currentObject.photoUrl) {
-                crossfade(true)
-                transformations(CircleCropTransformation())
-            }
+            binding.editForumImageView.load(currentObject.photoUrl)
         }
     }
 

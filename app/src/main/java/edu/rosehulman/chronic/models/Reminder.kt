@@ -41,7 +41,9 @@ class Reminder(
             ampmString = "PM"
         }
 
-        if(tempHour < 10){
+        if(tempHour == 0){
+            hourString = "12"
+        } else if(tempHour < 10) {
             hourString = "0" + tempHour.toString()
         } else {
             hourString = tempHour.toString()
