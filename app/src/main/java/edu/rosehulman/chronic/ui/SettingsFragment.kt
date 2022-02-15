@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import edu.rosehulman.chronic.MainActivity
 import edu.rosehulman.chronic.utilities.Constants
 import edu.rosehulman.chronic.R
 import edu.rosehulman.chronic.databinding.FragmentSettingsBinding
@@ -40,6 +41,7 @@ class SettingsFragment : Fragment() {
                 profilephotoURLIn = binding.userEditProfileImageUrlEditText.text.toString(),
                 newHasCompletedSetup = true,
             )
+            (activity as MainActivity).setupHeaderBar(userModel)
             Log.d(Constants.TAG,"CLicked Done Button for User Edit Page")
             findNavController().navigate(R.id.nav_pain_tracking)
         }
