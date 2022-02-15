@@ -83,7 +83,7 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.nav_settings)
         }
         binding.SubmitPainTrackingButton.setOnClickListener{
-            findNavController().navigate(R.id.nav_pain_data_entry)
+            findNavController().navigate(R.id.nav_data)
         }
         binding.LogoutButton.setOnClickListener(){
             Firebase.auth.signOut()

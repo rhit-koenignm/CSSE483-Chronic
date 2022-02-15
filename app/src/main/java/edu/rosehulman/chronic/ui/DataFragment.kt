@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import edu.rosehulman.chronic.adapters.PainDataTabAdapter
 import edu.rosehulman.chronic.databinding.FragmentDataBinding
-import android.R
 import android.util.Log
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 
 import com.google.android.material.tabs.TabLayout
-
-
+import edu.rosehulman.chronic.R
 
 
 class DataFragment : Fragment() {
@@ -30,6 +29,7 @@ class DataFragment : Fragment() {
 
         val fragmentAdapter = PainDataTabAdapter(childFragmentManager)
         binding.ViewPager.adapter = fragmentAdapter
+
 
         val tabLayout = binding.Tabs
         tabLayout.setupWithViewPager(binding.ViewPager)
