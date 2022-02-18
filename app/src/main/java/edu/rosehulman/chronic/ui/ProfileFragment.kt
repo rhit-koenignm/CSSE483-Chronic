@@ -98,6 +98,7 @@ class ProfileFragment : Fragment() {
         }
         binding.SubmitPainTrackingButton.setOnClickListener{
 //            findNavController().navigate(R.id.nav_data)
+            findNavController().popBackStack()
             findNavController().navigate(R.id.nav_data, null, NavOptions.Builder().setPopUpTo(R.id.nav_data, true).build());
         }
         binding.LogoutButton.setOnClickListener(){
