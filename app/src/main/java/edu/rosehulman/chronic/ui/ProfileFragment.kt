@@ -108,18 +108,21 @@ class ProfileFragment : Fragment() {
             val url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
+            findNavController().popBackStack()
             startActivity(i)
         }
         binding.WebsiteButton.setOnClickListener(){
             val url = "https://rosehulmanprojectvault.org/project/-Mr8sTDKHqXn-ZyrEATz"
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
+            findNavController().popBackStack()
             startActivity(i)
         }
         binding.SupportButton.setOnClickListener(){
             val url = "https://stackoverflow.com/"
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
+            findNavController().popBackStack()
             startActivity(i)
         }
 

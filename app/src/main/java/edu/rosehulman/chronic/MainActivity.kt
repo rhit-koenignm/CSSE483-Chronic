@@ -1,5 +1,6 @@
 package edu.rosehulman.chronic
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -16,6 +17,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -74,10 +76,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
-
-//        setupHeaderBar()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -107,18 +105,18 @@ class MainActivity : AppCompatActivity() {
 
 
     fun setupHeaderBar(userModel: UserViewModel) {
-            val navigationView = binding.navView
-            val headerView = navigationView.getHeaderView(0)
-            val profileImage = headerView.findViewById<ImageView>(R.id.profile_imageView)
-            val profileEmail = headerView.findViewById<TextView>(R.id.email_textView)
-            val profileName = headerView.findViewById<TextView>(R.id.name_textview)
+        val navigationView = binding.navView
+        val headerView = navigationView.getHeaderView(0)
+        val profileImage = headerView.findViewById<ImageView>(R.id.profile_imageView)
+        val profileEmail = headerView.findViewById<TextView>(R.id.email_textView)
+        val profileName = headerView.findViewById<TextView>(R.id.name_textview)
 
-            profileImage.load(userModel.user?.ProfileURL){
-                crossfade(true)
-                transformations(CircleCropTransformation())
-            }
+        profileImage.load(userModel.user?.ProfileURL) {
+            crossfade(true)
+            transformations(CircleCropTransformation())
+        }
 
-            profileEmail.text = "${userModel.user?.Email}"
+        profileEmail.text = "${userModel.user?.Email}"
         "${userModel.user?.firstName} ${userModel.user?.lastName}".also { profileName.text = it }
     }
 
@@ -127,7 +125,6 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         Firebase.auth.addAuthStateListener(authStateListener)
-
     }
 
     override fun onStop() {

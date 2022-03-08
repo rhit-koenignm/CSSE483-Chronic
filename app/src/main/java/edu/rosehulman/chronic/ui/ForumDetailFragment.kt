@@ -70,6 +70,7 @@ class ForumDetailFragment : Fragment(){
             sendIntent.setType("text/plain")
 
             val shareIntent = Intent.createChooser(sendIntent, null)
+            findNavController().popBackStack()
             startActivity(shareIntent)
         }
 
